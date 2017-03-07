@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load staticfiles %}
+    {% load bootstrap_themes %}
+    {% bootstrap_styles theme='spacelab' type='css' %}
+    {% bootstrap_script use_min=True %}
+    {% load i18n %}
+    {% get_current_language as LANGUAGE_CODE %}
+
+
+    <meta charset="utf-8">
+    <title>Shoal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed"
+                  data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+            Shoal
+          </a><img class="logo-header" src="/static/images/logo.png">
+        </div>
+        
+        {% if user.username %}
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"> <span class="sr-only"></span></li>
+          </ul>
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input class="form-control" placeholder="Search" type="text">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+
+          <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#" title="{{ _('registered_user') }}">
+            <i class="glyphicon glyphicon-user"></i> {{ user.username }}</a>
+          </li>
+          <li>
+            <a href="{% url 'logout' %}" title="{{ _('close_session') }}">
+            <i class="glyphicon glyphicon-log-out"></i></a>
+          </li>
+          <li style="margin-left:10px;"></li>
+          </ul>
+        </div>
+        {% endif  %}
+        
+      </div>
+    </nav>
+
+    <div class="container" id="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+
+    <!-- <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+    <!-- <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
+    <!-- <script src="../assets/js/bootswatch.js"></script> -->
+    <script type="text/javascript">
+      /* <![CDATA[ */
+(function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&a.indexOf("/cdn-cgi/l/email-protection") > -1  && (a.length > 28)){s='';j=27+ 1 + a.indexOf("/cdn-cgi/l/email-protection");if (a.length > j) {r=parseInt(a.substr(j,2),16);for(j+=2;a.length>j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);}t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
+/* ]]> */
+    </script>
+  </body>
+</html>
