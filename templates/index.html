@@ -11,19 +11,21 @@
         <table class="table table-striped table-hover ">
           <thead>
             <tr>
-              <th>Empleado</th>
-              <th>Oficina</th>
-              <th>Teléfono</th>
-              <th>Interno</th>
+              <th>{{ _('person') }}</th>
+              <th>{{ _('office') }}</th>
+              <th>{{ _('phone') }}</th>
             </tr>
           </thead>
           <tbody>
-                <tr>
-                <td><%= employee.name_and_surname %></td>
-                <td><%= office.name %></td>
-                <td><%= office.phone %></td>
-                <td><%= employee.phone %></td>
+            {% if people %}
+              {% for person in people %}
+              <tr>
+                <td>{{ person.surname }}, {{ person.name }}</td>
+                <td>{{ person.office }}</td>
+                <td>{{ person.telephone_number }}</td>
                 </tr>
+              {% endfor %}
+            {% endif %}
           </tbody>
         </table> 
       </div>
