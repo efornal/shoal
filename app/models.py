@@ -5,6 +5,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext as _
 
+
 class LdapConn():
 
     @classmethod
@@ -183,3 +184,27 @@ class LdapPerson(models.Model):
                 
         return cn_found
 
+
+class LDPerson(models.Model):
+    id = models.AutoField(primary_key=True,null=False)
+    username = models.CharField(max_length=200)
+    person_id = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+    surname = models.CharField(max_length=200)
+    fullname = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    office = models.CharField(max_length=200)
+    group_id = models.CharField(max_length=200)
+    document_number = models.CharField(max_length=200)
+    type_document_number = models.CharField(max_length=200)
+    country_document_number = models.CharField(max_length=200)
+    telephone_number = models.CharField(max_length=200)
+    home_telephone_number = models.CharField(max_length=200)
+
+    class Meta:
+        verbose_name = _('LdapPerson')
+        verbose_name_plural = _('LdapPeople')
+        db_table = 'appp_ldapperson'
+
+    def __unicode__(self):
+        return self.username
