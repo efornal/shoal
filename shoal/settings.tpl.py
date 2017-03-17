@@ -152,6 +152,9 @@ LDAP_DN = 'dc=*,dc=*,dc=*,dc=*'
 
 # Organizational Unit for Person
 LDAP_PEOPLE = 'People'
+LDAP_USERNAME='username'
+LDAP_USERPASS='password'
+
 # =================================/
 
 # =================================\
