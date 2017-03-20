@@ -147,13 +147,15 @@ SUIT_CONFIG = {
 # =================================\
 # ldap configuration
 LDAP_SERVER = 'ldap://ldap_host:389'
-
 LDAP_DN = 'dc=*,dc=*,dc=*,dc=*'
 
 # Organizational Unit for Person
 LDAP_PEOPLE = 'People'
 LDAP_USERNAME='username'
 LDAP_USERPASS='password'
+#
+# Maximum limit of results to be taken as error
+LDAP_SIZE_LIMIT=100
 
 # =================================/
 

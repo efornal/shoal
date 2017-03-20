@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-20 08:54-0300\n"
+"POT-Creation-Date: 2017-03-20 11:17-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,6 +33,12 @@ msgstr "Persona Ldap"
 #: app/models.py:64
 msgid "LdapPeople"
 msgstr "Personas Ldap"
+
+#: app/views.py:22
+msgid "search_error"
+msgstr ""
+       "La búsqueda no pudo realizarse. "
+       "Verifique que el texto a buscar no generes exceso de resultados"
 
 #: shoal/settings.py:119 shoal/settings.tpl.py:119
 msgid "Spanish"
@@ -101,35 +107,35 @@ msgstr "Historial"
 msgid "View on site"
 msgstr "Ver en el sitio"
 
-#: templates/base.html:41 templates/base.html:43
+#: templates/base.html:42 templates/base.html:44
 msgid "search"
 msgstr "buscar"
 
 #: templates/base.html:49
-msgid "username"
-msgstr "usuario"
-
-#: templates/base.html:54
-msgid "edit_account"
-msgstr "Editar cuenta"
-
-#: templates/base.html:56 templates/base.html:74
-msgid "close_session"
-msgstr "Cerrar sesión"
-
-#: templates/base.html:61
 msgid "language"
 msgstr "Idioma"
 
-#: templates/base.html:63 templates/base.html:68
+#: templates/base.html:51 templates/base.html:56
 msgid "spanish"
 msgstr "español"
 
-#: templates/base.html:64 templates/base.html:70
+#: templates/base.html:52 templates/base.html:58
 msgid "english"
 msgstr "inglés"
 
-#: templates/base.html:83
+#: templates/base.html:65
+msgid "username"
+msgstr "usuario"
+
+#: templates/base.html:70
+msgid "edit_account"
+msgstr "Editar cuenta"
+
+#: templates/base.html:72 templates/base.html:76
+msgid "close_session"
+msgstr "Cerrar sesión"
+
+#: templates/base.html:82
 msgid "init_session"
 msgstr "Iniciar sesión"
 
@@ -140,10 +146,10 @@ msgstr "Bienvenido!"
 #: templates/index.html:7
 msgid "welcome_message"
 msgstr ""
-       "Este sistema le permitirá gestionar su cuenta de usuario de ldap "
-       "y realizar búsquedas de otros usuarios. <br> "
-       "Para poder editar los datos de tu cuenta, deber registrarte "
-       "utilizando los datos de login de LDAP que utilizas normalmente."
+"Este sistema le permitirá gestionar su cuenta de usuario de ldap y realizar "
+"búsquedas de otros usuarios. <br> Para poder editar los datos de tu cuenta, "
+"deber registrarte utilizando los datos de login de LDAP que utilizas "
+"normalmente."
 
 #: templates/registration/login.html:6
 msgid "invalid_username_or_password"
@@ -165,14 +171,14 @@ msgstr "contraseña"
 msgid "log_in"
 msgstr "Iniciar sesión"
 
-#: templates/search.html:14
+#: templates/search.html:9
 msgid "person"
 msgstr "persona"
 
-#: templates/search.html:15
+#: templates/search.html:10
 msgid "office"
 msgstr "oficina"
 
-#: templates/search.html:16
+#: templates/search.html:11
 msgid "phone"
 msgstr "teléfono"
