@@ -10,12 +10,13 @@ import logging
 
 def index(request):
     context={}
-    people = LdapPerson.search_by_uid('ef')
-    context.update({'people': people})
     return render(request, 'index.html', context)
 
 
 def search(request):
     context={}
-
-    return render(request, 'index.html', context)
+    if 'text' in request.GET:
+        people = LdapPerson.search_by_uid(request.GET['text'])
+        context.update({'people': people})
+        
+    return render(request, 'search.html', context)

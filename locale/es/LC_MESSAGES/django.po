@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-08 10:59-0300\n"
+"POT-Creation-Date: 2017-03-20 08:54-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: app/admin.py:30
+msgid "name"
+msgstr "nombre"
+
+#: app/admin.py:132
+msgid "Database error"
+msgstr "Error de base de datos"
+
+#: app/models.py:63
+msgid "LdapPerson"
+msgstr "Persona Ldap"
+
+#: app/models.py:64
+msgid "LdapPeople"
+msgstr "Personas Ldap"
+
 #: shoal/settings.py:119 shoal/settings.tpl.py:119
 msgid "Spanish"
 msgstr "Español"
@@ -25,6 +41,65 @@ msgstr "Español"
 #: shoal/settings.py:120 shoal/settings.tpl.py:120
 msgid "English"
 msgstr "Inglés"
+
+#: templates/admin/change_list.html:42
+#: templates/admin/ldapperson/change_form.html:61
+#: templates/admin/ldapperson/change_list.html:42
+msgid "Home"
+msgstr "Inicio"
+
+#: templates/admin/change_list.html:68 templates/admin/change_list.html:116
+#: templates/admin/ldapperson/change_form.html:125
+#: templates/admin/ldapperson/change_list.html:68
+#: templates/admin/ldapperson/change_list.html:176
+#, python-format
+msgid "Add %(name)s"
+msgstr "Agregar %(name)s"
+
+#: templates/admin/change_list.html:86
+#: templates/admin/ldapperson/change_form.html:154
+#: templates/admin/ldapperson/change_list.html:86
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] "Por favor, corrija el error indicado"
+msgstr[1] "Por favor, corrija los errores indicados"
+
+#: templates/admin/change_list.html:110
+#: templates/admin/ldapperson/change_list.html:170
+msgid "Nothing found"
+msgstr "Sin resultados"
+
+#: templates/admin/change_list.html:112
+#: templates/admin/ldapperson/change_list.html:172
+msgid "Reset search and filters"
+msgstr "Restablecer búsqueda y filtros"
+
+#: templates/admin/change_list.html:114
+#: templates/admin/ldapperson/change_list.html:174
+#, python-format
+msgid "%(name_plural)s are not created yet"
+msgstr "%(name_plural)s aún no se han creado"
+
+#: templates/admin/ldapperson/change_form.html:21
+msgid "You have unsaved changes"
+msgstr "Tiene cambios sin guardar"
+
+#: templates/admin/ldapperson/change_form.html:50
+#: templates/admin/ldapperson/change_form.html:76
+msgid "Add"
+msgstr "Agregar"
+
+#: templates/admin/ldapperson/change_form.html:100
+msgid "tools"
+msgstr "herramientas"
+
+#: templates/admin/ldapperson/change_form.html:110
+msgid "History"
+msgstr "Historial"
+
+#: templates/admin/ldapperson/change_form.html:114
+msgid "View on site"
+msgstr "Ver en el sitio"
 
 #: templates/base.html:41 templates/base.html:43
 msgid "search"
@@ -54,21 +129,21 @@ msgstr "español"
 msgid "english"
 msgstr "inglés"
 
-#: templates/base.html:82
+#: templates/base.html:83
 msgid "init_session"
 msgstr "Iniciar sesión"
 
-#: templates/index.html:14
-msgid "person"
-msgstr "persona"
+#: templates/index.html:6
+msgid "welcome_message_title"
+msgstr "Bienvenido!"
 
-#: templates/index.html:15
-msgid "office"
-msgstr "oficina"
-
-#: templates/index.html:16
-msgid "phone"
-msgstr "teléfono"
+#: templates/index.html:7
+msgid "welcome_message"
+msgstr ""
+       "Este sistema le permitirá gestionar su cuenta de usuario de ldap "
+       "y realizar búsquedas de otros usuarios. <br> "
+       "Para poder editar los datos de tu cuenta, deber registrarte "
+       "utilizando los datos de login de LDAP que utilizas normalmente."
 
 #: templates/registration/login.html:6
 msgid "invalid_username_or_password"
@@ -89,3 +164,15 @@ msgstr "contraseña"
 #: templates/registration/login.html:35
 msgid "log_in"
 msgstr "Iniciar sesión"
+
+#: templates/search.html:14
+msgid "person"
+msgstr "persona"
+
+#: templates/search.html:15
+msgid "office"
+msgstr "oficina"
+
+#: templates/search.html:16
+msgid "phone"
+msgstr "teléfono"

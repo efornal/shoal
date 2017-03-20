@@ -44,7 +44,6 @@ class LdapConn():
     
 class LdapPerson(models.Model):
     id = models.AutoField(primary_key=True,null=False)
-#    username = models.CharField(max_length=200,primary_key=True)
     username = models.CharField(max_length=200)
     person_id = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
@@ -54,10 +53,10 @@ class LdapPerson(models.Model):
     office = models.CharField(max_length=200)
     group_id = models.CharField(max_length=200)
     document_number = models.CharField(max_length=200)
-#    type_document_number = models.CharField(max_length=200)
-#    country_document_number = models.CharField(max_length=200)
+    type_document_number = models.CharField(max_length=200)
+    country_document_number = models.CharField(max_length=200)
     telephone_number = models.CharField(max_length=200)
-#    home_telephone_number = models.CharField(max_length=200)
+    home_telephone_number = models.CharField(max_length=200)
     
     class Meta:
         managed = False
@@ -113,24 +112,8 @@ class LdapPerson(models.Model):
                                                                      settings.LDAP_DN),
                                                    ldap.SCOPE_SUBTREE,
                                                    ldap_condition)
-        p=LdapPerson.ldap_to_obj(ldap_result)[0]
-        return p
-        # cn_found=[]
-#        for dn,entry in ldap_result:
-        #     person = {}
-        #     if 'cn' in entry and entry['cn'][0]:
-        #         person.update({'name': entry['cn'][0]})
-        #     else:
-        #         person.update({'name': ''})
 
-        #     cn_found.append(person)
-                                                   
-        # return cn_found
-
-
-
-                              
-#        return LdapPerson.ldap_to_obj(ldap_result)    
+        return LdapPerson.ldap_to_obj(ldap_result)[0]
 
     
     @classmethod
@@ -149,14 +132,14 @@ class LdapPerson(models.Model):
             if 'givenName' in entry and entry['givenName'][0]:
                 person.name = entry['givenName'][0]
 
-            # if 'paisdoc' in entry and entry['paisdoc'][0]:
-            #     person.country_document_number = entry['paisdoc'][0]
+            if 'paisdoc' in entry and entry['paisdoc'][0]:
+                person.country_document_number = entry['paisdoc'][0]
 
             if 'numdoc' in entry and entry['numdoc'][0]:
                 person.document_number = entry['numdoc'][0]
 
-            # if 'tipodoc' in entry and entry['tipodoc'][0]:
-            #     person.type_document_number = entry['tipodoc'][0]
+            if 'tipodoc' in entry and entry['tipodoc'][0]:
+                person.type_document_number = entry['tipodoc'][0]
 
             if 'gidNumber' in entry and entry['gidNumber'][0]:
                 person.group_id = entry['gidNumber'][0]
@@ -177,34 +160,10 @@ class LdapPerson(models.Model):
             if 'telephoneNumber' in entry and entry['telephoneNumber'][0]:                
                 person.telephone_number = entry['telephoneNumber'][0]
 
-            # if 'homePhone' in entry and entry['homePhone'][0]:                
-            #     person.home_telephone_number = entry['homePhone'][0]
+            if 'homePhone' in entry and entry['homePhone'][0]:                
+                person.home_telephone_number = entry['homePhone'][0]
                 
             cn_found.append(person)
                 
         return cn_found
 
-
-class LDPerson(models.Model):
-    id = models.AutoField(primary_key=True,null=False)
-    username = models.CharField(max_length=200)
-    person_id = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
-    surname = models.CharField(max_length=200)
-    fullname = models.CharField(max_length=200)
-    email = models.CharField(max_length=200)
-    office = models.CharField(max_length=200)
-    group_id = models.CharField(max_length=200)
-    document_number = models.CharField(max_length=200)
-    type_document_number = models.CharField(max_length=200)
-    country_document_number = models.CharField(max_length=200)
-    telephone_number = models.CharField(max_length=200)
-    home_telephone_number = models.CharField(max_length=200)
-
-    class Meta:
-        verbose_name = _('LdapPerson')
-        verbose_name_plural = _('LdapPeople')
-        db_table = 'appp_ldapperson'
-
-    def __unicode__(self):
-        return self.username
