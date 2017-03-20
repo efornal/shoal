@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
 import ldap
@@ -67,6 +68,21 @@ class LdapPerson(models.Model):
     def __unicode__(self):
         return self.username
 
+    @classmethod
+    def ldap_attrs(cls):
+        return ['uid',
+                'cn',
+                'givenName',
+                'paisdoc',
+                'numdoc',
+                'tipodoc',
+                'gidNumber',
+                'uidNumber',
+                'sn',
+                'mail',
+                'physicalDeliveryOfficeName',
+                'telephoneNumber',
+                'homePhone']
     
     @classmethod
     def ldap_udn_for( cls, ldap_user_name ):
@@ -94,24 +110,51 @@ class LdapPerson(models.Model):
     @classmethod
     def search_by_uid(cls, uid):
         ldap_condition = "(uid=*{}*)".format( uid )
-        retrieve_attributes = None
-        ldap_result = LdapConn.new().search_s("ou={},{}".format(settings.LDAP_PEOPLE,
-                                                                settings.LDAP_DN),
-                                              ldap.SCOPE_SUBTREE,
-                                              ldap_condition,
-                                              retrieve_attributes )
-        
+        attributes = ['givenName','sn','telephoneNumber','physicalDeliveryOfficeName']
+        retrieve_attributes = [str(x) for x in attributes]
+        ldap_result = []
+        size_limit = 100
+
+        if hasattr(settings, 'LDAP_SIZE_LIMIT'):
+            size_limit = settings.LDAP_SIZE_LIMIT
+            
+        try:
+            ldap_result = LdapConn.new_user().search_ext_s(
+                "ou={},{}".format(settings.LDAP_PEOPLE,
+                                  settings.LDAP_DN),
+                ldap.SCOPE_SUBTREE,
+                ldap_condition,
+                retrieve_attributes,
+                sizelimit=size_limit)
+        except ldap.TIMEOUT, e:
+            logging.error( "Timeout exception {} \n".format(e))
+            return None
+        except ldap.SIZELIMIT_EXCEEDED, e:
+            logging.error( "Size limit exceeded exception {} \n".format(e))
+            return None
+        except ldap.LDAPError, e:
+            logging.error( e )
+
         return LdapPerson.ldap_to_obj(ldap_result)
 
 
     @classmethod
     def get_by_uid(cls, uid):
         ldap_condition = "(uid={})".format( uid )
-        retrieve_attributes = None
-        ldap_result = LdapConn.new_user().search_s("ou={},{}".format(settings.LDAP_PEOPLE,
-                                                                     settings.LDAP_DN),
-                                                   ldap.SCOPE_SUBTREE,
-                                                   ldap_condition)
+        retrieve_attributes = [str(x) for x in LdapPerson.ldap_attrs()]
+        ldap_result = []
+
+        try:
+            ldap_result = LdapConn.new_user().search_s(
+                "ou={},{}".format(settings.LDAP_PEOPLE,
+                                  settings.LDAP_DN),
+                ldap.SCOPE_SUBTREE,
+                ldap_condition,
+                retrieve_attributes)
+
+        except ldap.LDAPError, e:
+            logging.error( "Error updating ldap user data for {} \n".format(update_person))
+            logging.error( e )
 
         return LdapPerson.ldap_to_obj(ldap_result)[0]
 
@@ -122,7 +165,6 @@ class LdapPerson(models.Model):
         
         for dn,entry in ldap_result:
             person = LdapPerson()
-
             if 'uid' in entry and entry['uid'][0]:
                 person.username = entry['uid'][0]
 

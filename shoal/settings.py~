@@ -160,9 +160,7 @@ LDAP_PEOPLE = 'People'
 
 LDAP_USERNAME='molly'
 LDAP_USERPASS='2Xgvcc3qum28Reyj'
-#LDAP_USERNAME='admin'
-LDAP_ADMIN_USERNAME='admin'
-LDAP_ADMIN_USERPASS='tucancmon'
+
 
 
 

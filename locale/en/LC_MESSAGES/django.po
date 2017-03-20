@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-20 08:54-0300\n"
+"POT-Creation-Date: 2017-03-20 11:17-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,6 +32,12 @@ msgstr "Ldap Person"
 #: app/models.py:64
 msgid "LdapPeople"
 msgstr "Ldap People"
+
+#: app/views.py:22
+msgid "search_error"
+msgstr ""
+       "The search could not be performed."
+       " Verify that the text to be searched does not generate excess results"
 
 #: shoal/settings.py:119 shoal/settings.tpl.py:119
 msgid "Spanish"
@@ -100,35 +106,35 @@ msgstr "History"
 msgid "View on site"
 msgstr "View on site"
 
-#: templates/base.html:41 templates/base.html:43
+#: templates/base.html:42 templates/base.html:44
 msgid "search"
 msgstr "search"
 
 #: templates/base.html:49
-msgid "username"
-msgstr "username"
-
-#: templates/base.html:54
-msgid "edit_account"
-msgstr "Edit account"
-
-#: templates/base.html:56 templates/base.html:74
-msgid "close_session"
-msgstr "Close session"
-
-#: templates/base.html:61
 msgid "language"
 msgstr "Language"
 
-#: templates/base.html:63 templates/base.html:68
+#: templates/base.html:51 templates/base.html:56
 msgid "spanish"
 msgstr "spanish"
 
-#: templates/base.html:64 templates/base.html:70
+#: templates/base.html:52 templates/base.html:58
 msgid "english"
 msgstr "english"
 
-#: templates/base.html:83
+#: templates/base.html:65
+msgid "username"
+msgstr "username"
+
+#: templates/base.html:70
+msgid "edit_account"
+msgstr "Edit account"
+
+#: templates/base.html:72 templates/base.html:76
+msgid "close_session"
+msgstr "Close session"
+
+#: templates/base.html:82
 msgid "init_session"
 msgstr "Init session"
 
@@ -139,10 +145,9 @@ msgstr "You are welcome!"
 #: templates/index.html:7
 msgid "welcome_message"
 msgstr ""
-       "This system will allow you to manage your ldap user account "
-       "and search for other users.<br> "
-       "In order to edit your account data, you must register using the Ldap "
-       "login data that you normally use."
+"This system will allow you to manage your ldap user account and search for "
+"other users.<br> In order to edit your account data, you must register using "
+"the Ldap login data that you normally use."
 
 #: templates/registration/login.html:6
 msgid "invalid_username_or_password"
@@ -164,14 +169,14 @@ msgstr "password"
 msgid "log_in"
 msgstr "Log in"
 
-#: templates/search.html:14
+#: templates/search.html:9
 msgid "person"
 msgstr "Person"
 
-#: templates/search.html:15
+#: templates/search.html:10
 msgid "office"
 msgstr "Office"
 
-#: templates/search.html:16
+#: templates/search.html:11
 msgid "phone"
 msgstr "Phone"
