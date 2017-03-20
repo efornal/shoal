@@ -110,7 +110,7 @@ class LdapPerson(models.Model):
     @classmethod
     def search_by_uid(cls, uid):
         ldap_condition = "(uid=*{}*)".format( uid )
-        attributes = ['givenName','sn','telephoneNumber','physicalDeliveryOfficeName']
+        attributes = ['uid','givenName','sn','telephoneNumber','physicalDeliveryOfficeName']
         retrieve_attributes = [str(x) for x in attributes]
         ldap_result = []
         size_limit = 100

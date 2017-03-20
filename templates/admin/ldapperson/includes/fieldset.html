@@ -5,8 +5,9 @@
   <div class="control-group form-row field-username ">
     <div>
       <div class="control-label"><label>Username:</label></div>
-      <div class="controls"><span class="readonly">{{ result.username }}</span></div>
-      <input maxlength="200" name="username" type="hidden" value="{{ result.username }}">
+      <div class="controls">
+        <input class="readonly" type="text" name="username" value="{{ result.username }}" readonly="true">
+      </div>
     </div>
   </div>
   {% endif %}  
@@ -16,9 +17,9 @@
       <div class="control-label"><label for="id_document_number">Document:</label></div>
       <div class="controls">
         <span class="readonly">
-          {{ result.country_document_number }}&nlsp;
-          {{ result.type_document_number }}&nlsp;
-          {{ result.document_number }}</span>
+          <input class="readonly" type="text"
+                 value="{{ result.country_document_number }} &nbsp; {{ result.type_document_number }} &nbsp; {{ result.document_number }}" readonly="true">
+        </span>
       </div>
     </div>
   </div>
