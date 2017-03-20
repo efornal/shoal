@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
-from .models import LdapConn
+from .models import LdapPerson
 from django.shortcuts import redirect
 from django.utils import translation
 import logging
@@ -10,7 +10,7 @@ import logging
 
 def index(request):
     context={}
-    people = LdapConn.people_by_uid('ef')
+    people = LdapPerson.search_by_uid('ef')
     context.update({'people': people})
     return render(request, 'index.html', context)
 
