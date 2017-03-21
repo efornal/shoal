@@ -4,7 +4,7 @@
   {% if result.username %}
   <div class="control-group form-row field-username ">
     <div>
-      <div class="control-label"><label>Username:</label></div>
+      <div class="control-label"><label>{{ _('Username') }}:</label></div>
       <div class="controls">
         <input class="readonly" type="text" name="username" value="{{ result.username }}" readonly="true">
       </div>
@@ -14,7 +14,9 @@
 
   <div class="control-group form-row field-document_number ">
     <div>
-      <div class="control-label"><label for="id_document_number">Document:</label></div>
+      <div class="control-label">
+        <label for="id_document_number">{{ _('Document') }}:</label>
+      </div>
       <div class="controls">
         <span class="readonly">
           <input class="readonly" type="text"
@@ -26,7 +28,9 @@
   
   <div class="control-group form-row field-name ">
     <div>
-      <div class="control-label"><label for="id_name">Nombre:</label></div>
+      <div class="control-label">
+        <label for="id_name">{{ _('Name') }}:</label>
+      </div>
       <div class="controls">
         <input id="id_name" maxlength="200" name="name" type="text"
                value="{{ result.name }}">
@@ -36,7 +40,9 @@
   
   <div class="control-group form-row field-surname ">
     <div>
-      <div class="control-label"><label for="id_surname">Surname:</label></div>
+      <div class="control-label">
+        <label for="id_surname">{{ _('Surname') }}:</label>
+      </div>
       <div class="controls">
         <input id="id_surname" maxlength="200" name="surname" type="text"
                value="{{ result.surname }}">
@@ -46,7 +52,9 @@
   
   <div class="control-group form-row field-email ">
     <div>
-      <div class="control-label"><label for="id_email">Email:</label></div>
+      <div class="control-label">
+        <label for="id_email">{{ _('Email') }}:</label>
+      </div>
       <div class="controls">
         <input id="id_email" maxlength="200" name="email" type="text"
                value="{{ result.email }}">
@@ -57,7 +65,9 @@
   
   <div class="control-group form-row field-office ">
     <div>
-      <div class="control-label"><label for="id_office">Office:</label></div>
+      <div class="control-label">
+        <label for="id_office">{{ _('Office') }}:</label>
+      </div>
       <div class="controls">
         <input id="id_office" maxlength="200" name="office" type="text"
                value="{{ result.office }}">
@@ -67,7 +77,8 @@
   
   <div class="control-group form-row field-telephone_number ">
     <div>
-      <div class="control-label"><label for="id_telephone_number">Telephone number:</label></div>
+      <div class="control-label">
+        <label for="id_telephone_number">{{ _('Telephone_number') }}:</label></div>
       <div class="controls">
         <input id="id_telephone_number" maxlength="200" name="telephone_number" type="text"
                value="{{ result.telephone_number }}">
