@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-20 11:17-0300\n"
+"POT-Creation-Date: 2017-03-21 08:14-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,19 +26,19 @@ msgstr "nombre"
 msgid "Database error"
 msgstr "Error de base de datos"
 
-#: app/models.py:63
+#: app/models.py:64
 msgid "LdapPerson"
 msgstr "Persona Ldap"
 
-#: app/models.py:64
+#: app/models.py:65
 msgid "LdapPeople"
 msgstr "Personas Ldap"
 
-#: app/views.py:22
+#: app/views.py:26
 msgid "search_error"
 msgstr ""
-       "La búsqueda no pudo realizarse. "
-       "Verifique que el texto a buscar no generes exceso de resultados"
+"La búsqueda no pudo realizarse. Verifique que el texto a buscar no genere "
+"exceso de resultados"
 
 #: shoal/settings.py:119 shoal/settings.tpl.py:119
 msgid "Spanish"
@@ -106,6 +106,40 @@ msgstr "Historial"
 #: templates/admin/ldapperson/change_form.html:114
 msgid "View on site"
 msgstr "Ver en el sitio"
+
+#: templates/admin/ldapperson/change_list.html:124
+#: templates/admin/ldapperson/includes/fieldset.html:7
+msgid "Username"
+msgstr "Usuario"
+
+#: templates/admin/ldapperson/change_list.html:130
+msgid "Full_name"
+msgstr "Nombre"
+
+#: templates/admin/ldapperson/change_list.html:136
+#: templates/admin/ldapperson/includes/fieldset.html:56
+msgid "Email"
+msgstr "Email"
+
+#: templates/admin/ldapperson/includes/fieldset.html:18
+msgid "Document"
+msgstr "Documento"
+
+#: templates/admin/ldapperson/includes/fieldset.html:32
+msgid "Name"
+msgstr "Nombre"
+
+#: templates/admin/ldapperson/includes/fieldset.html:44
+msgid "Surname"
+msgstr "Apellido"
+
+#: templates/admin/ldapperson/includes/fieldset.html:69
+msgid "Office"
+msgstr "Oficina"
+
+#: templates/admin/ldapperson/includes/fieldset.html:81
+msgid "Telephone_number"
+msgstr "Teléfono"
 
 #: templates/base.html:42 templates/base.html:44
 msgid "search"
