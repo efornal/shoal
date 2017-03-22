@@ -90,6 +90,18 @@ class LdapPerson(models.Model):
                                      settings.LDAP_PEOPLE,
                                      settings.LDAP_DN )
 
+    @classmethod
+    def compose_ldap_filter ( cls, extra_conditions="" ):
+        settings_condition = ""
+        if hasattr(settings, 'LDAP_FILTER_OBJECT_CLASS'):
+            if len(settings.LDAP_FILTER_OBJECT_CLASS) > 0:
+                for s in settings.LDAP_FILTER_OBJECT_CLASS:
+                    settings_condition += "(objectClass={})".format(s)
+
+                return "(&{}{})".format(extra_conditions,settings_condition)
+        return extra_conditions
+        
+    
     def ldap_update(self, person):
         logging.warning("UPDATE::::{}".format(person))
 
@@ -110,7 +122,8 @@ class LdapPerson(models.Model):
     @classmethod
     def search_by_uid(cls, uid):
         ldap_condition = "(uid=*{}*)".format( uid )
-        attributes = ['uid','givenName','sn','telephoneNumber','physicalDeliveryOfficeName']
+        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
+        attributes = ['uid','givenName','sn','telephoneNumber','physicalDeliveryOfficeName','mail']
         retrieve_attributes = [str(x) for x in attributes]
         ldap_result = []
         size_limit = 100
@@ -141,6 +154,7 @@ class LdapPerson(models.Model):
     @classmethod
     def get_by_uid(cls, uid):
         ldap_condition = "(uid={})".format( uid )
+        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
         retrieve_attributes = [str(x) for x in LdapPerson.ldap_attrs()]
         ldap_result = []
 
@@ -169,8 +183,16 @@ class LdapPerson(models.Model):
                 person.username = entry['uid'][0]
 
             if 'cn' in entry and entry['cn'][0]:
-                person.full_name = entry['cn'][0]
-
+                person.fullname = entry['cn'][0]
+            else:
+                if 'sn' in entry and entry['sn'][0] and \
+                   'givenName' in entry and entry['givenName'][0]:
+                    person.fullname = "{}, {}".format(entry['sn'][0],entry['givenName'][0])
+                elif 'sn' in entry and entry['sn'][0]:
+                    person.fullname = entry['sn'][0]
+                elif 'givenName' in entry and entry['givenName'][0]:
+                    person.fullname = entry['givenName'][0]
+                
             if 'givenName' in entry and entry['givenName'][0]:
                 person.name = entry['givenName'][0]
 

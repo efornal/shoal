@@ -156,6 +156,9 @@ LDAP_USERPASS='password'
 #
 # Maximum limit of results to be taken as error
 LDAP_SIZE_LIMIT=100
+#
+# If specified, add the ObjectClass to the search condition of ldap
+LDAP_FILTER_OBJECT_CLASS=[]
 
 # =================================/
 
