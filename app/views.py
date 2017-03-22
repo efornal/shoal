@@ -11,6 +11,15 @@ from django.utils import translation
 import logging
 from django.contrib import messages
 
+
+def set_language(request, lang='es'):
+    if 'lang' in request.GET:
+        lang = request.GET['lang']
+    translation.activate(lang)
+    request.session[translation.LANGUAGE_SESSION_KEY] = lang
+    return redirect('index')
+
+
 def index(request):
     context={}
     return render(request, 'index.html', context)

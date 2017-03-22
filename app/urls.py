@@ -11,5 +11,6 @@ urlpatterns = [
         name='logout'),
     url(r'^search',views.search, name='search'),
     url(r'^en/$', views.index, name='index'),
+    url(r'^lang/(?P<lang>\w+)/$', views.set_language, name='set_language'),
     url(r'^$', views.index, name='index'),
 ]
