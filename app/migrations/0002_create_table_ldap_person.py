@@ -10,25 +10,8 @@ class Migration(migrations.Migration):
     dependencies = [
         ('app', '0001_create_model_ldap_person'),
     ]
-
+    
     operations = [
-        migrations.RunSQL(
-            [("create table app_ldapperson ( " \
-              "id serial primary key, " \
-              "username varchar(200), " \
-              "name varchar(200), " \
-              "person_id  varchar(200), " \
-              "surname varchar(200), " \
-              "fullname varchar(200), " \
-              "email varchar(200), " \
-              "office varchar(200), " \
-              "group_id varchar(200), " \
-              "country_document_number varchar(200), " \
-              "type_document_number varchar(200), " \
-              "document_number varchar(200), " \
-              "telephone_number varchar(200), " \
-              "home_telephone_number varchar(200) " \
-              ");")],
-            [("DELETE table app_ldapperson;")],
-        ),
+        migrations.RunSQL("create table app_ldapperson ( id serial primary key, username varchar(200), name varchar(200), person_id  varchar(200), surname varchar(200), fullname varchar(200), email varchar(200), office varchar(200), group_id varchar(200), country_document_number varchar(200), type_document_number varchar(200), document_number varchar(200),telephone_number varchar(200), home_telephone_number varchar(200));")
     ]
+
