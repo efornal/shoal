@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-21 08:14-0300\n"
+"POT-Creation-Date: 2017-03-23 08:22-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr "Ldap Person"
 msgid "LdapPeople"
 msgstr "Ldap People"
 
-#: app/views.py:26
+#: app/views.py:35
 msgid "search_error"
 msgstr ""
 "The search could not be performed. Verify that the text to be searched does "
@@ -133,6 +133,7 @@ msgid "Surname"
 msgstr "Surname"
 
 #: templates/admin/ldapperson/includes/fieldset.html:69
+#: templates/search.html:10
 msgid "Office"
 msgstr "Office"
 
@@ -204,13 +205,9 @@ msgid "log_in"
 msgstr "Log in"
 
 #: templates/search.html:9
-msgid "person"
+msgid "Person"
 msgstr "Person"
 
-#: templates/search.html:10
-msgid "office"
-msgstr "Office"
-
 #: templates/search.html:11
-msgid "phone"
+msgid "Phone"
 msgstr "Phone"
