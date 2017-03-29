@@ -85,11 +85,8 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
     
     def change_view(self, request, object_id, form_url='', extra_context=None):
-        logging.error("Change: {}".format(object_id))
         if request.method == 'GET':
             people = LdapPerson.get_by_uid('{}'.format(object_id))
-            logging.error(dir(people))
-            logging.error("FORM URL {}".format(form_url))
             extra_context={'result': people}
 
         return super(LdapPersonAdmin, self).change_view(
@@ -103,8 +100,6 @@ class LdapPersonAdmin(admin.ModelAdmin):
                    'telephone_number': request.POST['telephone_number'],
                    'office': request.POST['office'],
         }
-
-        logging.warning("Save:{}".format(person))
 
         if 'username' in request.POST and request.POST['username']:
             obj.ldap_update(person)

@@ -6,6 +6,10 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext as _
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 
 class LdapConn():
 
@@ -172,7 +176,7 @@ class LdapPerson(models.Model):
 
         return LdapPerson.ldap_to_obj(ldap_result)[0]
 
-    
+
     @classmethod
     def ldap_to_obj(cls, ldap_result):
         cn_found = []
