@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-23 08:22-0300\n"
+"POT-Creation-Date: 2017-03-29 09:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/admin.py:30
+#: app/admin.py:29
 msgid "name"
 msgstr "nombre"
 
-#: app/admin.py:132
+#: app/admin.py:142
 msgid "Database error"
 msgstr "Error de base de datos"
 
@@ -34,17 +34,17 @@ msgstr "Persona Ldap"
 msgid "LdapPeople"
 msgstr "Personas Ldap"
 
-#: app/views.py:35
+#: app/views.py:34
 msgid "search_error"
 msgstr ""
 "La búsqueda no pudo realizarse. Verifique que el texto a buscar no genere "
 "exceso de resultados"
 
-#: shoal/settings.py:119 shoal/settings.tpl.py:119
+#: shoal/settings.py:121 shoal/settings.tpl.py:122
 msgid "Spanish"
 msgstr "Español"
 
-#: shoal/settings.py:120 shoal/settings.tpl.py:120
+#: shoal/settings.py:122 shoal/settings.tpl.py:123
 msgid "English"
 msgstr "Inglés"
 
@@ -134,7 +134,7 @@ msgid "Surname"
 msgstr "Apellido"
 
 #: templates/admin/ldapperson/includes/fieldset.html:69
-#: templates/search.html:10
+#: templates/search.html:11
 msgid "Office"
 msgstr "Oficina"
 
@@ -142,35 +142,35 @@ msgstr "Oficina"
 msgid "Telephone_number"
 msgstr "Teléfono"
 
-#: templates/base.html:42 templates/base.html:44
+#: templates/base.html:44 templates/base.html:46
 msgid "search"
 msgstr "buscar"
 
-#: templates/base.html:49
+#: templates/base.html:51
 msgid "language"
 msgstr "Idioma"
 
-#: templates/base.html:51 templates/base.html:56
+#: templates/base.html:53 templates/base.html:58
 msgid "spanish"
 msgstr "español"
 
-#: templates/base.html:52 templates/base.html:58
+#: templates/base.html:54 templates/base.html:60
 msgid "english"
 msgstr "inglés"
 
-#: templates/base.html:65
+#: templates/base.html:67
 msgid "username"
 msgstr "usuario"
 
-#: templates/base.html:70
+#: templates/base.html:72
 msgid "edit_account"
 msgstr "Editar cuenta"
 
-#: templates/base.html:72 templates/base.html:76
+#: templates/base.html:74 templates/base.html:78
 msgid "close_session"
 msgstr "Cerrar sesión"
 
-#: templates/base.html:82
+#: templates/base.html:84
 msgid "init_session"
 msgstr "Iniciar sesión"
 
@@ -206,10 +206,10 @@ msgstr "contraseña"
 msgid "log_in"
 msgstr "Iniciar sesión"
 
-#: templates/search.html:9
+#: templates/search.html:10
 msgid "Person"
 msgstr "Persona"
 
-#: templates/search.html:11
+#: templates/search.html:12
 msgid "Phone"
 msgstr "Teléfono"

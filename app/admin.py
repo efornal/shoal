@@ -1,6 +1,5 @@
-
-
-
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 from django.contrib import admin
 from django.conf.urls import patterns
@@ -21,37 +20,48 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 
 
-
-
-
-
 class PersonAdminForm(forms.ModelForm):
-    username = forms.CharField(max_length=200)
-    name = forms.CharField(max_length=200, required=False, label=_('name'))
-    person_id = forms.CharField(max_length=200, required=False)
-    surname = forms.CharField(max_length=200, required=False)
-    fullname = forms.CharField(max_length=200, required=False)
-    email = forms.CharField(max_length=200, required=False)
-    office = forms.CharField(max_length=200, required=False)
-    group_id = forms.CharField(max_length=200, required=False)
-    document_number = forms.CharField(max_length=200, required=False)
-#    type_document_number = forms.CharField(max_length=200, required=False)
-#    country_document_number = forms.CharField(max_length=200, required=False)
-    telephone_number = forms.CharField(max_length=200, required=False)
-#    home_telephone_number = forms.CharField(max_length=200, required=False)
+    username = forms.CharField(
+        max_length=200)
+    name = forms.CharField(
+        max_length=200,
+        required=False,
+        label=_('name'))
+    person_id = forms.CharField(
+        max_length=200,
+        required=False)
+    surname = forms.CharField(
+        max_length=200,
+        required=False)
+    fullname = forms.CharField(
+        max_length=200,
+        required=False)
+    email = forms.CharField(
+        max_length=200,
+        required=False)
+    office = forms.CharField(
+        max_length=200,
+        required=False)
+    group_id = forms.CharField(
+        max_length=200,
+        required=False)
+    document_number = forms.CharField(
+        max_length=200,
+        required=False)
+    telephone_number = forms.CharField(
+        max_length=200,
+        required=False)
 
     class Meta:
         model = LdapPerson
         fields = ('username','name','surname','email','document_number', \
                   'office','telephone_number')
-        # fields = ('username','name','surname','email','document_number', \
-        #           'type_document_number','country_document_number', \
-        #           'office','telephone_number','home_telephone_number')
+    
 
-    
-    
+        
 class IncorrectLookupParameters(Exception):
     pass
+
 
 class LdapPersonAdmin(admin.ModelAdmin):
     fields = ('username','name','surname','email','document_number', \
