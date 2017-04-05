@@ -28,7 +28,7 @@ def search(request):
     context={}
     if 'text' in request.GET:
         text = request.GET['text']
-        people = LdapPerson.search_by_uid(text)
+        people = LdapPerson.search(text)
         if people is None:
             logging.warning ("Error al realizar la búsqueda del texto {}".format(text))
             messages.warning(request, _('search_error'))

@@ -87,7 +87,13 @@ class LdapPerson(models.Model):
                 'physicalDeliveryOfficeName',
                 'telephoneNumber',
                 'homePhone']
-    
+
+    @classmethod
+    def search_ldap_attrs(cls):
+        return ['uid','givenName','sn','telephoneNumber',
+                'physicalDeliveryOfficeName','mail']
+
+        
     @classmethod
     def ldap_udn_for( cls, ldap_user_name ):
         return "uid=%s,ou=%s,%s" % ( ldap_user_name,
@@ -95,14 +101,16 @@ class LdapPerson(models.Model):
                                      settings.LDAP_DN )
 
     @classmethod
-    def compose_ldap_filter ( cls, extra_conditions="" ):
+    def compose_ldap_filter ( cls, extra_conditions="",operator='&' ):
         settings_condition = ""
         if hasattr(settings, 'LDAP_FILTER_OBJECT_CLASS'):
             if len(settings.LDAP_FILTER_OBJECT_CLASS) > 0:
                 for s in settings.LDAP_FILTER_OBJECT_CLASS:
                     settings_condition += "(objectClass={})".format(s)
 
-                return "(&{}{})".format(extra_conditions,settings_condition)
+                return "({}{}{})".format(operator,
+                                         extra_conditions,
+                                         settings_condition)
         return extra_conditions
         
     
@@ -127,7 +135,7 @@ class LdapPerson(models.Model):
     def search_by_uid(cls, uid):
         ldap_condition = "(uid=*{}*)".format( uid )
         ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
-        attributes = ['uid','givenName','sn','telephoneNumber','physicalDeliveryOfficeName','mail']
+        attributes = self.search_ldap_attrs()
         retrieve_attributes = [str(x) for x in attributes]
         ldap_result = []
         size_limit = 100
@@ -154,7 +162,46 @@ class LdapPerson(models.Model):
 
         return LdapPerson.ldap_to_obj(ldap_result)
 
+    
+    @classmethod
+    def search(cls, text):
+        ldap_condition = "(uid=*{}*)".format( text )
+        ldap_condition += "(cn=*{}*)".format( text )
+        ldap_condition += "(sn=*{}*)".format( text )
+        ldap_condition += "(givenName=*{}*)".format( text )
+        ldap_condition += "(numdoc=*{}*)".format( text )
+        ldap_condition += "(physicalDeliveryOfficeName=*{}*)".format( text )
+        ldap_condition += "(telephoneNumber=*{}*)".format( text )
+        ldap_condition = "(|{})".format( ldap_condition )
+        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
+        attributes = LdapPerson.search_ldap_attrs()
+        retrieve_attributes = [str(x) for x in attributes]
+        ldap_result = []
+        size_limit = 100
 
+        if hasattr(settings, 'LDAP_SIZE_LIMIT'):
+            size_limit = settings.LDAP_SIZE_LIMIT
+            
+        try:
+            ldap_result = LdapConn.new_user().search_ext_s(
+                "ou={},{}".format(settings.LDAP_PEOPLE,
+                                  settings.LDAP_DN),
+                ldap.SCOPE_SUBTREE,
+                ldap_condition,
+                retrieve_attributes,
+                sizelimit=size_limit)
+        except ldap.TIMEOUT, e:
+            logging.error( "Timeout exception {} \n".format(e))
+            return None
+        except ldap.SIZELIMIT_EXCEEDED, e:
+            logging.error( "Size limit exceeded exception {} \n".format(e))
+            return None
+        except ldap.LDAPError, e:
+            logging.error( e )
+
+        return LdapPerson.ldap_to_obj(ldap_result)
+
+    
     @classmethod
     def get_by_uid(cls, uid):
         ldap_condition = "(uid={})".format( uid )
