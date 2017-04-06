@@ -110,7 +110,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
         
     def changelist_view(self, request, extra_context=""):
         if 'q' in request.GET:
-            people = LdapPerson.search_by_uid('{}'.format(request.GET['q']))
+            people = LdapPerson.search('{}'.format(request.GET['q']))
         else:
             people = []
             

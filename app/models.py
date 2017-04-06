@@ -135,7 +135,7 @@ class LdapPerson(models.Model):
     def search_by_uid(cls, uid):
         ldap_condition = "(uid=*{}*)".format( uid )
         ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
-        attributes = self.search_ldap_attrs()
+        attributes = LdapPerson.search_ldap_attrs()
         retrieve_attributes = [str(x) for x in attributes]
         ldap_result = []
         size_limit = 100
