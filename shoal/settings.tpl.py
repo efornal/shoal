@@ -162,6 +162,10 @@ LDAP_SIZE_LIMIT=100
 #
 # If specified, add the ObjectClass to the search condition of ldap
 LDAP_FILTER_OBJECT_CLASS=[]
+#
+# Domain name used to identify the institutional mail of an alternative
+# Ej: the (LDAP DN)
+LDAP_DOMAIN_MAIL=''
 
 # =================================/
 

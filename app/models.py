@@ -55,6 +55,7 @@ class LdapPerson(models.Model):
     surname = models.CharField(max_length=200)
     fullname = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
+    alternative_email = models.CharField(max_length=200)
     office = models.CharField(max_length=200)
     group_id = models.CharField(max_length=200)
     document_number = models.CharField(max_length=200)
@@ -216,7 +217,6 @@ class LdapPerson(models.Model):
                 ldap.SCOPE_SUBTREE,
                 ldap_condition,
                 retrieve_attributes)
-
         except ldap.LDAPError, e:
             logging.error( "Error updating ldap user data for {} \n".format(update_person))
             logging.error( e )
@@ -227,7 +227,10 @@ class LdapPerson(models.Model):
     @classmethod
     def ldap_to_obj(cls, ldap_result):
         cn_found = []
-        
+        ldap_domain_mail = ''
+        if hasattr(settings, 'LDAP_DOMAIN_MAIL') and settings.LDAP_DOMAIN_MAIL:
+            ldap_domain_mail = settings.LDAP_DOMAIN_MAIL
+            
         for dn,entry in ldap_result:
             person = LdapPerson()
             if 'uid' in entry and entry['uid'][0]:
@@ -266,8 +269,12 @@ class LdapPerson(models.Model):
                 person.surname = entry['sn'][0]
                 
             if 'mail' in entry and entry['mail'][0]:                
-                person.email = entry['mail'][0]
-                
+                for mail in entry['mail']:
+                    if ldap_domain_mail and ldap_domain_mail in mail:
+                        person.email = mail
+                    else:
+                        person.alternative_email = mail
+
             if 'physicalDeliveryOfficeName' in entry \
                and entry['physicalDeliveryOfficeName'][0]:                
                 person.office = entry['physicalDeliveryOfficeName'][0]
@@ -279,7 +286,7 @@ class LdapPerson(models.Model):
                 person.home_telephone_number = entry['homePhone'][0]
                 
             cn_found.append(person)
-                
+            logging.error(person)
         return cn_found
 
 

@@ -34,7 +34,7 @@
       </div>
       <div class="controls">
         <input id="id_name" maxlength="200" name="name" type="text"
-               value="{{ result.name }}">
+               value="{{ result.name }}" readonly="true">
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@
       </div>
       <div class="controls">
         <input id="id_surname" maxlength="200" name="surname" type="text"
-               value="{{ result.surname }}">
+               value="{{ result.surname }}" readonly="true">
       </div>
     </div>
   </div>
@@ -58,7 +58,19 @@
       </div>
       <div class="controls">
         <input id="id_email" maxlength="200" name="email" type="text"
-               value="{{ result.email }}">
+               value="{{ result.email }}" readonly="true">
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row field-email ">
+    <div>
+      <div class="control-label">
+        <label for="id_email">{{ _('Alternative_email') }}:</label>
+      </div>
+      <div class="controls">
+        <input id="id_email" maxlength="200" name="alternative_email" type="text"
+               value="{{ result.alternative_email }}">
       </div>
     </div>
   </div>
@@ -95,7 +107,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="control-group form-row field-telephone_number ">
     <div>
       <div class="control-label">

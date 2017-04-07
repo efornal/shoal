@@ -23,6 +23,7 @@ class Migration(migrations.Migration):
                 ('surname', models.CharField(max_length=200)),
                 ('fullname', models.CharField(max_length=200)),
                 ('email', models.CharField(max_length=200)),
+                ('alternative_email', models.CharField(max_length=200)),
                 ('office', models.CharField(max_length=200)),
                 ('group_id', models.CharField(max_length=200)),
                 ('document_number', models.CharField(max_length=200)),
