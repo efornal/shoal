@@ -27,8 +27,6 @@ class IncorrectLookupParameters(Exception):
 
 
 class LdapPersonAdmin(admin.ModelAdmin):
-    fields = ('username','name','surname','email','document_number', \
-              'office','telephone_number')
     form = LdapPersonForm
     readonly_fields = ('username',)
     search_fields = ['username',]
@@ -50,9 +48,9 @@ class LdapPersonAdmin(admin.ModelAdmin):
     def change_view(self, request, object_id, form_url='', extra_context=None):
         if request.method == 'GET':
             people = LdapPerson.get_by_uid('{}'.format(object_id))
-            extra_context={'result': people}
-
-        extra_context.update({'offices': Office.objects.all()})
+            extra_context = {'result': people,
+                             'offices': Office.objects.all()}
+            
         return super(LdapPersonAdmin, self).change_view(
             request, object_id, form_url, extra_context
         )
@@ -60,9 +58,15 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
     
     def save_model(self, request, obj, form, change):
+        office=''
+        if 'office' in request.POST and request.POST['office']:
+            office = request.POST['office']
+        elif 'other_office' in request.POST:
+            office = request.POST['other_office']
+            
         person = { 'username': request.POST['username'],
                    'telephone_number': request.POST['telephone_number'],
-                   'office': request.POST['office'],
+                   'office': office,
         }
 
         if 'username' in request.POST and request.POST['username']:
@@ -115,3 +119,4 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
 
 admin.site.register(LdapPerson, LdapPersonAdmin)
+admin.site.register(Office)

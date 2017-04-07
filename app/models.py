@@ -292,7 +292,6 @@ class Office(models.Model):
         max_length=200,
         null=False,
         verbose_name=_('name'))
-    
     class Meta:
         db_table = 'offices'
         verbose_name = _('Office')

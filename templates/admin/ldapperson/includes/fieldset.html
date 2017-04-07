@@ -69,13 +69,15 @@
         <label for="id_office">{{ _('Office') }}:</label>
       </div>
       <div class="controls">
-        <select id="office_id" name="office" value="{{ result.office }}">
-          <option value="0">Seleccione uno</option>
+        <select id="office_id" name="office">
+          <option value="">Seleccione uno</option>
+          {% if offices %}
           {% for office in offices %}
-        <option value="{{ group.gidNumber }}"
+        <option value="{{ office.name }}"
                 {% ifequal result.office office.name %} selected="selected" {%endifequal%}>
           {{ office.name }}</option>
         {% endfor%}
+        {% endif%}
         </select>
 
       </div>

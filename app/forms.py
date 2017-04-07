@@ -1,4 +1,5 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django import forms
 from django.forms import ModelForm
 from .models import LdapPerson
@@ -29,12 +30,14 @@ class LdapPersonForm(forms.ModelForm):
     email = forms.CharField(
         max_length=200,
         required=False)
-    office = forms.ModelChoiceField(
-        queryset=Office.objects.all(),
-        empty_label= "(%s)" % _('specify_other'),
-        to_field_name= "id",
+    office = forms.CharField(
+        max_length=200,
         required=False,
         label=_('office'))
+    other_office = forms.CharField(
+        max_length=200,
+        required=False,
+        label=_('other_office'))
     group_id = forms.CharField(
         max_length=200,
         required=False)
@@ -48,7 +51,7 @@ class LdapPersonForm(forms.ModelForm):
     class Meta:
         model = LdapPerson
         fields = ('username','name','surname','email','document_number', \
-                  'office','telephone_number')
+                  'office','telephone_number','other_office')
 
 # class LdapPerson(models.Model):
 #     username = models.CharField(max_length=200)
