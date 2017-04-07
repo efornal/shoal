@@ -152,7 +152,7 @@ msgstr "Apellido"
 
 #: templates/admin/ldapperson/includes/fieldset.html:69
 msgid "Alternative_email"
-msgstr "Mail alternativo"
+msgstr "Email alternativo"
 
 #: templates/admin/ldapperson/includes/fieldset.html:102
 msgid "Other_office"
