@@ -1,4 +1,5 @@
 {% load suit_tags %}
+{% load application %}
 <fieldset class="module aligned first ">
   
   {% if result.username %}
@@ -62,15 +63,33 @@
     </div>
   </div>
   
-  
   <div class="control-group form-row field-office ">
     <div>
       <div class="control-label">
         <label for="id_office">{{ _('Office') }}:</label>
       </div>
       <div class="controls">
-        <input id="id_office" maxlength="200" name="office" type="text"
-               value="{{ result.office }}">
+        <select id="office_id" name="office" value="{{ result.office }}">
+          <option value="0">Seleccione uno</option>
+          {% for office in offices %}
+        <option value="{{ group.gidNumber }}"
+                {% ifequal result.office office.name %} selected="selected" {%endifequal%}>
+          {{ office.name }}</option>
+        {% endfor%}
+        </select>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row field-email ">
+    <div>
+      <div class="control-label">
+        <label for="id_email">{{ _('Other_office') }}:</label>
+      </div>
+      <div class="controls">
+        <input id="id_email" maxlength="200" name="other_office" type="text"
+               value="{{ result.office|if_not_exist_in:offices }}">
       </div>
     </div>
   </div>

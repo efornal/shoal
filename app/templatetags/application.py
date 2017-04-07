@@ -15,3 +15,12 @@ def application_title(value):
         title = settings.APPLICATION_NAME
 
     return title
+
+
+@register.filter
+def if_not_exist_in(value,objects):
+    result = value
+    for o in objects:
+        if o.name == value:
+            result = ''
+    return result

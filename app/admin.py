@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.conf.urls import patterns
 from django.http import HttpResponse
 from app.models import LdapPerson
+from app.models import Office
 from django.forms import ModelForm
 from django import forms
 from django.conf.urls import url
@@ -18,45 +19,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-
-
-class PersonAdminForm(forms.ModelForm):
-    username = forms.CharField(
-        max_length=200)
-    name = forms.CharField(
-        max_length=200,
-        required=False,
-        label=_('name'))
-    person_id = forms.CharField(
-        max_length=200,
-        required=False)
-    surname = forms.CharField(
-        max_length=200,
-        required=False)
-    fullname = forms.CharField(
-        max_length=200,
-        required=False)
-    email = forms.CharField(
-        max_length=200,
-        required=False)
-    office = forms.CharField(
-        max_length=200,
-        required=False)
-    group_id = forms.CharField(
-        max_length=200,
-        required=False)
-    document_number = forms.CharField(
-        max_length=200,
-        required=False)
-    telephone_number = forms.CharField(
-        max_length=200,
-        required=False)
-
-    class Meta:
-        model = LdapPerson
-        fields = ('username','name','surname','email','document_number', \
-                  'office','telephone_number')
-    
+from app.forms import LdapPersonForm
 
         
 class IncorrectLookupParameters(Exception):
@@ -66,7 +29,7 @@ class IncorrectLookupParameters(Exception):
 class LdapPersonAdmin(admin.ModelAdmin):
     fields = ('username','name','surname','email','document_number', \
               'office','telephone_number')
-    form = PersonAdminForm
+    form = LdapPersonForm
     readonly_fields = ('username',)
     search_fields = ['username',]
     actions = None
@@ -89,6 +52,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
             people = LdapPerson.get_by_uid('{}'.format(object_id))
             extra_context={'result': people}
 
+        extra_context.update({'offices': Office.objects.all()})
         return super(LdapPersonAdmin, self).change_view(
             request, object_id, form_url, extra_context
         )
@@ -143,7 +107,8 @@ class LdapPersonAdmin(admin.ModelAdmin):
         cl.result_count=len(people)
         
         extra_context={'cl':cl,
-                       'result_list':people,}
+                       'result_list':people,
+                       'offices': Office.objects.all()}
         return super(LdapPersonAdmin, self).changelist_view( request, extra_context)
         
     change_list_template = "admin/ldapperson/change_list.html"        
