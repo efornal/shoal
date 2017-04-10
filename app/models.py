@@ -176,14 +176,25 @@ class LdapPerson(models.Model):
     
     def ldap_update(self, person):
         logging.warning("UPDATE::::{}".format(person))
-
+        
         try:
             update_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
                                str(person['telephone_number']) or None),
                              ( ldap.MOD_REPLACE, 'physicalDeliveryOfficeName',
-                               str(person['office']) or None)]
+                               str(person['office']) or None),]
 
+            if 'email' in person and person['email']:
+                mails = []
+                mails.append(str("{}".format(person['email'])))
+
+                if 'alternative_email' in person and person['alternative_email']:
+                    mails.append(str("{}".format(person['alternative_email'])))
+
+                update_person.append((ldap.MOD_REPLACE,
+                                      'mail',
+                                      mails))
             udn = LdapPerson.ldap_udn_for( person['username'] )
+
             logging.warning( "Updated ldap user data for {} \n".format(update_person))
             LdapConn.new_user().modify_s(udn, update_person)
         except ldap.LDAPError, e:

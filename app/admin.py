@@ -42,20 +42,20 @@ class LdapPersonAdmin(admin.ModelAdmin):
         found or the object_id fails validation.
         """
         queryset = self.get_queryset(request)
-        people = LdapPerson.get_by_uid('{}'.format(object_id))
-        model =  people
-        return people
+        person = LdapPerson.get_by_uid('{}'.format(object_id))
+        model =  person
+        return person
 
     
     def change_view(self, request, object_id, form_url='', extra_context=None):
-        people = LdapPerson.get_by_uid('{}'.format(object_id))
+        person = LdapPerson.get_by_uid('{}'.format(object_id))
 
         if extra_context is None:
             extra_context = {'offices': Office.objects.all(),
-                             'result': people,}
+                             'result': person,}
         else:
             extra_context.update({'offices': Office.objects.all()})
-            extra_context.update({'result': people,})
+            extra_context.update({'result': person,})
 
         return super(LdapPersonAdmin, self).change_view(
             request, object_id, form_url, extra_context
@@ -71,13 +71,14 @@ class LdapPersonAdmin(admin.ModelAdmin):
         elif 'other_office' in request.POST:
             office = request.POST['other_office']
 
-        person = { 'username': request.POST['username'],
-                   'telephone_number': request.POST['telephone_number'],
-                   'office': office,
-        }
+        update_person = { 'username': request.POST['username'],
+                          'telephone_number': request.POST['telephone_number'],
+                          'office': office,
+                          'email': request.POST['email'],
+                          'alternative_email': request.POST['alternative_email'],}
 
         if 'username' in request.POST and request.POST['username']:
-            obj.ldap_update(person)
+            obj.ldap_update(update_person)
             super(LdapPersonAdmin, self).save_model(request, obj, form, change)
         else:
             return HttpResponseRedirect('/')

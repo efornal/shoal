@@ -70,7 +70,7 @@
       </div>
       <div class="controls">
         <input id="id_email" maxlength="200" name="alternative_email" type="text"
-               value="{{ result.alternative_email }}">
+               value="{{ result.alternative_email|default:'' }}">
       </div>
     </div>
   </div>
@@ -114,7 +114,7 @@
         <label for="id_telephone_number">{{ _('Telephone_number') }}:</label></div>
       <div class="controls">
         <input id="id_telephone_number" maxlength="200" name="telephone_number" type="text"
-               value="{{ result.telephone_number }}">
+               value="{{ result.telephone_number|default:'' }}">
       </div>
     </div>
   </div>
