@@ -46,11 +46,17 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
     
     def change_view(self, request, object_id, form_url='', extra_context=None):
-        if request.method == 'GET':
-            people = LdapPerson.get_by_uid('{}'.format(object_id))
-            extra_context = {'result': people,
-                             'offices': Office.objects.all()}
-            
+        logging.error("--------- CHANGE")
+        logging.error(extra_context)
+        logging.error(request.POST)
+        people = LdapPerson.get_by_uid('{}'.format(object_id))
+        if extra_context is None:
+            extra_context = {'offices': Office.objects.all(),
+                             'result': people,}
+        else:
+            extra_context.update({'offices': Office.objects.all()})
+            extra_context.update({'result': people,})
+
         return super(LdapPersonAdmin, self).change_view(
             request, object_id, form_url, extra_context
         )
@@ -58,12 +64,14 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
     
     def save_model(self, request, obj, form, change):
+        logging.error("--------- SAVE")
         office=''
+    
         if 'office' in request.POST and request.POST['office']:
             office = request.POST['office']
         elif 'other_office' in request.POST:
             office = request.POST['other_office']
-            
+
         person = { 'username': request.POST['username'],
                    'telephone_number': request.POST['telephone_number'],
                    'office': office,

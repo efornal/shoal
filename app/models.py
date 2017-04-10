@@ -286,7 +286,7 @@ class LdapPerson(models.Model):
                 person.home_telephone_number = entry['homePhone'][0]
                 
             cn_found.append(person)
-            logging.error(person)
+
         return cn_found
 
 

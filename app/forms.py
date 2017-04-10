@@ -13,21 +13,25 @@ from django.conf import settings
 
 class LdapPersonForm(forms.ModelForm):
     username = forms.CharField(
+        required=True,
         max_length=200)
     name = forms.CharField(
         max_length=200,
-        required=False,
+        required=True,
         label=_('name'))
     person_id = forms.CharField(
         max_length=200,
         required=False)
     surname = forms.CharField(
         max_length=200,
-        required=False)
+        required=True)
     fullname = forms.CharField(
         max_length=200,
         required=False)
-    email = forms.CharField(
+    email = forms.EmailField(
+        max_length=200,
+        required=True)
+    alternative_email = forms.EmailField(
         max_length=200,
         required=False)
     office = forms.CharField(
