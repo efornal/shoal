@@ -55,9 +55,9 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="download">
-                <li><a href="/es/">{{ _('spanish') }}</a></li>
+                <li><a href="{% url 'set_language' lang='es' %}">{{ _('spanish') }}</a></li>
                 <li class="divider"></li>
-                <li><a href="/en/">{{ _('english') }}</a></li>
+                <li><a href="{% url 'set_language' lang='en' %}">{{ _('english') }}</a></li>
               </ul>
             </li>
 
