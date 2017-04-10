@@ -25,6 +25,7 @@ class Migration(migrations.Migration):
                 ('email', models.CharField(max_length=200)),
                 ('alternative_email', models.CharField(max_length=200)),
                 ('office', models.CharField(max_length=200)),
+                ('other_office', models.CharField(max_length=200)),
                 ('group_id', models.CharField(max_length=200)),
                 ('document_number', models.CharField(max_length=200)),
                 ('type_document_number', models.CharField(max_length=200)),

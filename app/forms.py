@@ -56,28 +56,3 @@ class LdapPersonForm(forms.ModelForm):
         model = LdapPerson
         fields = ('username','name','surname','email','document_number', \
                   'office','telephone_number','other_office')
-
-# class LdapPerson(models.Model):
-#     username = models.CharField(max_length=200)
-#     document = models.CharField(max_length=200) 
-#     name = models.CharField(max_length=200)
-#     surname = models.CharField(max_length=200)
-#     email = models.CharField(max_length=200)
-#     office   = forms.ModelChoiceField(
-#         queryset=Office.objects.all(),
-#         empty_label= "(%s)" % _('specify_other'),
-#         to_field_name= "id",
-#         required=False,
-#         label=_('office'))
-#     telephone_number = models.CharField(max_length=200)
-
-
-#     class Meta:
-#         model = LdapPerson
-#         fields = ('username',
-#                   'name',
-#                   'surname',
-#                   'document',
-#                   'office',
-#                   'telephone_number',
-#                   'other_office',)

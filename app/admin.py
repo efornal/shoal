@@ -30,6 +30,8 @@ class LdapPersonAdmin(admin.ModelAdmin):
     form = LdapPersonForm
     readonly_fields = ('username',)
     search_fields = ['username',]
+    list_display = ('username','name','surname','email','document_number', \
+                    'office','telephone_number','other_office')
     actions = None
 
 
@@ -46,10 +48,8 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
     
     def change_view(self, request, object_id, form_url='', extra_context=None):
-        logging.error("--------- CHANGE")
-        logging.error(extra_context)
-        logging.error(request.POST)
         people = LdapPerson.get_by_uid('{}'.format(object_id))
+
         if extra_context is None:
             extra_context = {'offices': Office.objects.all(),
                              'result': people,}
@@ -64,7 +64,6 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
     
     def save_model(self, request, obj, form, change):
-        logging.error("--------- SAVE")
         office=''
     
         if 'office' in request.POST and request.POST['office']:

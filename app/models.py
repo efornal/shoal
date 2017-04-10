@@ -48,21 +48,80 @@ class LdapConn():
 
     
 class LdapPerson(models.Model):
-    id = models.AutoField(primary_key=True,null=False)
-    username = models.CharField(max_length=200)
-    person_id = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
-    surname = models.CharField(max_length=200)
-    fullname = models.CharField(max_length=200)
-    email = models.CharField(max_length=200)
-    alternative_email = models.CharField(max_length=200)
-    office = models.CharField(max_length=200)
-    group_id = models.CharField(max_length=200)
-    document_number = models.CharField(max_length=200)
-    type_document_number = models.CharField(max_length=200)
-    country_document_number = models.CharField(max_length=200)
-    telephone_number = models.CharField(max_length=200)
-    home_telephone_number = models.CharField(max_length=200)
+    id = models.AutoField(
+        primary_key=True,
+        null=False)
+    username = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('username'))
+    person_id = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True)
+    name = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('name'))
+    surname = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('surname'))
+    fullname = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('fullname'))
+    email = models.EmailField(
+        null=True,
+        blank=True,
+        verbose_name=_('email'))
+    alternative_email = models.EmailField(
+        null=True,
+        blank=True,
+        verbose_name=_('alternative_email'))
+    office = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('office'))
+    other_office = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('other_office'))
+    group_id = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True)
+    document_number = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('document_number'))
+    type_document_number = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('type_document_number'))
+    country_document_number = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('country_document_number'))
+    telephone_number = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('telephone_number'))
+    home_telephone_number = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('home_telephone_number'))
     
     class Meta:
         managed = False
