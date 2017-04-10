@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-07 12:42-0300\n"
+"POT-Creation-Date: 2017-04-10 12:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,36 +17,76 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:105
+#: app/admin.py:113
 msgid "Database error"
 msgstr "Database error"
 
-#: app/forms.py:20 app/models.py:301
+#: app/forms.py:21 app/models.py:67 app/models.py:371
 msgid "name"
 msgstr "name"
 
-#: app/forms.py:36
+#: app/forms.py:40 app/models.py:90
 msgid "office"
 msgstr "office"
 
-#: app/forms.py:40
+#: app/forms.py:44 app/models.py:95
 msgid "other_office"
 msgstr "other office"
 
-#: app/models.py:69
+#: app/models.py:58 templates/base.html:67
+msgid "username"
+msgstr "username"
+
+#: app/models.py:72
+msgid "surname"
+msgstr "Surname"
+
+#: app/models.py:77
+msgid "fullname"
+msgstr "name"
+
+#: app/models.py:81
+msgid "email"
+msgstr "email"
+
+#: app/models.py:85
+msgid "alternative_email"
+msgstr "alternative email"
+
+#: app/models.py:104
+msgid "document_number"
+msgstr "document number"
+
+#: app/models.py:109
+msgid "type_document_number"
+msgstr "type document number"
+
+#: app/models.py:114
+msgid "country_document_number"
+msgstr "country document number"
+
+#: app/models.py:119
+msgid "telephone_number"
+msgstr "telephone number"
+
+#: app/models.py:124
+msgid "home_telephone_number"
+msgstr "personal telephone number"
+
+#: app/models.py:128
 msgid "LdapPerson"
 msgstr "Ldap Person"
 
-#: app/models.py:70
+#: app/models.py:129
 msgid "LdapPeople"
 msgstr "Ldap People"
 
-#: app/models.py:304 templates/admin/ldapperson/includes/fieldset.html:81
+#: app/models.py:374 templates/admin/ldapperson/includes/fieldset.html:81
 #: templates/search.html:10
 msgid "Office"
 msgstr "Office"
 
-#: app/models.py:305
+#: app/models.py:375
 msgid "Offices"
 msgstr "Offices"
 
@@ -167,7 +207,7 @@ msgstr "search"
 
 #: templates/base.html:51
 msgid "language"
-msgstr "Language"
+msgstr "language"
 
 #: templates/base.html:53 templates/base.html:58
 msgid "spanish"
@@ -177,25 +217,21 @@ msgstr "spanish"
 msgid "english"
 msgstr "english"
 
-#: templates/base.html:67
-msgid "username"
-msgstr "username"
-
 #: templates/base.html:72
 msgid "edit_account"
-msgstr "Edit account"
+msgstr "edit account"
 
 #: templates/base.html:74 templates/base.html:78
 msgid "close_session"
-msgstr "Close session"
+msgstr "close session"
 
 #: templates/base.html:84
 msgid "init_session"
-msgstr "Init session"
+msgstr "init session"
 
 #: templates/index.html:6
 msgid "welcome_message_title"
-msgstr "You are welcome!"
+msgstr "you are welcome!"
 
 #: templates/index.html:7
 msgid "welcome_message"
@@ -206,11 +242,11 @@ msgstr ""
 
 #: templates/registration/login.html:6
 msgid "invalid_username_or_password"
-msgstr "Invalid username or password"
+msgstr "invalid username or password"
 
 #: templates/registration/login.html:18
 msgid "home_login"
-msgstr "Home login"
+msgstr "home login"
 
 #: templates/registration/login.html:23
 msgid "user"
@@ -222,7 +258,7 @@ msgstr "password"
 
 #: templates/registration/login.html:35
 msgid "log_in"
-msgstr "Log in"
+msgstr "log in"
 
 #: templates/search.html:9
 msgid "Person"

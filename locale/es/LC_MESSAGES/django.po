@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-07 12:42-0300\n"
+"POT-Creation-Date: 2017-04-10 12:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,36 +18,76 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/admin.py:105
+#: app/admin.py:113
 msgid "Database error"
 msgstr "Error de base de datos"
 
-#: app/forms.py:20 app/models.py:301
+#: app/forms.py:21 app/models.py:67 app/models.py:371
 msgid "name"
 msgstr "nombre"
 
-#: app/forms.py:36
+#: app/forms.py:40 app/models.py:90
 msgid "office"
 msgstr "oficina"
 
-#: app/forms.py:40
+#: app/forms.py:44 app/models.py:95
 msgid "other_office"
-msgstr "Otra oficina"
+msgstr "otra oficina"
 
-#: app/models.py:69
+#: app/models.py:58 templates/base.html:67
+msgid "username"
+msgstr "usuario"
+
+#: app/models.py:72
+msgid "surname"
+msgstr "apellido"
+
+#: app/models.py:77
+msgid "fullname"
+msgstr "nombre"
+
+#: app/models.py:81
+msgid "email"
+msgstr "email"
+
+#: app/models.py:85
+msgid "alternative_email"
+msgstr "email alternativo"
+
+#: app/models.py:104
+msgid "document_number"
+msgstr "nro documento"
+
+#: app/models.py:109
+msgid "type_document_number"
+msgstr "tipo documento"
+
+#: app/models.py:114
+msgid "country_document_number"
+msgstr "nro documento país"
+
+#: app/models.py:119
+msgid "telephone_number"
+msgstr "teléfono"
+
+#: app/models.py:124
+msgid "home_telephone_number"
+msgstr "teléfono personal"
+
+#: app/models.py:128
 msgid "LdapPerson"
 msgstr "Persona Ldap"
 
-#: app/models.py:70
+#: app/models.py:129
 msgid "LdapPeople"
 msgstr "Personas Ldap"
 
-#: app/models.py:304 templates/admin/ldapperson/includes/fieldset.html:81
+#: app/models.py:374 templates/admin/ldapperson/includes/fieldset.html:81
 #: templates/search.html:10
 msgid "Office"
 msgstr "Oficina"
 
-#: app/models.py:305
+#: app/models.py:375
 msgid "Offices"
 msgstr "Oficinas"
 
@@ -168,7 +208,7 @@ msgstr "buscar"
 
 #: templates/base.html:51
 msgid "language"
-msgstr "Idioma"
+msgstr "idioma"
 
 #: templates/base.html:53 templates/base.html:58
 msgid "spanish"
@@ -178,25 +218,21 @@ msgstr "español"
 msgid "english"
 msgstr "inglés"
 
-#: templates/base.html:67
-msgid "username"
-msgstr "usuario"
-
 #: templates/base.html:72
 msgid "edit_account"
 msgstr "Editar cuenta"
 
 #: templates/base.html:74 templates/base.html:78
 msgid "close_session"
-msgstr "Cerrar sesión"
+msgstr "cerrar sesión"
 
 #: templates/base.html:84
 msgid "init_session"
-msgstr "Iniciar sesión"
+msgstr "iniciar sesión"
 
 #: templates/index.html:6
 msgid "welcome_message_title"
-msgstr "Bienvenido!"
+msgstr "bienvenido!"
 
 #: templates/index.html:7
 msgid "welcome_message"
@@ -208,11 +244,11 @@ msgstr ""
 
 #: templates/registration/login.html:6
 msgid "invalid_username_or_password"
-msgstr "Usuario o contraseña incorrectos"
+msgstr "usuario o contraseña incorrectos"
 
 #: templates/registration/login.html:18
 msgid "home_login"
-msgstr "Inicio"
+msgstr "inicio"
 
 #: templates/registration/login.html:23
 msgid "user"
@@ -224,7 +260,7 @@ msgstr "contraseña"
 
 #: templates/registration/login.html:35
 msgid "log_in"
-msgstr "Iniciar sesión"
+msgstr "iniciar sesión"
 
 #: templates/search.html:9
 msgid "Person"
