@@ -15,9 +15,9 @@
       {% if people %}
       {% for person in people %}
       <tr>
-        <td>{{ person.surname }}, {{ person.name }}</td>
-        <td>{{ person.office }}</td>
-        <td>{{ person.telephone_number }}</td>
+        <td>{{ person.surname|default:'' }}, {{ person.name|default:'' }}</td>
+        <td>{{ person.office|default:'' }}</td>
+        <td>{{ person.telephone_number|default:'' }}</td>
       </tr>
       {% endfor %}
       {% endif %}
