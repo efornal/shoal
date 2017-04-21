@@ -122,6 +122,21 @@ class LdapPerson(models.Model):
         null=True,
         blank=True,
         verbose_name=_('home_telephone_number'))
+    floor = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('floor'))
+    area = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('area'))
+    position = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('position'))
     
     class Meta:
         managed = False
@@ -146,7 +161,10 @@ class LdapPerson(models.Model):
                 'mail',
                 'physicalDeliveryOfficeName',
                 'telephoneNumber',
-                'homePhone']
+                'homePhone',
+                'departmentNumber',
+                'destinationIndicator',
+                'employeeType',]
 
     @classmethod
     def search_ldap_attrs(cls):
@@ -181,7 +199,13 @@ class LdapPerson(models.Model):
             update_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
                                str(person['telephone_number']) or None),
                              ( ldap.MOD_REPLACE, 'physicalDeliveryOfficeName',
-                               str(person['office']) or None),]
+                               str(person['office']) or None),
+                             ( ldap.MOD_REPLACE, 'departmentNumber',
+                               str(person['floor']) or None),
+                             ( ldap.MOD_REPLACE, 'destinationIndicator',
+                               str(person['area']) or None),
+                             ( ldap.MOD_REPLACE, 'employeeType',
+                               str(person['position']) or None),]
 
             if 'email' in person and person['email']:
                 mails = []
@@ -354,7 +378,16 @@ class LdapPerson(models.Model):
 
             if 'homePhone' in entry and entry['homePhone'][0]:                
                 person.home_telephone_number = entry['homePhone'][0]
-                
+
+            if 'departmentNumber' in entry and entry['departmentNumber'][0]:                
+                person.floor = entry['departmentNumber'][0]
+
+            if 'destinationIndicator' in entry and entry['destinationIndicator'][0]:
+                person.area = entry['destinationIndicator'][0]
+
+            if 'employeeType' in entry and entry['employeeType'][0]:
+                person.position = entry['employeeType'][0]
+
             cn_found.append(person)
 
         return cn_found

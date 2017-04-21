@@ -9,7 +9,6 @@ from app.models import Office
 from django.forms import ModelForm
 from django import forms
 from django.conf.urls import url
-import logging
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.db.models.query import QuerySet
@@ -70,12 +69,14 @@ class LdapPersonAdmin(admin.ModelAdmin):
             office = request.POST['office']
         elif 'other_office' in request.POST:
             office = request.POST['other_office']
-
         update_person = { 'username': request.POST['username'],
                           'telephone_number': request.POST['telephone_number'],
                           'office': office,
                           'email': request.POST['email'],
-                          'alternative_email': request.POST['alternative_email'],}
+                          'alternative_email': request.POST['alternative_email'],
+                          'floor': request.POST['floor'],
+                          'area': request.POST['area'],
+                          'position': request.POST['position'],}
 
         if 'username' in request.POST and request.POST['username']:
             obj.ldap_update(update_person)

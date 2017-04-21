@@ -32,6 +32,9 @@ class Migration(migrations.Migration):
                 ('country_document_number', models.CharField(max_length=200)),
                 ('telephone_number', models.CharField(max_length=200)),
                 ('home_telephone_number', models.CharField(max_length=200)),
+                ('floor', models.CharField(max_length=200)),
+                ('area', models.CharField(max_length=200)),
+                ('position', models.CharField(max_length=200)),
             ],
             options={
                 'verbose_name': 'LdapPerson',

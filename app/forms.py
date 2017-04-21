@@ -51,6 +51,15 @@ class LdapPersonForm(forms.ModelForm):
     telephone_number = forms.CharField(
         max_length=200,
         required=False)
+    floor = forms.CharField(
+        max_length=200,
+        required=False)
+    area = forms.CharField(
+        max_length=200,
+        required=False)
+    position = forms.CharField(
+        max_length=200,
+        required=False)
 
     class Meta:
         model = LdapPerson

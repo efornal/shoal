@@ -144,7 +144,7 @@ STATIC_URL = '/static/'
 
 # django configuration
 SUIT_CONFIG = {
-    'ADMIN_NAME': 'Shoal'
+    'ADMIN_NAME': APPLICATION_NAME
 }
 
 # =================================\

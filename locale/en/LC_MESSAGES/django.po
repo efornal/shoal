@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-11 12:25-0300\n"
+"POT-Creation-Date: 2017-04-21 10:28-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:113
+#: app/admin.py:116
 msgid "Database error"
 msgstr "Database error"
 
-#: app/forms.py:21 app/models.py:67 app/models.py:371
+#: app/forms.py:21 app/models.py:67 app/models.py:404
 msgid "name"
 msgstr "name"
 
@@ -33,7 +33,7 @@ msgstr "office"
 msgid "other_office"
 msgstr "other office"
 
-#: app/models.py:58 templates/base.html:67
+#: app/models.py:58 templates/base.html:68
 msgid "username"
 msgstr "username"
 
@@ -73,20 +73,32 @@ msgstr "telephone number"
 msgid "home_telephone_number"
 msgstr "personal telephone number"
 
-#: app/models.py:128
+#: app/models.py:129
+msgid "floor"
+msgstr "floor"
+
+#: app/models.py:134
+msgid "area"
+msgstr "area"
+
+#: app/models.py:139
+msgid "position"
+msgstr "position"
+
+#: app/models.py:143
 msgid "LdapPerson"
 msgstr "Ldap Person"
 
-#: app/models.py:129
+#: app/models.py:144
 msgid "LdapPeople"
 msgstr "Ldap People"
 
-#: app/models.py:374 templates/admin/ldapperson/includes/fieldset.html:81
+#: app/models.py:407 templates/admin/ldapperson/includes/fieldset.html:81
 #: templates/search.html:10
 msgid "Office"
 msgstr "Office"
 
-#: app/models.py:375
+#: app/models.py:408
 msgid "Offices"
 msgstr "Offices"
 
@@ -201,31 +213,43 @@ msgstr "Other office"
 msgid "Telephone_number"
 msgstr "Telephone number"
 
-#: templates/base.html:44 templates/base.html:46
+#: templates/admin/ldapperson/includes/fieldset.html:125
+msgid "Floor"
+msgstr "Floor"
+
+#: templates/admin/ldapperson/includes/fieldset.html:136
+msgid "Area"
+msgstr "Area"
+
+#: templates/admin/ldapperson/includes/fieldset.html:147
+msgid "Position"
+msgstr "Position"
+
+#: templates/base.html:45 templates/base.html:47
 msgid "search"
 msgstr "search"
 
-#: templates/base.html:51
+#: templates/base.html:52
 msgid "language"
 msgstr "language"
 
-#: templates/base.html:53 templates/base.html:58
+#: templates/base.html:54 templates/base.html:59
 msgid "spanish"
 msgstr "spanish"
 
-#: templates/base.html:54 templates/base.html:60
+#: templates/base.html:55 templates/base.html:61
 msgid "english"
 msgstr "english"
 
-#: templates/base.html:72
+#: templates/base.html:73
 msgid "edit_account"
 msgstr "edit account"
 
-#: templates/base.html:74 templates/base.html:78
+#: templates/base.html:75 templates/base.html:79
 msgid "close_session"
 msgstr "close session"
 
-#: templates/base.html:84
+#: templates/base.html:85
 msgid "init_session"
 msgstr "init session"
 

@@ -66,10 +66,10 @@
   <div class="control-group form-row field-email ">
     <div>
       <div class="control-label">
-        <label for="id_email">{{ _('Alternative_email') }}:</label>
+        <label for="id_alternative_email">{{ _('Alternative_email') }}:</label>
       </div>
       <div class="controls">
-        <input id="id_email" maxlength="200" name="alternative_email" type="text"
+        <input id="id_alternative_email" maxlength="200" name="alternative_email" type="text"
                value="{{ result.alternative_email|default:'' }}">
       </div>
     </div>
@@ -99,10 +99,10 @@
   <div class="control-group form-row field-email ">
     <div>
       <div class="control-label">
-        <label for="id_email">{{ _('Other_office') }}:</label>
+        <label for="id_other_office">{{ _('Other_office') }}:</label>
       </div>
       <div class="controls">
-        <input id="id_email" maxlength="200" name="other_office" type="text"
+        <input id="id_other_office" maxlength="200" name="other_office" type="text"
                value="{{ result.office|if_not_exist_in:offices }}">
       </div>
     </div>
@@ -119,6 +119,38 @@
     </div>
   </div>
 
+  <div class="control-group form-row">
+    <div>
+      <div class="control-label">
+        <label for="id_floor">{{ _('Floor') }}:</label></div>
+      <div class="controls">
+        <input id="id_floor" maxlength="200" name="floor" type="text"
+               value="{{ result.floor|default:'' }}">
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row">
+    <div>
+      <div class="control-label">
+        <label for="id_area">{{ _('Area') }}:</label></div>
+      <div class="controls">
+        <input id="id_area" maxlength="200" name="area" type="text"
+               value="{{ result.area|default:'' }}">
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row">
+    <div>
+      <div class="control-label">
+        <label for="id_position">{{ _('Position') }}:</label></div>
+      <div class="controls">
+        <input id="id_position" maxlength="200" name="position" type="text"
+               value="{{ result.position|default:'' }}">
+      </div>
+    </div>
+  </div>
 </fieldset>
 {# For closing line #}
 {% if 'plugin-holder' in fieldset.classes %}
