@@ -16,6 +16,17 @@ def application_title(value):
 
     return title
 
+@register.filter
+def application_subtitle(value):
+    logging.error(settings.APPLICATION_DESC)
+    subtitle = ''
+    if value:
+        subtitle = value
+    elif settings.APPLICATION_DESC:
+        subtitle = settings.APPLICATION_DESC
+
+    return subtitle
+
 
 @register.filter
 def if_not_exist_in(value,objects):
