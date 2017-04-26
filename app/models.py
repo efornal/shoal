@@ -200,6 +200,8 @@ class LdapPerson(models.Model):
                                str(person['telephone_number']) or None),
                              ( ldap.MOD_REPLACE, 'physicalDeliveryOfficeName',
                                str(person['office']) or None),
+                             ( ldap.MOD_REPLACE, 'gidNumber',
+                               str(person['group_id']) or None),
                              ( ldap.MOD_REPLACE, 'departmentNumber',
                                str(person['floor']) or None),
                              ( ldap.MOD_REPLACE, 'destinationIndicator',

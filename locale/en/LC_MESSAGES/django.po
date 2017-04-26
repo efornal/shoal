@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-21 10:28-0300\n"
+"POT-Creation-Date: 2017-04-26 11:43-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:116
+#: app/admin.py:134
 msgid "Database error"
 msgstr "Database error"
 
@@ -33,7 +33,7 @@ msgstr "office"
 msgid "other_office"
 msgstr "other office"
 
-#: app/models.py:58 templates/base.html:68
+#: app/models.py:58 templates/base.html:69
 msgid "username"
 msgstr "username"
 
@@ -102,17 +102,25 @@ msgstr "Office"
 msgid "Offices"
 msgstr "Offices"
 
+#: app/models.py:421
+msgid "Group"
+msgstr "Group"
+
+#: app/models.py:422
+msgid "Groups"
+msgstr "Groups"
+
 #: app/views.py:34
 msgid "search_error"
 msgstr ""
 "The search could not be performed. Verify that the text to be searched does "
 "not generate excess results"
 
-#: shoal/settings.py:121 shoal/settings.tpl.py:122
+#: shoal/settings.py:121 shoal/settings.tpl.py:123
 msgid "Spanish"
 msgstr "Spanish"
 
-#: shoal/settings.py:122 shoal/settings.tpl.py:123
+#: shoal/settings.py:122 shoal/settings.tpl.py:124
 msgid "English"
 msgstr "English"
 
@@ -225,31 +233,39 @@ msgstr "Area"
 msgid "Position"
 msgstr "Position"
 
-#: templates/base.html:45 templates/base.html:47
+#: templates/admin/ldapperson/includes/fieldset.html:158
+msgid "Main_group"
+msgstr "Main group"
+
+#: templates/admin/ldapperson/includes/fieldset.html:177
+msgid "Secondary_groups"
+msgstr "Secondary groups"
+
+#: templates/base.html:46 templates/base.html:48
 msgid "search"
 msgstr "search"
 
-#: templates/base.html:52
+#: templates/base.html:53
 msgid "language"
 msgstr "language"
 
-#: templates/base.html:54 templates/base.html:59
+#: templates/base.html:55 templates/base.html:60
 msgid "spanish"
 msgstr "spanish"
 
-#: templates/base.html:55 templates/base.html:61
+#: templates/base.html:56 templates/base.html:62
 msgid "english"
 msgstr "english"
 
-#: templates/base.html:73
+#: templates/base.html:74
 msgid "edit_account"
 msgstr "edit account"
 
-#: templates/base.html:75 templates/base.html:79
+#: templates/base.html:76 templates/base.html:80
 msgid "close_session"
 msgstr "close session"
 
-#: templates/base.html:85
+#: templates/base.html:86
 msgid "init_session"
 msgstr "init session"
 

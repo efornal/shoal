@@ -20,8 +20,9 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from app.forms import LdapPersonForm
+import logging
 
-        
+
 class IncorrectLookupParameters(Exception):
     pass
 
@@ -51,10 +52,9 @@ class LdapPersonAdmin(admin.ModelAdmin):
         person_id = '{}'.format(object_id)
         person = LdapPerson.get_by_uid(person_id)
         offices = Office.objects.all()
-        import logging
         groups = LdapGroup.all()
         groups_of_the_person = [str(x.group_id) for x in LdapGroup.groups_by_uid(person_id)]
-        logging.warning(groups_of_the_person)
+
         context = {'offices': offices,
                    'groups': groups,
                    'groups_of_the_person': groups_of_the_person,
@@ -88,6 +88,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
         update_person = { 'username': ldap_username,
                           'telephone_number': request.POST['telephone_number'],
                           'office': office,
+                          'group_id': request.POST['group_id'],
                           'email': request.POST['email'],
                           'alternative_email': request.POST['alternative_email'],
                           'floor': request.POST['floor'],
@@ -96,8 +97,8 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
         obj.ldap_update(update_person)
 
-        if 'group_id' in request.POST:
-            new_groups_ids = request.POST.getlist('group_id')
+        if 'groups_id' in request.POST:
+            new_groups_ids = request.POST.getlist('groups_id')
             LdapGroup.update_member_in_groups(ldap_username,new_groups_ids)
 
         super(LdapPersonAdmin, self).save_model(request, obj, form, change)
