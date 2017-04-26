@@ -411,3 +411,168 @@ class Office(models.Model):
     def __unicode__(self):
         return self.name
 
+
+    
+class LdapGroup(models.Model):
+    group_id = models.IntegerField()
+    name     = models.CharField(max_length=200)
+    
+    class Meta:
+        verbose_name = _('Group')
+        verbose_name_plural = _('Groups')
+        managed = False
+        
+    def __unicode__(self):
+        return self.name
+
+    
+    @classmethod
+    def ldap_attrs(cls):
+        return ['gidNumber','cn'] # id first!
+
+    
+    @classmethod
+    def all(cls):
+        rows = []
+        ldap_result = []
+        attributes = LdapGroup.ldap_attrs()
+        retrieve_attributes = [str(x) for x in attributes]
+
+        ldap_condition = "(&(cn=*)({}>={}))".format( retrieve_attributes[0],
+                                                     settings.LDAP_GROUP_MIN_VALUE)
+        try:
+            ldap_result = LdapConn.new_user().search_s( "ou={},{}".format(settings.LDAP_GROUP,
+                                                                          settings.LDAP_DN),
+                                                        ldap.SCOPE_SUBTREE,
+                                                        ldap_condition,
+                                                        retrieve_attributes )
+        except ldap.LDAPError, e:
+            logging.error( e )
+        
+        return LdapGroup.ldap_to_obj(ldap_result)
+
+            
+    
+    @classmethod
+    def groups_by_uid(cls, uid):
+        attributes = LdapGroup.ldap_attrs()
+        retrieve_attributes = [str(x) for x in attributes]
+
+        ldap_condition = "(&(cn=*)(memberUid={0})({1}>={2}))" \
+            .format( uid,
+                     retrieve_attributes[0],
+                     settings.LDAP_GROUP_MIN_VALUE)
+        cn_found = None
+
+        ldap_result = LdapConn.new().search_s("ou={},{}".format(settings.LDAP_GROUP,
+                                                      settings.LDAP_DN),
+                                    ldap.SCOPE_SUBTREE,
+                                    ldap_condition,
+                                    retrieve_attributes )
+        
+        return LdapGroup.ldap_to_obj(ldap_result)
+    
+            
+    @classmethod
+    def add_member_to( cls,  ldap_username, group_id ):
+        if group_id < settings.LDAP_GROUP_MIN_VALUE:
+            logging.error("Error removing group {}, must be greater than {}" \
+                          .format(group_id,settings.LDAP_GROUP_MIN_VALUE))
+            return
+
+        ldap_username = str(ldap_username)
+        update_group = [( ldap.MOD_ADD, 'memberUid', ldap_username )]
+        
+        try:
+            group_name = LdapGroup.cn_group_by_gid(group_id)
+            gdn = "cn={},ou={},{}".format ( group_name,
+                                            settings.LDAP_GROUP,
+                                            settings.LDAP_DN )
+            LdapConn.new_user().modify_s(gdn, update_group)
+            logging.warning("Added new member {} in ldap group: {} \n" \
+                            .format(ldap_username,group_name))
+        except ldap.LDAPError, e:
+            logging.error( "Error adding member {} in ldap group: {} \n" \
+                           .format(ldap_username,group_name))
+            logging.error( e )
+
+            
+    @classmethod
+    def add_member_in_groups( cls,  ldap_username, group_ids ):
+        for group_id in group_ids:
+            LdapGroup.add_member_to(ldap_username,group_id)
+
+
+    @classmethod
+    def remove_member_of_group( cls,  ldap_username, group_id ):
+
+        if group_id < settings.LDAP_GROUP_MIN_VALUE:
+            logging.error("Error removing group {}, must be greater than {}" \
+                          .format(group_id,settings.LDAP_GROUP_MIN_VALUE))
+            return
+        ldap_username = str(ldap_username)
+        group_name = LdapGroup.cn_group_by_gid(group_id)
+
+        if not (ldap_username and group_name):
+            logging.error("Error deleting group %s of member: %s. Missing parameter.\n" \
+                          .format(group_name,ldap_username))
+            return
+            
+        delete_member = [(ldap.MOD_DELETE , 'memberUid', ldap_username )]
+        try:
+            gdn = "cn={},ou={},{}".format( group_name,
+                                           settings.LDAP_GROUP,
+                                           settings.LDAP_DN )
+            LdapConn.new_user().modify_s(gdn,delete_member)
+            logging.warning("Removed member {} of group {} \n" \
+                         .format(ldap_username,group_name))
+        except ldap.LDAPError, e:
+            logging.error( "Error deleting member {} of group: {} \n" \
+                           .format(ldap_username,ldap_group))
+            logging.error( e )
+
+            
+    @classmethod
+    def  remove_member_of_groups( cls,  ldap_username, group_ids ):
+        for group_id in group_ids:
+            LdapGroup.remove_member_of_group(ldap_username,group_id)
+            
+
+    @classmethod
+    def update_member_in_groups( cls,  ldap_username, new_groups ):
+        curr_groups = [str(x.group_id) for x in LdapGroup.groups_by_uid(ldap_username)]
+        remove_groups = [item for item in curr_groups if item not in new_groups]
+        add_groups = [item for item in new_groups if item not in curr_groups]
+        LdapGroup.add_member_in_groups( ldap_username, add_groups )
+        LdapGroup.remove_member_of_groups (ldap_username, remove_groups )
+
+        
+    @classmethod
+    def cn_group_by_gid(cls, gid):
+        ldap_condition = "(gidNumber={})".format(str(gid))
+        cn_found = None
+        r = LdapConn.new().search_s("ou={},{}".format(settings.LDAP_GROUP,
+                                                      settings.LDAP_DN),
+                                    ldap.SCOPE_SUBTREE,
+                                    ldap_condition,
+                                    [str("cn")])
+        for dn,entry in r:
+            if 'cn' in entry and entry['cn'][0]:
+                cn_found = entry['cn'][0]
+
+        return cn_found
+
+    
+    @classmethod
+    def ldap_to_obj(cls, ldap_result):
+        cn_found = []
+            
+        for dn,entry in ldap_result:
+            group = LdapGroup()
+            if 'gidNumber' in entry and entry['gidNumber'][0]:
+                group.group_id = entry['gidNumber'][0]
+            if 'cn' in entry and entry['cn'][0]:
+                group.name = entry['cn'][0]
+            cn_found.append(group)
+
+        return cn_found

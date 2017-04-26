@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.conf.urls import patterns
 from django.http import HttpResponse
 from app.models import LdapPerson
+from app.models import LdapGroup
 from app.models import Office
 from django.forms import ModelForm
 from django import forms
@@ -47,14 +48,22 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
     
     def change_view(self, request, object_id, form_url='', extra_context=None):
-        person = LdapPerson.get_by_uid('{}'.format(object_id))
+        person_id = '{}'.format(object_id)
+        person = LdapPerson.get_by_uid(person_id)
+        offices = Office.objects.all()
+        import logging
+        groups = LdapGroup.all()
+        groups_of_the_person = [str(x.group_id) for x in LdapGroup.groups_by_uid(person_id)]
+        logging.warning(groups_of_the_person)
+        context = {'offices': offices,
+                   'groups': groups,
+                   'groups_of_the_person': groups_of_the_person,
+                   'result': person,}
 
         if extra_context is None:
-            extra_context = {'offices': Office.objects.all(),
-                             'result': person,}
+            extra_context = context
         else:
-            extra_context.update({'offices': Office.objects.all()})
-            extra_context.update({'result': person,})
+            extra_context.update(context)
 
         return super(LdapPersonAdmin, self).change_view(
             request, object_id, form_url, extra_context
@@ -64,12 +73,19 @@ class LdapPersonAdmin(admin.ModelAdmin):
     
     def save_model(self, request, obj, form, change):
         office=''
-    
+        
+        if 'username' in request.POST and request.POST['username']:
+            ldap_username = request.POST['username']
+        else:
+            logging.error("Attempted to modify the ldap user without having a value.")
+            return HttpResponseRedirect('/')
+            
         if 'office' in request.POST and request.POST['office']:
             office = request.POST['office']
         elif 'other_office' in request.POST:
             office = request.POST['other_office']
-        update_person = { 'username': request.POST['username'],
+
+        update_person = { 'username': ldap_username,
                           'telephone_number': request.POST['telephone_number'],
                           'office': office,
                           'email': request.POST['email'],
@@ -78,12 +94,15 @@ class LdapPersonAdmin(admin.ModelAdmin):
                           'area': request.POST['area'],
                           'position': request.POST['position'],}
 
-        if 'username' in request.POST and request.POST['username']:
-            obj.ldap_update(update_person)
-            super(LdapPersonAdmin, self).save_model(request, obj, form, change)
-        else:
-            return HttpResponseRedirect('/')
+        obj.ldap_update(update_person)
 
+        if 'group_id' in request.POST:
+            new_groups_ids = request.POST.getlist('group_id')
+            LdapGroup.update_member_in_groups(ldap_username,new_groups_ids)
+
+        super(LdapPersonAdmin, self).save_model(request, obj, form, change)
+
+        
         
     def changelist_view(self, request, extra_context=""):
         if 'q' in request.GET:

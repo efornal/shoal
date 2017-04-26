@@ -27,10 +27,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">
-            {{ ''|application_title }}
-          </a>
           <img class="logo-header" src="{% static 'images/logo.png' %}">
+          <span class="navbar-brand">
+            <p>{{ ''|application_title }}</p>
+            <small>{{ ''|application_subtitle }}</small>
+          </span>
         </div>
         
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
