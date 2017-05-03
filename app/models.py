@@ -224,7 +224,6 @@ class LdapPerson(models.Model):
             logging.warning( "Updated ldap user data for {} \n".format(update_person))
             LdapConn.new_user().modify_s(udn, update_person)
         except ldap.LDAPError, e:
-            logging.error( "Error updating ldap user data for {} \n".format(update_person))
             logging.error( e )
 
 
@@ -314,7 +313,6 @@ class LdapPerson(models.Model):
                 ldap_condition,
                 retrieve_attributes)
         except ldap.LDAPError, e:
-            logging.error( "Error updating ldap user data for {} \n".format(update_person))
             logging.error( e )
 
         return LdapPerson.ldap_to_obj(ldap_result)[0]
