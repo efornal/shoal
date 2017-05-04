@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-26 11:43-0300\n"
+"POT-Creation-Date: 2017-05-04 12:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,11 +117,11 @@ msgstr ""
 "La búsqueda no pudo realizarse. Verifique que el texto a buscar no genere "
 "exceso de resultados"
 
-#: shoal/settings.py:121 shoal/settings.tpl.py:123
+#: shoal/settings.py:124 shoal/settings.tpl.py:124
 msgid "Spanish"
 msgstr "Español"
 
-#: shoal/settings.py:122 shoal/settings.tpl.py:124
+#: shoal/settings.py:125 shoal/settings.tpl.py:125
 msgid "English"
 msgstr "Inglés"
 
@@ -217,6 +217,10 @@ msgstr "Email alternativo"
 #: templates/admin/ldapperson/includes/fieldset.html:102
 msgid "Other_office"
 msgstr "Otra oficina"
+
+#: templates/admin/ldapperson/includes/fieldset.html:112
+msgid "telephone_number_example"
+msgstr "Ejemplo: (4571110[/4571111] int 172[/173])"
 
 #: templates/admin/ldapperson/includes/fieldset.html:114
 msgid "Telephone_number"
