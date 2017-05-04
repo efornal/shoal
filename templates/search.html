@@ -8,6 +8,7 @@
       <tr class="active">
         <th>{{ _('Person') }}</th>
         <th>{{ _('Office') }}</th>
+        <th>{{ _('Email') }}</th>
         <th>{{ _('Phone') }}</th>
       </tr>
     </thead>
@@ -17,6 +18,7 @@
       <tr>
         <td>{{ person.surname|default:'' }}, {{ person.name|default:'' }}</td>
         <td>{{ person.office|default:'' }}</td>
+        <td>{{ person.email|default:'' }}</td>
         <td>{{ person.telephone_number|default:'' }}</td>
       </tr>
       {% endfor %}
