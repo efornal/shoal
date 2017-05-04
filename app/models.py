@@ -193,8 +193,6 @@ class LdapPerson(models.Model):
         
     
     def ldap_update(self, person):
-        logging.warning("UPDATE::::{}".format(person))
-        
         try:
             update_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
                                str(person['telephone_number']) or None),
