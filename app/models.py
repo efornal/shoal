@@ -462,7 +462,7 @@ class LdapGroup(models.Model):
                      settings.LDAP_GROUP_MIN_VALUE)
         cn_found = None
 
-        ldap_result = LdapConn.new().search_s("ou={},{}".format(settings.LDAP_GROUP,
+        ldap_result = LdapConn.new_user().search_s("ou={},{}".format(settings.LDAP_GROUP,
                                                       settings.LDAP_DN),
                                     ldap.SCOPE_SUBTREE,
                                     ldap_condition,
@@ -531,7 +531,7 @@ class LdapGroup(models.Model):
 
             
     @classmethod
-    def  remove_member_of_groups( cls,  ldap_username, group_ids ):
+    def remove_member_of_groups( cls,  ldap_username, group_ids ):
         for group_id in group_ids:
             LdapGroup.remove_member_of_group(ldap_username,group_id)
             
@@ -549,7 +549,7 @@ class LdapGroup(models.Model):
     def cn_group_by_gid(cls, gid):
         ldap_condition = "(gidNumber={})".format(str(gid))
         cn_found = None
-        r = LdapConn.new().search_s("ou={},{}".format(settings.LDAP_GROUP,
+        r = LdapConn.new_user().search_s("ou={},{}".format(settings.LDAP_GROUP,
                                                       settings.LDAP_DN),
                                     ldap.SCOPE_SUBTREE,
                                     ldap_condition,
@@ -563,8 +563,8 @@ class LdapGroup(models.Model):
     
     @classmethod
     def ldap_to_obj(cls, ldap_result):
+        ldap_result = sorted(ldap_result)
         cn_found = []
-            
         for dn,entry in ldap_result:
             group = LdapGroup()
             if 'gidNumber' in entry and entry['gidNumber'][0]:
