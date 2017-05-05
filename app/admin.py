@@ -137,7 +137,11 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
 
         cl.result_list=people
-        cl.result_count=len(people)
+        if people is None:
+            messages.warning(request, _('search_error'))
+            cl.result_count=0
+        else:
+            cl.result_count=len(people)
         
         extra_context={'cl':cl,
                        'result_list':people,
