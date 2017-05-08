@@ -1,5 +1,12 @@
 {% load suit_tags %}
 {% load application %}
+
+{% for line in fieldset %}
+{% with singlefield=line.fields|length_is:'1' %}
+{{ line.errors }}
+{% endwith %}
+{% endfor %}
+        
 <fieldset class="module aligned first ">
   
   {% if result.username %}
