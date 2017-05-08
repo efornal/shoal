@@ -388,7 +388,7 @@ class LdapPerson(models.Model):
 
             cn_found.append(person)
 
-        return cn_found
+        return sorted(cn_found, key=lambda person: person.fullname)
 
 
 
@@ -563,7 +563,6 @@ class LdapGroup(models.Model):
     
     @classmethod
     def ldap_to_obj(cls, ldap_result):
-        ldap_result = sorted(ldap_result)
         cn_found = []
         for dn,entry in ldap_result:
             group = LdapGroup()
@@ -573,4 +572,4 @@ class LdapGroup(models.Model):
                 group.name = entry['cn'][0]
             cn_found.append(group)
 
-        return cn_found
+        return sorted(cn_found, key=lambda group: group.name)
