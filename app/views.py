@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
-from .models import LdapPerson
+from ldap_people.models import LdapPerson
 from django.shortcuts import redirect
 from django.utils import translation
 import logging

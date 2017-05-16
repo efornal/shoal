@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'bootstrap_themes',
     'app',
+    'ldap_people',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -66,7 +67,8 @@ ROOT_URLCONF = 'shoal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+                 os.path.join(BASE_DIR, 'ldap_people/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'debug': True,
@@ -87,6 +89,14 @@ WSGI_APPLICATION = 'shoal.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'shoal_db',
+        'USER': 'shoal_user',
+        'PASSWORD': 'user',
+        'PORT': '5432',
+        'HOST': 'localhost',
+    },
+    'shoal_owner': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'shoal_db',
         'USER': 'shoal_owner',
@@ -152,14 +162,14 @@ SUIT_CONFIG = {
 # =================================\
 # ldap configuration
 LDAP_SERVER = 'ldap://ldap_host:389'
-LDAP_DN = 'dc=*,dc=*,dc=*,dc=*'
+-LDAP_DN = 'dc=*,dc=*,dc=*,dc=*'
 
 # Organizational Unit for Person
 LDAP_GROUP  = 'Group' # ou=Entry
 LDAP_PEOPLE = 'People' # ou=Entry
 
 LDAP_USERNAME='username'
-LDAP_USERPASS='password'
+LDAP_PASSWORD='password'
 #
 # Maximum limit of results to be taken as error
 LDAP_SIZE_LIMIT=100
@@ -208,7 +218,7 @@ AUTH_LDAP_USER_FLAGS_BY_GROUP = {
 #
 # Ldap User Auth
 AUTH_LDAP_BIND_DN = "cn={},{}".format(LDAP_USERNAME,LDAP_DN)
-AUTH_LDAP_BIND_PASSWORD = LDAP_USERPASS
+AUTH_LDAP_BIND_PASSWORD = LDAP_PASSWORD
 
 AUTH_LDAP_SERVER_URI = LDAP_SERVER
 
