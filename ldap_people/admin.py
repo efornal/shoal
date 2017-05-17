@@ -77,30 +77,12 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
     
     def save_model(self, request, obj, form, change):
-        office=''
-        
-        if 'username' in request.POST and request.POST['username']:
-            ldap_username = request.POST['username']
+        ldap_person= LdapPersonForm(request.POST)
+        if ldap_person.is_valid():
+            logging.warning(dir(ldap_person))
+            ldap_person.save()
         else:
-            logging.error("Attempted to modify the ldap user without having a value.")
-            return HttpResponseRedirect('/')
-            
-        if 'office' in request.POST and request.POST['office']:
-            office = request.POST['office']
-        elif 'other_office' in request.POST:
-            office = request.POST['other_office']
-
-        update_person = { 'username': ldap_username,
-                          'telephone_number': request.POST['telephone_number'],
-                          'office': office,
-                          'group_id': request.POST['group_id'],
-                          'email': request.POST['email'],
-                          'alternative_email': request.POST['alternative_email'],
-                          'floor': request.POST['floor'],
-                          'area': request.POST['area'],
-                          'position': request.POST['position'],}
-
-        obj.ldap_update(update_person)
+            logging.error(ldap_person.errors)
 
         if 'groups_id' in request.POST:
             new_groups_ids = request.POST.getlist('groups_id')

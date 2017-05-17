@@ -6,13 +6,7 @@ import ldap
 from django.conf import settings
 from django.utils.translation import ugettext as _
 
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
-
 class LdapConn():
-
     
     @classmethod
     def new_anon(cls):
@@ -146,27 +140,18 @@ class LdapPerson(models.Model):
 
     @classmethod
     def ldap_attrs(cls):
-        return ['uid',
-                'cn',
-                'givenName',
-                'paisdoc',
-                'numdoc',
-                'tipodoc',
-                'gidNumber',
-                'uidNumber',
-                'sn',
-                'mail',
-                'physicalDeliveryOfficeName',
-                'telephoneNumber',
-                'homePhone',
-                'departmentNumber',
-                'destinationIndicator',
-                'employeeType',]
+        return ['uid','cn','sn','givenName',
+                'paisdoc','numdoc','tipodoc',
+                'gidNumber','uidNumber','mail',
+                'telephoneNumber','homePhone',
+                'employeeType','physicalDeliveryOfficeName',
+                'departmentNumber','destinationIndicator',]
 
+    
     @classmethod
     def search_ldap_attrs(cls):
-        return ['uid','givenName','sn','telephoneNumber',
-                'physicalDeliveryOfficeName','mail']
+        return ['uid','givenName','sn',
+                'telephoneNumber','physicalDeliveryOfficeName','mail']
 
         
     @classmethod
@@ -189,35 +174,42 @@ class LdapPerson(models.Model):
         return extra_conditions
         
     
-    def ldap_update(self, person):
+    def save(self):
         try:
-            update_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
-                               str(person['telephone_number']) or None),
+            ldap_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
+                               str(self.telephone_number) or None),
                              ( ldap.MOD_REPLACE, 'physicalDeliveryOfficeName',
-                               str(person['office']) or None),
+                               str(self.office) or None),
                              ( ldap.MOD_REPLACE, 'gidNumber',
-                               str(person['group_id']) or None),
+                               str(self.group_id) or None),
                              ( ldap.MOD_REPLACE, 'departmentNumber',
-                               str(person['floor']) or None),
+                               str(self.floor) or None),
                              ( ldap.MOD_REPLACE, 'destinationIndicator',
-                               str(person['area']) or None),
+                               str(self.area) or None),
                              ( ldap.MOD_REPLACE, 'employeeType',
-                               str(person['position']) or None),]
+                               str(self.position) or None),]
 
-            if 'email' in person and person['email']:
+            if self.office:
+                new_office = self.office
+            elif self.other_office:
+                new_office = self.other_office
+
+            ldap_person.append((ldap.MOD_REPLACE,
+                                'physicalDeliveryOfficeName',
+                                str(new_office)))
+
+            if self.email:
                 mails = []
-                mails.append(str("{}".format(person['email'])))
+                mails.append(str(self.email))
+                if self.alternative_email:
+                    mails.append(str(self.alternative_email))
+                ldap_person.append((ldap.MOD_REPLACE,'mail',mails))
+                
+            udn = LdapPerson.ldap_udn_for( str(self.username) )
 
-                if 'alternative_email' in person and person['alternative_email']:
-                    mails.append(str("{}".format(person['alternative_email'])))
-
-                update_person.append((ldap.MOD_REPLACE,
-                                      'mail',
-                                      mails))
-            udn = LdapPerson.ldap_udn_for( person['username'] )
-
-            logging.warning( "Updated ldap user data for {} \n".format(update_person))
-            LdapConn.new().modify_s(udn, update_person)
+            logging.warning( "Updated ldap user data for {} \n".format(ldap_person))
+            LdapConn.new().modify_s(udn, ldap_person)
+            
         except ldap.LDAPError, e:
             logging.error( e )
 
@@ -265,8 +257,7 @@ class LdapPerson(models.Model):
         ldap_condition += "(telephoneNumber=*{}*)".format( text )
         ldap_condition = "(|{})".format( ldap_condition )
         ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
-        attributes = LdapPerson.search_ldap_attrs()
-        retrieve_attributes = [str(x) for x in attributes]
+        retrieve_attributes = [str(x) for x in LdapPerson.search_ldap_attrs()]
         ldap_result = []
         size_limit = 100
 
@@ -322,6 +313,7 @@ class LdapPerson(models.Model):
             
         for dn,entry in ldap_result:
             person = LdapPerson()
+
             if 'uid' in entry and entry['uid'][0]:
                 person.username = entry['uid'][0]
 
@@ -335,9 +327,17 @@ class LdapPerson(models.Model):
                     person.fullname = entry['sn'][0]
                 elif 'givenName' in entry and entry['givenName'][0]:
                     person.fullname = entry['givenName'][0]
+
+            if 'mail' in entry and entry['mail'][0]:                
+                for mail in entry['mail']:
+                    if ldap_domain_mail and ldap_domain_mail in mail:
+                        person.email = mail
+                    else:
+                        person.alternative_email = mail
                 
             if 'givenName' in entry and entry['givenName'][0]:
-                person.name = entry['givenName'][0]
+                person.name = "%s" % entry['givenName'][0]
+                #person.name = "%s" % entry['givenName'][0]
 
             if 'paisdoc' in entry and entry['paisdoc'][0]:
                 person.country_document_number = entry['paisdoc'][0]
@@ -356,13 +356,6 @@ class LdapPerson(models.Model):
                 
             if 'sn' in entry and entry['sn'][0]:                
                 person.surname = entry['sn'][0]
-                
-            if 'mail' in entry and entry['mail'][0]:                
-                for mail in entry['mail']:
-                    if ldap_domain_mail and ldap_domain_mail in mail:
-                        person.email = mail
-                    else:
-                        person.alternative_email = mail
 
             if 'physicalDeliveryOfficeName' in entry \
                and entry['physicalDeliveryOfficeName'][0]:                
