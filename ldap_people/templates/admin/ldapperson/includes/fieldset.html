@@ -85,20 +85,18 @@
   <div class="control-group form-row field-office ">
     <div>
       <div class="control-label">
-        <label for="id_office">{{ _('Office') }}:</label>
+        <label for="id_office">{{ _('Office') }}</label>
       </div>
       <div class="controls">
         <select id="office_id" name="office">
           <option value="">Seleccione uno</option>
-          {% if offices %}
-          {% for office in offices %}
-        <option value="{{ office.name }}"
-                {% ifequal result.office office.name %} selected="selected" {%endifequal%}>
-          {{ office.name }}</option>
-        {% endfor%}
-        {% endif%}
+          {% if form.office %}
+            {% for office in form.office.field.choices %}
+              <option value="{{ office.1 }}"
+              {% if result.office == office.1 %} selected="selected" {%endif%}>{{ office.1 }}</option>
+            {% endfor%}
+          {% endif%}
         </select>
-
       </div>
     </div>
   </div>
@@ -110,7 +108,7 @@
       </div>
       <div class="controls">
         <input id="id_other_office" maxlength="200" name="other_office" type="text"
-               value="{{ result.office|if_not_exist_in:offices }}">
+               value="{{ result.office }}">
       </div>
     </div>
   </div>

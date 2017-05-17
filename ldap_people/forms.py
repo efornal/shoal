@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django import forms
 from django.forms import ModelForm
 from ldap_people.models import LdapPerson
-from app.models import Office
+from ldap_people.models import Office
 from django.utils.translation import ugettext as _
 from django.utils import translation
 from django.contrib import messages
@@ -37,9 +37,9 @@ class LdapPersonForm(forms.ModelForm):
     alternative_email = forms.EmailField(
         max_length=200,
         required=False)
-    office = forms.CharField(
-        max_length=200,
-        required=False,
+    office = forms.ChoiceField(
+        choices=[(str(id), str(id)) for id in Office.objects.all()],
+        required=True,
         label=_('office'))
     other_office = forms.CharField(
         max_length=200,

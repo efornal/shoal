@@ -6,7 +6,7 @@ from django.conf.urls import patterns
 from django.http import HttpResponse
 from ldap_people.models import LdapPerson
 from ldap_people.models import LdapGroup
-#from app.models import Office
+from ldap_people.models import Office
 from django.forms import ModelForm
 from django import forms
 from django.conf.urls import url
@@ -22,6 +22,8 @@ from django.core.urlresolvers import reverse
 from ldap_people.forms import LdapPersonForm
 import logging
 import sys
+from django.conf import settings
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -54,11 +56,11 @@ class LdapPersonAdmin(admin.ModelAdmin):
     def change_view(self, request, object_id, form_url='', extra_context=None):
         person_id = '{}'.format(object_id)
         person = LdapPerson.get_by_uid(person_id)
-        offices = []#Office.objects.all()
+        form = LdapPersonForm(instance=person)
         groups = LdapGroup.all()
         groups_of_the_person = [str(x.group_id) for x in LdapGroup.groups_by_uid(person_id)]
-
-        context = {'offices': offices,
+            
+        context = {'form': form,
                    'groups': groups,
                    'groups_of_the_person': groups_of_the_person,
                    'result': person,}
@@ -147,13 +149,11 @@ class LdapPersonAdmin(admin.ModelAdmin):
             cl.result_count=len(people)
         
         extra_context={'cl':cl,
-                       'result_list':people,
-                       'offices': []}
-#        'offices': Office.objects.all()}
+                       'result_list':people,}
         return super(LdapPersonAdmin, self).changelist_view( request, extra_context)
         
     change_list_template = "admin/ldapperson/change_list.html"        
 
 
 admin.site.register(LdapPerson, LdapPersonAdmin)
-
+admin.site.register(Office)
