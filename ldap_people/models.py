@@ -39,6 +39,7 @@ class LdapConn():
 
     
 class LdapPerson(models.Model):
+
     id = models.AutoField(
         primary_key=True,
         null=False)
@@ -135,9 +136,35 @@ class LdapPerson(models.Model):
         verbose_name_plural = _('LdapPeople')
         db_table = 'app_ldapperson'
 
+        
     def __unicode__(self):
         return self.username
 
+    
+    def __init__(self, *args, **kwargs):
+        super(LdapPerson, self).__init__(*args, **kwargs)
+
+
+    @classmethod
+    def ldap_size_limit(self):
+        if hasattr(settings, 'LDAP_SIZE_LIMIT'):
+            return settings.LDAP_SIZE_LIMIT
+        return 100
+
+    @classmethod
+    def ldap_dn(self):
+        if hasattr(settings, 'LDAP_DN'):
+            return settings.LDAP_DN
+        return None
+
+
+    @classmethod
+    def ldap_ou(self):
+        if hasattr(settings, 'LDAP_PEOPLE'):
+            return settings.LDAP_PEOPLE
+        return None
+
+    
     @classmethod
     def ldap_attrs(cls):
         return ['uid','cn','sn','givenName',
@@ -157,8 +184,8 @@ class LdapPerson(models.Model):
     @classmethod
     def ldap_udn_for( cls, ldap_user_name ):
         return "uid=%s,ou=%s,%s" % ( ldap_user_name,
-                                     settings.LDAP_PEOPLE,
-                                     settings.LDAP_DN )
+                                     LdapPerson.ldap_ou(),
+                                     LdapPerson.ldap_dn())
 
     @classmethod
     def compose_ldap_filter ( cls, extra_conditions="",operator='&' ):
@@ -221,19 +248,15 @@ class LdapPerson(models.Model):
         attributes = LdapPerson.search_ldap_attrs()
         retrieve_attributes = [str(x) for x in attributes]
         ldap_result = []
-        size_limit = 100
-
-        if hasattr(settings, 'LDAP_SIZE_LIMIT'):
-            size_limit = settings.LDAP_SIZE_LIMIT
             
         try:
             ldap_result = LdapConn.new().search_ext_s(
-                "ou={},{}".format(settings.LDAP_PEOPLE,
-                                  settings.LDAP_DN),
+                "ou={},{}".format(LdapPerson.ldap_ou(),
+                                  LdapPerson.lap_dn),
                 ldap.SCOPE_SUBTREE,
                 ldap_condition,
                 retrieve_attributes,
-                sizelimit=size_limit)
+                sizelimit=LdapPerson.ldap_size_limit())
         except ldap.TIMEOUT, e:
             logging.error( "Timeout exception {} \n".format(e))
             return None
@@ -259,19 +282,14 @@ class LdapPerson(models.Model):
         ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
         retrieve_attributes = [str(x) for x in LdapPerson.search_ldap_attrs()]
         ldap_result = []
-        size_limit = 100
-
-        if hasattr(settings, 'LDAP_SIZE_LIMIT'):
-            size_limit = settings.LDAP_SIZE_LIMIT
             
         try:
             ldap_result = LdapConn.new().search_ext_s(
-                "ou={},{}".format(settings.LDAP_PEOPLE,
-                                  settings.LDAP_DN),
+                "ou={},{}".format(LdapPerson.ldap_ou(),LdapPerson.ldap_dn()),
                 ldap.SCOPE_SUBTREE,
                 ldap_condition,
                 retrieve_attributes,
-                sizelimit=size_limit)
+                sizelimit = LdapPerson.ldap_size_limit())
         except ldap.TIMEOUT, e:
             logging.error( "Timeout exception {} \n".format(e))
             return None
@@ -293,8 +311,7 @@ class LdapPerson(models.Model):
 
         try:
             ldap_result = LdapConn.new().search_s(
-                "ou={},{}".format(settings.LDAP_PEOPLE,
-                                  settings.LDAP_DN),
+                "ou={},{}".format(LdapPerson.ldap_ou(),LdapPerson.ldap_dn()),
                 ldap.SCOPE_SUBTREE,
                 ldap_condition,
                 retrieve_attributes)
