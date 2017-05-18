@@ -11,12 +11,12 @@ class LdapConn():
     @classmethod
     def new_anon(cls):
         try:
-            connection = ldap.initialize( settings.LDAP_SERVER )
+            connection = ldap.initialize( LdapConn.ldap_server() )
             connection.simple_bind_s()
             return connection
         except ldap.LDAPError, e:
             logging.error("Could not connect to the Ldap server: '{}'" \
-                          .format(settings.LDAP_SERVER))
+                          .format(LdapConn.ldap_server()))
             logging.error(e)
             raise
 
@@ -24,17 +24,40 @@ class LdapConn():
     @classmethod
     def new(cls):
         try:
-            connection = ldap.initialize( settings.LDAP_SERVER )
-            connection.simple_bind_s( "cn={},{}" \
-                                      .format( settings.LDAP_USERNAME, \
-                                               settings.LDAP_DN ), \
-                                      settings.LDAP_PASSWORD )
+            connection = ldap.initialize( LdapConn.ldap_server() )
+            connection.simple_bind_s( "cn={},{}".format( LdapConn.ldap_username(), \
+                                                         LdapConn.ldap_dn() ), \
+                                      LdapConn.ldap_password() )
             return connection
         except ldap.LDAPError, e:
             logging.error("Could not connect to the Ldap server: '{}'" \
-                          .format(settings.LDAP_SERVER))
+                          .format(LdapConn.ldap_server()))
             logging.error(e)
             raise
+        
+    @classmethod
+    def ldap_dn(self):
+        if hasattr(settings, 'LDAP_DN'):
+            return LdapConn.ldap_dn()
+        return None
+
+    @classmethod
+    def ldap_server(self):
+        if hasattr(settings, 'LDAP_SERVER'):
+            return settings.LDAP_SERVER
+        return None
+
+    @classmethod
+    def ldap_password(self):
+        if hasattr(settings, 'LDAP_PASSWORD'):
+            return settings.LDAP_PASSWORD
+        return None
+
+    @classmethod
+    def ldap_username(self):
+        if hasattr(settings, 'LDAP_USERNAME'):
+            return settings.LDAP_USERNAME
+        return None
 
 
     
@@ -151,12 +174,6 @@ class LdapPerson(models.Model):
             return settings.LDAP_SIZE_LIMIT
         return 100
 
-    @classmethod
-    def ldap_dn(self):
-        if hasattr(settings, 'LDAP_DN'):
-            return settings.LDAP_DN
-        return None
-
 
     @classmethod
     def ldap_ou(self):
@@ -185,7 +202,7 @@ class LdapPerson(models.Model):
     def ldap_udn_for( cls, ldap_user_name ):
         return "uid=%s,ou=%s,%s" % ( ldap_user_name,
                                      LdapPerson.ldap_ou(),
-                                     LdapPerson.ldap_dn())
+                                     LdapConn.ldap_dn())
 
     @classmethod
     def compose_ldap_filter ( cls, extra_conditions="",operator='&' ):
@@ -285,7 +302,7 @@ class LdapPerson(models.Model):
             
         try:
             ldap_result = LdapConn.new().search_ext_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),LdapPerson.ldap_dn()),
+                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
                 ldap.SCOPE_SUBTREE,
                 ldap_condition,
                 retrieve_attributes,
@@ -311,7 +328,7 @@ class LdapPerson(models.Model):
 
         try:
             ldap_result = LdapConn.new().search_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),LdapPerson.ldap_dn()),
+                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
                 ldap.SCOPE_SUBTREE,
                 ldap_condition,
                 retrieve_attributes)
@@ -407,10 +424,23 @@ class LdapGroup(models.Model):
         verbose_name = _('Group')
         verbose_name_plural = _('Groups')
         managed = False
+
         
     def __unicode__(self):
         return self.name
 
+
+    @classmethod
+    def ldap_ou(self):
+        if hasattr(settings, 'LDAP_GROUP'):
+            return LdapGroup.ldap_ou()
+        return None
+
+    @classmethod
+    def ldap_min_gid_value(self):
+        if hasattr(settings, 'LDAP_GROUP_MIN_VALUE'):
+            return settings.LDAP_GROUP_MIN_VALUE
+        return None
     
     @classmethod
     def ldap_attrs(cls):
@@ -421,14 +451,12 @@ class LdapGroup(models.Model):
     def all(cls):
         rows = []
         ldap_result = []
-        attributes = LdapGroup.ldap_attrs()
-        retrieve_attributes = [str(x) for x in attributes]
-
+        retrieve_attributes = [str(x) for x in LdapGroup.ldap_attrs()]
         ldap_condition = "(&(cn=*)({}>={}))".format( retrieve_attributes[0],
-                                                     settings.LDAP_GROUP_MIN_VALUE)
+                                                     LdapGroup.ldap_min_gid_value())
         try:
-            ldap_result = LdapConn.new().search_s( "ou={},{}".format(settings.LDAP_GROUP,
-                                                                          settings.LDAP_DN),
+            ldap_result = LdapConn.new().search_s( "ou={},{}".format(LdapGroup.ldap_ou(),
+                                                                     LdapConn.ldap_dn()),
                                                         ldap.SCOPE_SUBTREE,
                                                         ldap_condition,
                                                         retrieve_attributes )
@@ -441,29 +469,29 @@ class LdapGroup(models.Model):
     
     @classmethod
     def groups_by_uid(cls, uid):
-        attributes = LdapGroup.ldap_attrs()
-        retrieve_attributes = [str(x) for x in attributes]
-
+        ldap_result = []
+        retrieve_attributes = [str(x) for x in  LdapGroup.ldap_attrs()]
         ldap_condition = "(&(cn=*)(memberUid={0})({1}>={2}))" \
             .format( uid,
                      retrieve_attributes[0],
-                     settings.LDAP_GROUP_MIN_VALUE)
-        cn_found = None
-
-        ldap_result = LdapConn.new().search_s("ou={},{}".format(settings.LDAP_GROUP,
-                                                      settings.LDAP_DN),
-                                    ldap.SCOPE_SUBTREE,
-                                    ldap_condition,
-                                    retrieve_attributes )
+                     LdapGroup.ldap_min_gid_value())
+        try:
+            ldap_result = LdapConn.new().search_s("ou={},{}".format(LdapGroup.ldap_ou(),
+                                                                    LdapConn.ldap_dn()),
+                                                  ldap.SCOPE_SUBTREE,
+                                                  ldap_condition,
+                                                  retrieve_attributes )
+        except ldap.LDAPError, e:
+            logging.error( e )
         
         return LdapGroup.ldap_to_obj(ldap_result)
     
             
     @classmethod
     def add_member_to( cls,  ldap_username, group_id ):
-        if group_id < settings.LDAP_GROUP_MIN_VALUE:
+        if group_id < LdapGroup.ldap_min_gid_value():
             logging.error("Error removing group {}, must be greater than {}" \
-                          .format(group_id,settings.LDAP_GROUP_MIN_VALUE))
+                          .format(group_id,LdapGroup.ldap_min_gid_value()))
             return
 
         ldap_username = str(ldap_username)
@@ -472,8 +500,8 @@ class LdapGroup(models.Model):
         try:
             group_name = LdapGroup.cn_group_by_gid(group_id)
             gdn = "cn={},ou={},{}".format ( group_name,
-                                            settings.LDAP_GROUP,
-                                            settings.LDAP_DN )
+                                            LdapGroup.ldap_ou(),
+                                            LdapConn.ldap_dn() )
             LdapConn.new().modify_s(gdn, update_group)
             logging.warning("Added new member {} in ldap group: {} \n" \
                             .format(ldap_username,group_name))
@@ -492,9 +520,9 @@ class LdapGroup(models.Model):
     @classmethod
     def remove_member_of_group( cls,  ldap_username, group_id ):
 
-        if group_id < settings.LDAP_GROUP_MIN_VALUE:
+        if group_id < LdapGroup.ldap_min_gid_value():
             logging.error("Error removing group {}, must be greater than {}" \
-                          .format(group_id,settings.LDAP_GROUP_MIN_VALUE))
+                          .format(group_id,LdapGroup.ldap_min_gid_value()))
             return
         ldap_username = str(ldap_username)
         group_name = LdapGroup.cn_group_by_gid(group_id)
@@ -507,8 +535,8 @@ class LdapGroup(models.Model):
         delete_member = [(ldap.MOD_DELETE , 'memberUid', ldap_username )]
         try:
             gdn = "cn={},ou={},{}".format( group_name,
-                                           settings.LDAP_GROUP,
-                                           settings.LDAP_DN )
+                                           LdapGroup.ldap_ou(),
+                                           LdapConn.ldap_dn() )
             LdapConn.new().modify_s(gdn,delete_member)
             logging.warning("Removed member {} of group {} \n" \
                          .format(ldap_username,group_name))
@@ -537,8 +565,8 @@ class LdapGroup(models.Model):
     def cn_group_by_gid(cls, gid):
         ldap_condition = "(gidNumber={})".format(str(gid))
         cn_found = None
-        r = LdapConn.new().search_s("ou={},{}".format(settings.LDAP_GROUP,
-                                                      settings.LDAP_DN),
+        r = LdapConn.new().search_s("ou={},{}".format(LdapGroup.ldap_ou(),
+                                                      LdapConn.ldap_dn()),
                                     ldap.SCOPE_SUBTREE,
                                     ldap_condition,
                                     [str("cn")])
@@ -571,6 +599,7 @@ class Office(models.Model):
         max_length=200,
         null=False,
         verbose_name=_('name'))
+    
     class Meta:
         db_table = 'offices'
         verbose_name = _('Office')

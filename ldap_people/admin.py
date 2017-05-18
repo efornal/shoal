@@ -86,7 +86,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
         if 'groups_id' in request.POST:
             new_groups_ids = request.POST.getlist('groups_id')
-            LdapGroup.update_member_in_groups(ldap_username,new_groups_ids)
+            LdapGroup.update_member_in_groups(ldap_person.username,new_groups_ids)
 
         super(LdapPersonAdmin, self).save_model(request, obj, form, change)
 
