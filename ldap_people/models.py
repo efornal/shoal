@@ -38,7 +38,7 @@ class LdapConn():
     @classmethod
     def ldap_dn(self):
         if hasattr(settings, 'LDAP_DN'):
-            return LdapConn.ldap_dn()
+            return settings.LDAP_DN
         return None
 
     @classmethod
