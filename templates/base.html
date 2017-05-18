@@ -106,6 +106,12 @@
       </div>
       {% endfor %}
       {% endif %}
+      {% if form.errors %}
+      <div class="alert alert-dismissible alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <p>{{ _('invalid_username_or_password') }}</p>
+      </div>
+      {% endif %}
 
       {% block content %}
       {% endblock %}
