@@ -218,27 +218,31 @@ class LdapPerson(models.Model):
         return extra_conditions
         
     
-    def save(self):
+    def save(self, attrs=[]):
+        upd_person = []
         try:
-            ldap_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
-                               str(self.telephone_number) or None),
-                             ( ldap.MOD_REPLACE, 'physicalDeliveryOfficeName',
-                               str(self.office) or None),
-                             ( ldap.MOD_REPLACE, 'gidNumber',
-                               str(self.group_id) or None),
-                             ( ldap.MOD_REPLACE, 'departmentNumber',
-                               str(self.floor) or None),
-                             ( ldap.MOD_REPLACE, 'destinationIndicator',
-                               str(self.area) or None),
-                             ( ldap.MOD_REPLACE, 'employeeType',
-                               str(self.position) or None),]
+            upd_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
+                             str(self.telephone_number) or ''),
+                           ( ldap.MOD_REPLACE, 'homePhone',
+                             str(self.home_telephone_number) or ''),
+                           ( ldap.MOD_REPLACE, 'physicalDeliveryOfficeName',
+                             str(self.office) or ''),
+                           ( ldap.MOD_REPLACE, 'departmentNumber',
+                             str(self.floor) or ''),
+                           ( ldap.MOD_REPLACE, 'destinationIndicator',
+                             str(self.area) or ''),
+                           ( ldap.MOD_REPLACE, 'employeeType',
+                             str(self.position) or ''),]
 
+            if self.group_id:
+                upd_person.append((ldap.MOD_REPLACE, 'gidNumber', str(self.group_id)))
+                
             if self.office:
                 new_office = self.office
             elif self.other_office:
                 new_office = self.other_office
 
-            ldap_person.append((ldap.MOD_REPLACE,
+            upd_person.append((ldap.MOD_REPLACE,
                                 'physicalDeliveryOfficeName',
                                 str(new_office)))
 
@@ -247,12 +251,12 @@ class LdapPerson(models.Model):
                 mails.append(str(self.email))
                 if self.alternative_email:
                     mails.append(str(self.alternative_email))
-                ldap_person.append((ldap.MOD_REPLACE,'mail',mails))
+                upd_person.append((ldap.MOD_REPLACE,'mail',mails))
                 
             udn = LdapPerson.ldap_udn_for( str(self.username) )
 
-            logging.warning( "Updated ldap user data for {} \n".format(ldap_person))
-            LdapConn.new().modify_s(udn, ldap_person)
+            logging.warning( "Updated ldap user data for {} \n".format(upd_person))
+            LdapConn.new().modify_s(udn, upd_person)
             
         except ldap.LDAPError, e:
             logging.error( e )
@@ -307,35 +311,37 @@ class LdapPerson(models.Model):
                 ldap_condition,
                 retrieve_attributes,
                 sizelimit = LdapPerson.ldap_size_limit())
+            LdapPerson.ldap_to_obj(ldap_result)
         except ldap.TIMEOUT, e:
             logging.error( "Timeout exception {} \n".format(e))
-            return None
+            ldap_result = None
         except ldap.SIZELIMIT_EXCEEDED, e:
             logging.error( "Size limit exceeded exception {} \n".format(e))
-            return None
+            ldap_result = None
         except ldap.LDAPError, e:
             logging.error( e )
+            ldap_result = None
 
-        return LdapPerson.ldap_to_obj(ldap_result)
+        return ldap_result
 
     
     @classmethod
     def get_by_uid(cls, uid):
-        ldap_condition = "(uid={})".format( uid )
+        ldap_condition = "(uid={})".format( str(uid) )
         ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
         retrieve_attributes = [str(x) for x in LdapPerson.ldap_attrs()]
-        ldap_result = []
-
+        ldap_result = None
         try:
             ldap_result = LdapConn.new().search_s(
                 "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
                 ldap.SCOPE_SUBTREE,
                 ldap_condition,
                 retrieve_attributes)
+            ldap_result = LdapPerson.ldap_to_obj(ldap_result)[0]
         except ldap.LDAPError, e:
             logging.error( e )
 
-        return LdapPerson.ldap_to_obj(ldap_result)[0]
+        return ldap_result
 
 
     @classmethod
@@ -362,7 +368,7 @@ class LdapPerson(models.Model):
                 elif 'givenName' in entry and entry['givenName'][0]:
                     person.fullname = entry['givenName'][0]
 
-            if 'mail' in entry and entry['mail'][0]:                
+            if 'mail' in entry and len(entry['mail']) > 0:
                 for mail in entry['mail']:
                     if ldap_domain_mail and ldap_domain_mail in mail:
                         person.email = mail

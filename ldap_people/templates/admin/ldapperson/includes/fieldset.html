@@ -10,15 +10,16 @@
 <fieldset class="module aligned first ">
   
   {% if result.username %}
-  <div class="control-group form-row field-username ">
+  <div class="control-group form-row field-username">
     <div>
       <div class="control-label"><label>{{ _('Username') }}:</label></div>
       <div class="controls">
-        <input class="readonly" type="text" name="username" value="{{ result.username }}" readonly="true">
+        <input class="readonly" type="text" name="username"
+               value="{{ result.username }}" readonly="true">
       </div>
     </div>
   </div>
-  {% endif %}  
+  {% endif %}
 
   <div class="control-group form-row field-document_number ">
     <div>
@@ -120,6 +121,17 @@
       <div class="controls">
         <input id="id_telephone_number" maxlength="200" name="telephone_number" type="text"
                value="{{ result.telephone_number|default:'' }}">
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row field-telephone_number ">
+    <div title="{{ _('telephone_number_example') }}">
+      <div class="control-label">
+        <label for="id_home_telephone_number">{{ _('Home_telephone_number') }}:</label></div>
+      <div class="controls">
+        <input id="id_home_telephone_number" maxlength="200" name="home_telephone_number" type="text"
+               value="{{ result.home_telephone_number|default:'' }}">
       </div>
     </div>
   </div>

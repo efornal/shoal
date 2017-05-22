@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="well bs-component">
+
+  <form class="form-horizontal" action="{% url 'save' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+      <legend>{{ _('data_of_the_person') }}</legend>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="textinput">{{ _('Name') }}</label>
+        <div class="col-sm-4">
+          <p class="form-control-static">
+            {{ form.surname.value|default:'' }}, {{ form.name.value|default:'' }}</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="textinput">{{ _('Document') }}</label>
+        <div class="col-sm-4">
+          <p class="form-control-static">
+            {{ form.type_document_number.value|default:'' }}&nbsp;
+            {{ form.document_number.value|default:'' }}</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail" class="col-sm-2 control-label">{{ _('Office') }}</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">{{ form.office.value|default:'' }}</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="textinput">{{ _('Email') }}</label>
+        <div class="col-sm-4">
+          <p class="form-control-static">{{ form.email.value|default:'' }}</p>
+        </div>
+        <label class="col-sm-2 control-label" for="textinput">{{ _('Alternative_email') }}</label>
+        <div class="col-sm-4" title="{{ _('to_change_password') }}">
+          <input class="form-control" type="text" name="alternative_email" 
+                 value="{{ form.alternative_email.value|default:'' }}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="textinput">{{ _('Telephone_number') }}</label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" name="telephone_number" 
+                 value="{{ form.telephone_number.value|default:'' }}" />
+        </div>
+        <label class="col-sm-2 control-label" for="textinput">{{ _('Home_telephone_number') }}</label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" name="home_telephone_number" 
+                 value="{{ form.home_telephone_number.value|default:'' }}" />
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+        <div class="col-lg-12 pull-right">
+          <button type="reset" class="btn btn-default">{{ _('Cancel') }}</button>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <button type="submit" class="btn btn-primary">{{ _('Save') }}</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+</div>
+</div>
+
+
+
+{% endblock %}
+

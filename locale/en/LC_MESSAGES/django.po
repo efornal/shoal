@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-04 12:23-0300\n"
+"POT-Creation-Date: 2017-05-22 11:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,233 +17,257 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/admin.py:134
+#: app/views.py:49
+msgid "changes_saved"
+msgstr "Changes saved successfully"
+
+#: app/views.py:65 ldap_people/admin.py:128
+msgid "search_error"
+msgstr ""
+"The search could not be performed. Check the connection, "
+"or the text to search does not generate excess results"
+
+#: decorators.py:13
+msgid "person_was_not_found"
+msgstr "The registered person could not be validated. Service not available"
+
+#: ldap_people/admin.py:121
 msgid "Database error"
 msgstr "Database error"
 
-#: app/forms.py:21 app/models.py:67 app/models.py:404
+#: ldap_people/forms.py:24 ldap_people/models.py:82 ldap_people/models.py:605
 msgid "name"
 msgstr "name"
 
-#: app/forms.py:40 app/models.py:90
+#: ldap_people/forms.py:43 ldap_people/models.py:105
 msgid "office"
 msgstr "office"
 
-#: app/forms.py:44 app/models.py:95
+#: ldap_people/forms.py:47 ldap_people/models.py:110
 msgid "other_office"
 msgstr "other office"
 
-#: app/models.py:58 templates/base.html:69
+#: ldap_people/forms.py:106
+msgid "person_without_email"
+msgstr "The person's email is a required data"
+
+#: ldap_people/forms.py:109
+msgid "person_without_institutional_email"
+msgstr "The institutional email of the person is a required data"
+
+#: ldap_people/models.py:73 templates/base.html:69
 msgid "username"
 msgstr "username"
 
-#: app/models.py:72
+#: ldap_people/models.py:87
 msgid "surname"
 msgstr "Surname"
 
-#: app/models.py:77
+#: ldap_people/models.py:92
 msgid "fullname"
 msgstr "name"
 
-#: app/models.py:81
+#: ldap_people/models.py:96
 msgid "email"
 msgstr "email"
 
-#: app/models.py:85
+#: ldap_people/models.py:100
 msgid "alternative_email"
 msgstr "alternative email"
 
-#: app/models.py:104
+#: ldap_people/models.py:119
 msgid "document_number"
 msgstr "document number"
 
-#: app/models.py:109
+#: ldap_people/models.py:124
 msgid "type_document_number"
 msgstr "type document number"
 
-#: app/models.py:114
+#: ldap_people/models.py:129
 msgid "country_document_number"
 msgstr "country document number"
 
-#: app/models.py:119
+#: ldap_people/models.py:134
 msgid "telephone_number"
-msgstr "telephone number"
+msgstr "work telephone number"
 
-#: app/models.py:124
+#: ldap_people/models.py:139
 msgid "home_telephone_number"
 msgstr "personal telephone number"
 
-#: app/models.py:129
+#: ldap_people/models.py:144
 msgid "floor"
 msgstr "floor"
 
-#: app/models.py:134
+#: ldap_people/models.py:149
 msgid "area"
 msgstr "area"
 
-#: app/models.py:139
+#: ldap_people/models.py:154
 msgid "position"
 msgstr "position"
 
-#: app/models.py:143
+#: ldap_people/models.py:158
 msgid "LdapPerson"
 msgstr "Ldap Person"
 
-#: app/models.py:144
+#: ldap_people/models.py:159
 msgid "LdapPeople"
 msgstr "Ldap People"
 
-#: app/models.py:407 templates/admin/ldapperson/includes/fieldset.html:81
-#: templates/search.html:10
-msgid "Office"
-msgstr "Office"
-
-#: app/models.py:408
-msgid "Offices"
-msgstr "Offices"
-
-#: app/models.py:421
+#: ldap_people/models.py:428
 msgid "Group"
 msgstr "Group"
 
-#: app/models.py:422
+#: ldap_people/models.py:429
 msgid "Groups"
 msgstr "Groups"
 
-#: app/views.py:34
-msgid "search_error"
-msgstr ""
-"The search could not be performed. Verify that the text to be searched does "
-"not generate excess results"
+#: ldap_people/models.py:609
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:89
+#: templates/edit.html:29 templates/search.html:12
+msgid "Office"
+msgstr "Office"
 
-#: shoal/settings.py:124 shoal/settings.tpl.py:124
-msgid "Spanish"
-msgstr "Spanish"
+#: ldap_people/models.py:610
+msgid "Offices"
+msgstr "Offices"
 
-#: shoal/settings.py:125 shoal/settings.tpl.py:125
-msgid "English"
-msgstr "English"
+#: ldap_people/templates/admin/ldapperson/change_form.html:21
+msgid "You have unsaved changes"
+msgstr "You have unsaved changes"
 
-#: templates/admin/change_list.html:42
-#: templates/admin/ldapperson/change_form.html:61
-#: templates/admin/ldapperson/change_list.html:42
+#: ldap_people/templates/admin/ldapperson/change_form.html:50
+#: ldap_people/templates/admin/ldapperson/change_form.html:76
+msgid "Add"
+msgstr "Add"
+
+#: ldap_people/templates/admin/ldapperson/change_form.html:61
+#: ldap_people/templates/admin/ldapperson/change_list.html:42
 msgid "Home"
 msgstr "Home"
 
-#: templates/admin/change_list.html:68 templates/admin/change_list.html:116
-#: templates/admin/ldapperson/change_form.html:125
-#: templates/admin/ldapperson/change_list.html:68
-#: templates/admin/ldapperson/change_list.html:176
+#: ldap_people/templates/admin/ldapperson/change_form.html:100
+msgid "tools"
+msgstr "tools"
+
+#: ldap_people/templates/admin/ldapperson/change_form.html:110
+msgid "History"
+msgstr "History"
+
+#: ldap_people/templates/admin/ldapperson/change_form.html:114
+msgid "View on site"
+msgstr "View on site"
+
+#: ldap_people/templates/admin/ldapperson/change_form.html:125
+#: ldap_people/templates/admin/ldapperson/change_list.html:68
+#: ldap_people/templates/admin/ldapperson/change_list.html:176
 #, python-format
 msgid "Add %(name)s"
 msgstr "Add %(name)s"
 
-#: templates/admin/change_list.html:86
-#: templates/admin/ldapperson/change_form.html:154
-#: templates/admin/ldapperson/change_list.html:86
+#: ldap_people/templates/admin/ldapperson/change_form.html:154
+#: ldap_people/templates/admin/ldapperson/change_list.html:86
 msgid "Please correct the error below."
-msgid_plural "Please correct the errors below."
+msgid_plural " Please correct the errors below."
 msgstr[0] "Please correct the error below."
 msgstr[1] "Please correct the errors below."
 
-#: templates/admin/change_list.html:110
-#: templates/admin/ldapperson/change_list.html:170
+#: ldap_people/templates/admin/ldapperson/change_list.html:124
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:15
+msgid "Username"
+msgstr "Username"
+
+#: ldap_people/templates/admin/ldapperson/change_list.html:130
+msgid "Full_name"
+msgstr "Name"
+
+#: ldap_people/templates/admin/ldapperson/change_list.html:136
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:65
+#: templates/edit.html:36 templates/search.html:13
+msgid "Email"
+msgstr "Email"
+
+#: ldap_people/templates/admin/ldapperson/change_list.html:170
 msgid "Nothing found"
 msgstr "Nothing found"
 
-#: templates/admin/change_list.html:112
-#: templates/admin/ldapperson/change_list.html:172
+#: ldap_people/templates/admin/ldapperson/change_list.html:172
 msgid "Reset search and filters"
 msgstr "Reset search and filters"
 
-#: templates/admin/change_list.html:114
-#: templates/admin/ldapperson/change_list.html:174
+#: ldap_people/templates/admin/ldapperson/change_list.html:174
 #, python-format
 msgid "%(name_plural)s are not created yet"
 msgstr "%(name_plural)s are not created yet"
 
-#: templates/admin/ldapperson/change_form.html:21
-msgid "You have unsaved changes"
-msgstr "You have unsaved changes"
-
-#: templates/admin/ldapperson/change_form.html:50
-#: templates/admin/ldapperson/change_form.html:76
-msgid "Add"
-msgstr "Add"
-
-#: templates/admin/ldapperson/change_form.html:100
-msgid "tools"
-msgstr "tools"
-
-#: templates/admin/ldapperson/change_form.html:110
-msgid "History"
-msgstr "History"
-
-#: templates/admin/ldapperson/change_form.html:114
-msgid "View on site"
-msgstr "View on site"
-
-#: templates/admin/ldapperson/change_list.html:124
-#: templates/admin/ldapperson/includes/fieldset.html:8
-msgid "Username"
-msgstr "Username"
-
-#: templates/admin/ldapperson/change_list.html:130
-msgid "Full_name"
-msgstr "Name"
-
-#: templates/admin/ldapperson/change_list.html:136
-#: templates/admin/ldapperson/includes/fieldset.html:57
-msgid "Email"
-msgstr "Email"
-
-#: templates/admin/ldapperson/includes/fieldset.html:19
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:27
+#: templates/edit.html:20
 msgid "Document"
 msgstr "Document"
 
-#: templates/admin/ldapperson/includes/fieldset.html:33
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:41
+#: templates/edit.html:12
 msgid "Name"
 msgstr "Name"
 
-#: templates/admin/ldapperson/includes/fieldset.html:45
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:53
 msgid "Surname"
 msgstr "Surname"
 
-#: templates/admin/ldapperson/includes/fieldset.html:69
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:77
+#: templates/edit.html:40
 msgid "Alternative_email"
 msgstr "Alternative email"
 
-#: templates/admin/ldapperson/includes/fieldset.html:102
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:108
 msgid "Other_office"
 msgstr "Other office"
 
-#: templates/admin/ldapperson/includes/fieldset.html:112
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:118
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:129
 msgid "telephone_number_example"
 msgstr "Example: (4571110[/4571111] int 172[/173])"
 
-#: templates/admin/ldapperson/includes/fieldset.html:114
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:120
+#: templates/edit.html:47
 msgid "Telephone_number"
-msgstr "Telephone number"
+msgstr "Work telephone number"
 
-#: templates/admin/ldapperson/includes/fieldset.html:125
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:131
+#: templates/edit.html:52
+msgid "Home_telephone_number"
+msgstr "Home telephone number"
+
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:142
 msgid "Floor"
 msgstr "Floor"
 
-#: templates/admin/ldapperson/includes/fieldset.html:136
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:153
 msgid "Area"
 msgstr "Area"
 
-#: templates/admin/ldapperson/includes/fieldset.html:147
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:164
 msgid "Position"
 msgstr "Position"
 
-#: templates/admin/ldapperson/includes/fieldset.html:158
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:175
 msgid "Main_group"
 msgstr "Main group"
 
-#: templates/admin/ldapperson/includes/fieldset.html:177
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:194
 msgid "Secondary_groups"
 msgstr "Secondary groups"
+
+#: shoal/settings.py:134 shoal/settings.tpl.py:134 templates/base.html:55
+#: templates/base.html:60
+msgid "Spanish"
+msgstr "Spanish"
+
+#: shoal/settings.py:135 shoal/settings.tpl.py:135 templates/base.html:56
+#: templates/base.html:62
+msgid "English"
+msgstr "English"
 
 #: templates/base.html:46 templates/base.html:48
 msgid "search"
@@ -253,25 +277,33 @@ msgstr "search"
 msgid "language"
 msgstr "language"
 
-#: templates/base.html:55 templates/base.html:60
-msgid "spanish"
-msgstr "spanish"
+#: templates/base.html:75
+msgid "Edit_account"
+msgstr "Edit account"
 
-#: templates/base.html:56 templates/base.html:62
-msgid "english"
-msgstr "english"
+#: templates/base.html:78 templates/base.html:82
+msgid "Close_session"
+msgstr "Close session"
 
-#: templates/base.html:74
-msgid "edit_account"
-msgstr "edit account"
+#: templates/base.html:88
+msgid "Init_session"
+msgstr "Init session"
 
-#: templates/base.html:76 templates/base.html:80
-msgid "close_session"
-msgstr "close session"
+#: templates/edit.html:9
+msgid "data_of_the_person"
+msgstr "Data of the person"
 
-#: templates/base.html:86
-msgid "init_session"
-msgstr "init session"
+#: templates/edit.html:41
+msgid "to_change_password"
+msgstr "It will be used to change the password"
+
+#: templates/edit.html:61
+msgid "Cancel"
+msgstr "Cancel"
+
+#: templates/edit.html:63
+msgid "Save"
+msgstr "Save"
 
 #: templates/index.html:6
 msgid "welcome_message_title"
@@ -284,19 +316,19 @@ msgstr ""
 "other users.<br> In order to edit your account data, you must register using "
 "the Ldap login data that you normally use."
 
-#: templates/registration/login.html:6
+#: templates/registration/login.html:8
 msgid "invalid_username_or_password"
 msgstr "invalid username or password"
 
-#: templates/registration/login.html:18
+#: templates/registration/login.html:21
 msgid "home_login"
 msgstr "home login"
 
-#: templates/registration/login.html:23
+#: templates/registration/login.html:25
 msgid "user"
 msgstr "user"
 
-#: templates/registration/login.html:29
+#: templates/registration/login.html:30
 msgid "password"
 msgstr "password"
 
@@ -304,10 +336,16 @@ msgstr "password"
 msgid "log_in"
 msgstr "log in"
 
-#: templates/search.html:9
+#: templates/search.html:10
 msgid "Person"
 msgstr "Person"
 
 #: templates/search.html:11
 msgid "Phone"
 msgstr "Phone"
+
+#~ msgid "spanish"
+#~ msgstr "spanish"
+
+#~ msgid "english"
+#~ msgstr "english"

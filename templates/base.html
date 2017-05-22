@@ -52,14 +52,14 @@
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download"
                  title="{{ _('language') }}">
                 <i class="glyphicon glyphicon-flag"></i>
-                {% if LANGUAGE_CODE = 'es' %} {{ _('spanish') }} {% endif %}
-                {% if LANGUAGE_CODE = 'en' %} {{ _('english') }} {% endif %}
+                {% if LANGUAGE_CODE = 'es' %} {{ _('Spanish') }} {% endif %}
+                {% if LANGUAGE_CODE = 'en' %} {{ _('English') }} {% endif %}
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="download">
-                <li><a href="{% url 'set_language' lang='es' %}">{{ _('spanish') }}</a></li>
+                <li><a href="{% url 'set_language' lang='es' %}">{{ _('Spanish') }}</a></li>
                 <li class="divider"></li>
-                <li><a href="{% url 'set_language' lang='en' %}">{{ _('english') }}</a></li>
+                <li><a href="{% url 'set_language' lang='en' %}">{{ _('English') }}</a></li>
               </ul>
             </li>
 
@@ -71,19 +71,21 @@
                 {{ user.username }} <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="download">
-                <li><a href="" title="{{ _('edit_account') }}">{{ _('edit_account') }}</a></li>
+                <li><a href="{% url 'edit' %}"
+                       title="{{ _('Edit_account') }}">{{ _('Edit_account') }}</a></li>
                 <li class="divider"></li>
-                <li><a href="" title="{{ _('close_session') }}">{{ _('close_session') }}</a></li>
+                <li><a href="{% url 'logout' %}"
+                       title="{{ _('Close_session') }}">{{ _('Close_session') }}</a></li>
               </ul>
             </li>
             <li>
-              <a href="{% url 'logout' %}" title="{{ _('close_session') }}">
+              <a href="{% url 'logout' %}" title="{{ _('Close_session') }}">
                 <i class="glyphicon glyphicon-log-out"></i></a>
             </li>
             <li style="margin-left:10px;"></li>
             {% else  %}
             <li>
-              <a href="{% url 'login' %}" title="{{ _('init_session') }}">
+              <a href="{% url 'login' %}" title="{{ _('Init_session') }}">
                 <i class="glyphicon glyphicon-user"></i>
                 <i class="glyphicon glyphicon-log-in"></i>
               </a>
@@ -106,12 +108,24 @@
       </div>
       {% endfor %}
       {% endif %}
+
       {% if form.errors %}
-      <div class="alert alert-dismissible alert-info">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <p>{{ _('invalid_username_or_password') }}</p>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="bs-component">
+            {% for field in form %}
+            {% if field.errors %}
+            <div class="alert alert-dismissible alert-danger">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {%  trans field.name %}: {{ field.errors|striptags }}
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
       </div>
       {% endif %}
+
 
       {% block content %}
       {% endblock %}

@@ -17,3 +17,6 @@ body {
     float: left;
     margin-right: 20px;
 }
+legend {
+    font-size: 18px;
+}
