@@ -307,7 +307,7 @@ msgstr "Save"
 
 #: templates/index.html:6
 msgid "welcome_message_title"
-msgstr "you are welcome!"
+msgstr "You are welcome!"
 
 #: templates/index.html:7
 msgid "welcome_message"

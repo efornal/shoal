@@ -308,14 +308,14 @@ msgstr "Guardar cambios"
 
 #: templates/index.html:6
 msgid "welcome_message_title"
-msgstr "bienvenido!"
+msgstr "Bienvenido!"
 
 #: templates/index.html:7
 msgid "welcome_message"
 msgstr ""
 "Este sistema le permitirá gestionar su cuenta de usuario de ldap y realizar "
 "búsquedas de otros usuarios. <br> Para poder editar los datos de tu cuenta, "
-"deber registrarte utilizando los datos de login de LDAP que utilizas "
+"debes registrarte utilizando los datos de login de LDAP que utilizas "
 "normalmente."
 
 #: templates/registration/login.html:8
