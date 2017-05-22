@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="jumbotron">
+  <h3>{{ _('logout_message_title') | safe }}</h3>
+  <p>{{ _('logout_message') | safe}}</p>
+</div>
+{% endblock %}
+

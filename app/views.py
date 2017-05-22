@@ -25,6 +25,11 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+def logout(request):
+    context={}
+    return render(request, 'logout.html', context)
+
+
 @login_required
 @ldap_user_required
 def edit(request):
@@ -60,10 +65,10 @@ def search(request):
     if 'text' in request.GET:
         text = request.GET['text']
         people = LdapPerson.search(text)
+        context.update({'people': people})
+
         if people is None:
             logging.warning ("Failed to perform text search {}".format(text))
             messages.info(request, _('search_error'))
-            
-        context.update({'people': people})
         
     return render(request, 'search.html', context)

@@ -305,13 +305,13 @@ class LdapPerson(models.Model):
         ldap_result = []
             
         try:
-            ldap_result = LdapConn.new().search_ext_s(
+            result = LdapConn.new().search_ext_s(
                 "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
                 ldap.SCOPE_SUBTREE,
                 ldap_condition,
                 retrieve_attributes,
                 sizelimit = LdapPerson.ldap_size_limit())
-            LdapPerson.ldap_to_obj(ldap_result)
+            ldap_result = LdapPerson.ldap_to_obj(result)
         except ldap.TIMEOUT, e:
             logging.error( "Timeout exception {} \n".format(e))
             ldap_result = None

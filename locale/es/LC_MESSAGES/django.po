@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-22 11:57-0300\n"
+"POT-Creation-Date: 2017-05-22 13:06-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,25 +18,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/views.py:49
+#: app/views.py:54
 msgid "changes_saved"
 msgstr "Los cambios se guardaron correctamente"
 
-#: app/views.py:65 ldap_people/admin.py:128
+#: app/views.py:72 ldap_people/admin.py:128
 msgid "search_error"
 msgstr ""
-"La búsqueda no pudo realizarse. Verifique la conexión, o que el texto a buscar no genere "
-"exceso de resultados"
+"La búsqueda no pudo realizarse. Verifique la conexión, o que el texto a "
+"buscar no genere exceso de resultados"
 
-#: decorators.py:13
+#: decorators.py:14
 msgid "person_was_not_found"
-msgstr "La persona registrada no se pudo validar. El servicio no está disponible."
+msgstr ""
+"La persona registrada no se pudo validar. El servicio no está disponible."
 
 #: ldap_people/admin.py:121
 msgid "Database error"
 msgstr "Error de base de datos"
 
-#: ldap_people/forms.py:24 ldap_people/models.py:82 ldap_people/models.py:605
+#: ldap_people/forms.py:24 ldap_people/models.py:82 ldap_people/models.py:607
 msgid "name"
 msgstr "nombre"
 
@@ -116,21 +117,21 @@ msgstr "Persona Ldap"
 msgid "LdapPeople"
 msgstr "Personas Ldap"
 
-#: ldap_people/models.py:428
+#: ldap_people/models.py:430
 msgid "Group"
 msgstr "Grupo"
 
-#: ldap_people/models.py:429
+#: ldap_people/models.py:431
 msgid "Groups"
 msgstr "Grupos"
 
-#: ldap_people/models.py:609
+#: ldap_people/models.py:611
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:89
-#: templates/edit.html:29 templates/search.html:12
+#: templates/edit.html:30 templates/search.html:12
 msgid "Office"
 msgstr "Oficina"
 
-#: ldap_people/models.py:610
+#: ldap_people/models.py:612
 msgid "Offices"
 msgstr "Oficinas"
 
@@ -185,7 +186,7 @@ msgstr "Nombre"
 
 #: ldap_people/templates/admin/ldapperson/change_list.html:136
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:65
-#: templates/edit.html:36 templates/search.html:13
+#: templates/edit.html:37 templates/search.html:13
 msgid "Email"
 msgstr "Email"
 
@@ -203,12 +204,12 @@ msgid "%(name_plural)s are not created yet"
 msgstr "%(name_plural)s aún no se han creado"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:27
-#: templates/edit.html:20
+#: templates/edit.html:21
 msgid "Document"
 msgstr "Documento"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:41
-#: templates/edit.html:12
+#: templates/edit.html:13
 msgid "Name"
 msgstr "Nombre"
 
@@ -217,7 +218,7 @@ msgid "Surname"
 msgstr "Apellido"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:77
-#: templates/edit.html:40
+#: templates/edit.html:41
 msgid "Alternative_email"
 msgstr "Email alternativo"
 
@@ -231,12 +232,12 @@ msgid "telephone_number_example"
 msgstr "Ejemplo: (4571110[/4571111] int 172[/173])"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:120
-#: templates/edit.html:47
+#: templates/edit.html:48
 msgid "Telephone_number"
 msgstr "Teléfono laboral"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:131
-#: templates/edit.html:52
+#: templates/edit.html:53
 msgid "Home_telephone_number"
 msgstr "Teléfono personal"
 
@@ -290,19 +291,19 @@ msgstr "Cerrar sesión"
 msgid "Init_session"
 msgstr "Iniciar sesión"
 
-#: templates/edit.html:9
+#: templates/edit.html:10
 msgid "data_of_the_person"
 msgstr "Datos de la persona"
 
-#: templates/edit.html:41
+#: templates/edit.html:42
 msgid "to_change_password"
 msgstr "Se usará para modificar la contraseña"
 
-#: templates/edit.html:61
+#: templates/edit.html:62
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: templates/edit.html:63
+#: templates/edit.html:64
 msgid "Save"
 msgstr "Guardar cambios"
 
@@ -317,6 +318,15 @@ msgstr ""
 "búsquedas de otros usuarios. <br> Para poder editar los datos de tu cuenta, "
 "debes registrarte utilizando los datos de login de LDAP que utilizas "
 "normalmente."
+
+#: templates/logout.html:6 templates/registration/logout.html:6
+msgid "logout_message_title"
+msgstr "Hasta luego!"
+
+#: templates/logout.html:7 templates/registration/logout.html:7
+msgid "logout_message"
+msgstr ""
+"Gracias por el tiempo que has dedicado hoy al sitio web"
 
 #: templates/registration/login.html:8
 msgid "invalid_username_or_password"
