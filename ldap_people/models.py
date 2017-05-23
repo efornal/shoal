@@ -20,14 +20,13 @@ class LdapConn():
             logging.error(e)
             raise
 
-        
     @classmethod
-    def new(cls):
+    def new_auth(cls, username, password):
         try:
             connection = ldap.initialize( LdapConn.ldap_server() )
-            connection.simple_bind_s( "cn={},{}".format( LdapConn.ldap_username(), \
-                                                         LdapConn.ldap_dn() ), \
-                                      LdapConn.ldap_password() )
+            connection.simple_bind_s( "cn={},{}".format( username, \
+                                                         LdapConn.ldap_dn() ),  \
+                                      password )
             return connection
         except ldap.LDAPError, e:
             logging.error("Could not connect to the Ldap server: '{}'" \
@@ -35,6 +34,11 @@ class LdapConn():
             logging.error(e)
             raise
         
+    @classmethod
+    def new(cls):
+        return LdapConn.new_auth( LdapConn.ldap_username(), LdapConn.ldap_password() )
+
+    
     @classmethod
     def ldap_dn(self):
         if hasattr(settings, 'LDAP_DN'):
