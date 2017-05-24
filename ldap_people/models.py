@@ -27,7 +27,6 @@ class LdapConn():
             connection.simple_bind_s( "cn={},{}".format( username, \
                                                          LdapConn.ldap_dn() ),  \
                                       password )
-            logging.warning("{}-{}-{}".format(username, LdapConn.ldap_dn(),password))
             return connection
         except ldap.LDAPError, e:
             logging.error("Could not connect to the Ldap server: '{}'" \
@@ -76,11 +75,6 @@ class LdapPerson(models.Model):
         null=True,
         blank=True,
         verbose_name=_('username'))
-    password = models.CharField(
-        max_length=200,
-        null=True,
-        blank=True,
-        verbose_name=_('password'))
     person_id = models.CharField(
         max_length=200,
         null=True,
@@ -229,14 +223,7 @@ class LdapPerson(models.Model):
         
     
     def save(self, *args, **kwargs):
-        """
-        Guarda determinados datos de la persona en LDAP
-        """
-        if 'connection' in kwargs:
-              ldap_conn = kwargs['connection']
-        else:
-              ldap_conn = LdapConn.new()
-              
+        """Guarda determinados datos de la persona en LDAP """
         upd_person = []
         try:
             upd_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
@@ -271,10 +258,10 @@ class LdapPerson(models.Model):
                     mails.append(str(self.alternative_email))
                 upd_person.append((ldap.MOD_REPLACE,'mail',mails))
                 
-            udn = LdapPerson.ldap_udn_for( str(username) )
+            udn = LdapPerson.ldap_udn_for( str(self.username) )
 
             logging.warning( "Updated ldap user data for {} \n".format(upd_person))
-            ldap_conn.modify_s(udn, upd_person)
+            LdapConn.new().modify_s(udn, upd_person)
             
         except ldap.LDAPError, e:
             logging.error( e )

@@ -326,7 +326,7 @@ msgstr "Hasta luego!"
 #: templates/logout.html:7 templates/registration/logout.html:7
 msgid "logout_message"
 msgstr ""
-"Gracias por el tiempo que has dedicado hoy al sitio web"
+"Gracias por el tiempo que has dedicado al sitio web hoy."
 
 #: templates/registration/login.html:8
 msgid "invalid_username_or_password"
