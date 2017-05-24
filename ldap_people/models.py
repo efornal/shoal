@@ -27,6 +27,7 @@ class LdapConn():
             connection.simple_bind_s( "cn={},{}".format( username, \
                                                          LdapConn.ldap_dn() ),  \
                                       password )
+            logging.warning("{}-{}-{}".format(username, LdapConn.ldap_dn(),password))
             return connection
         except ldap.LDAPError, e:
             logging.error("Could not connect to the Ldap server: '{}'" \
@@ -75,6 +76,11 @@ class LdapPerson(models.Model):
         null=True,
         blank=True,
         verbose_name=_('username'))
+    password = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('password'))
     person_id = models.CharField(
         max_length=200,
         null=True,
@@ -222,7 +228,15 @@ class LdapPerson(models.Model):
         return extra_conditions
         
     
-    def save(self, attrs=[]):
+    def save(self, *args, **kwargs):
+        """
+        Guarda determinados datos de la persona en LDAP
+        """
+        if 'connection' in kwargs:
+              ldap_conn = kwargs['connection']
+        else:
+              ldap_conn = LdapConn.new()
+              
         upd_person = []
         try:
             upd_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
@@ -257,10 +271,10 @@ class LdapPerson(models.Model):
                     mails.append(str(self.alternative_email))
                 upd_person.append((ldap.MOD_REPLACE,'mail',mails))
                 
-            udn = LdapPerson.ldap_udn_for( str(self.username) )
+            udn = LdapPerson.ldap_udn_for( str(username) )
 
             logging.warning( "Updated ldap user data for {} \n".format(upd_person))
-            LdapConn.new().modify_s(udn, upd_person)
+            ldap_conn.modify_s(udn, upd_person)
             
         except ldap.LDAPError, e:
             logging.error( e )
@@ -349,6 +363,30 @@ class LdapPerson(models.Model):
 
 
     @classmethod
+    def get_auth_by_uid(cls, uid):
+        """
+        Retorna PersonaLdap con datos de authenticación
+        Usado luego para autenticar las peticiones a Ldap por usuario
+        """
+        ldap_condition = "(uid={})".format( str(uid) )
+        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
+        attributes = LdapPerson.ldap_attrs() + ['username','userPassword']
+        retrieve_attributes = [str(x) for x in attributes]
+        ldap_result = None
+        try:
+            ldap_result = LdapConn.new().search_s(
+                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
+                ldap.SCOPE_SUBTREE,
+                ldap_condition,
+                retrieve_attributes)
+            ldap_result = LdapPerson.ldap_to_obj(ldap_result)[0]
+        except ldap.LDAPError, e:
+            logging.error( e )
+
+        return ldap_result
+
+    
+    @classmethod
     def ldap_to_obj(cls, ldap_result):
         cn_found = []
         ldap_domain_mail = ''
@@ -360,6 +398,9 @@ class LdapPerson(models.Model):
 
             if 'uid' in entry and entry['uid'][0]:
                 person.username = entry['uid'][0]
+
+            if 'userPassword' in entry and entry['userPassword'][0]:
+                person.password = entry['userPassword'][0]
 
             if 'cn' in entry and entry['cn'][0]:
                 person.fullname = entry['cn'][0]

@@ -5,13 +5,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
 from ldap_people.models import LdapPerson
+from ldap_people.models import LdapConn
 from django.shortcuts import redirect
 from django.utils import translation
 import logging
 from django.contrib import messages
 from ldap_people.forms import LdapPersonForm, FrontLdapPersonForm
 from decorators import ldap_user_required
-    
+
+
 def set_language(request, lang='es'):
     if 'lang' in request.GET:
         lang = request.GET['lang']
@@ -43,14 +45,17 @@ def edit(request):
 @ldap_user_required
 def save(request):
     context={}
-    person = LdapPerson.get_by_uid(request.user)
+    person = LdapPerson.get_auth_by_uid(request.user)
+    ldap_conn =  LdapConn.new_auth(person.username, person.password)
     params = request.POST.copy()
     params.update({'username':request.user.username})
     params.update({'email': person.email})
     form = FrontLdapPersonForm(params,instance=person)
 
     if form.is_valid():
-        form.instance.save()
+        logging.error(person)
+        logging.error(ldap_conn)
+        form.instance.save(connection=ldap_conn)
         messages.info(request, _('changes_saved'))
     else:
         logging.warning ("Error to update ldap person {}".format(form.errors))

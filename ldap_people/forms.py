@@ -18,6 +18,9 @@ class LdapPersonForm(forms.ModelForm):
     username = forms.CharField(
         required=True,
         max_length=200)
+    password = forms.CharField(
+        required=True,
+        max_length=200)
     name = forms.CharField(
         max_length=200,
         required=True,
