@@ -289,11 +289,37 @@ class LdapPerson(models.Model):
         try:
             ldap_result = LdapConn.new().search_ext_s(
                 "ou={},{}".format(LdapPerson.ldap_ou(),
-                                  LdapPerson.lap_dn),
+                                  LdapConn.ldap_dn()),
                 ldap.SCOPE_SUBTREE,
                 ldap_condition,
                 retrieve_attributes,
                 sizelimit=LdapPerson.ldap_size_limit())
+        except ldap.TIMEOUT, e:
+            logging.error( "Timeout exception {} \n".format(e))
+            return None
+        except ldap.SIZELIMIT_EXCEEDED, e:
+            logging.error( "Size limit exceeded exception {} \n".format(e))
+            return None
+        except ldap.LDAPError, e:
+            logging.error( e )
+
+        return LdapPerson.ldap_to_obj(ldap_result)
+
+    
+    @classmethod
+    def all(cls):
+        ldap_condition = "(uid=*)"
+        ldap_condition = "(|{})".format( ldap_condition )
+        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
+        retrieve_attributes = [str(x) for x in LdapPerson.search_ldap_attrs()]
+        ldap_result = []
+        logging.error(ldap_condition)
+        try:
+            ldap_result = LdapConn.new().search_ext_s(
+                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
+                ldap.SCOPE_SUBTREE,
+                ldap_condition,
+                retrieve_attributes)
         except ldap.TIMEOUT, e:
             logging.error( "Timeout exception {} \n".format(e))
             return None
@@ -514,6 +540,26 @@ class LdapGroup(models.Model):
         
         return LdapGroup.ldap_to_obj(ldap_result)
 
+    
+    @classmethod
+    def members_of(cls, gid):
+        ldap_result = []
+        retrieve_attributes = [str('memberUid')]
+        ldap_condition = "(cn={})" .format(gid)
+        members = []
+        try:
+            ldap_result = LdapConn.new().search_s("ou={},{}".format(LdapGroup.ldap_ou(),
+                                                                    LdapConn.ldap_dn()),
+                                                  ldap.SCOPE_SUBTREE,
+                                                  ldap_condition,
+                                                  retrieve_attributes )
+            for dn,entry in ldap_result:
+                members = entry['memberUid']
+                
+        except ldap.LDAPError, e:
+            logging.error( e )
+        
+        return members
             
     
     @classmethod
