@@ -199,6 +199,7 @@ class LdapPerson(models.Model):
     @classmethod
     def search_ldap_attrs(cls):
         return ['uid','givenName','sn',
+                'departmentNumber','destinationIndicator','employeeType',
                 'telephoneNumber','physicalDeliveryOfficeName','mail']
 
         

@@ -10,6 +10,11 @@
         <th>{{ _('Person') }}</th>
         <th>{{ _('Phone') }}</th>
         <th>{{ _('Office') }}</th>
+        {% if show_extra_info %}
+        <th>{{ _('Floor') }}</th>
+        <th>{{ _('Area') }}</th>
+        <th>{{ _('Position') }}</th>
+        {% endif %}
         <th>{{ _('Email') }}</th>
       </tr>
     </thead>
@@ -20,6 +25,11 @@
         <td>{{ person.surname|default:'' }}, {{ person.name|default:'' }} </td>
         <td>{{ person.telephone_number|default:'' }} </td>
         <td>{{ person.office|default:'' }} </td>
+        {% if show_extra_info %}
+        <td>{{ person.floor|default:'' }} </td>
+        <td>{{ person.area|default:'' }} </td>
+        <td>{{ person.position|default:'' }}</td>
+        {% endif %}
         <td>{{ person.email|default:'' }}</td>
       </tr>
       {% endfor %}

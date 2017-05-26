@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
 from ldap_people.models import LdapPerson
+from ldap_people.models import LdapGroup
 from django.shortcuts import redirect
 from django.utils import translation
 import logging
@@ -62,8 +63,35 @@ def save(request):
     return redirect('edit')
 
 
+
+def is_in_group_with_extra_info(request):
+    """
+    Indicates whether the registered user belongs to an ldap group 
+    that allows the display of extra information
+    """
+    show_extra_info = False
+    try:
+        if request.user.is_authenticated:
+            user_groups = LdapGroup.groups_by_uid(request.user)
+            valid_user_groups = []
+            if hasattr(settings, 'GROUPS_EXTRA_INFORMATION_SEARCH') and \
+               len(settings.GROUPS_EXTRA_INFORMATION_SEARCH) > 0:
+                valid_user_groups = settings.GROUPS_EXTRA_INFORMATION_SEARCH
+                for user_group in user_groups:
+                    if user_group.name in valid_user_groups:
+                        show_extra_info = True
+    except Exception as e:
+        logging.error(e)
+
+    return show_extra_info
+
+
 def search(request):
-    context={}
+    user_groups = []
+    context = {}
+    show_extra_info = is_in_group_with_extra_info(request)
+                
+    context={'show_extra_info':show_extra_info}
     if 'text' in request.GET:
         text = request.GET['text']
         people = LdapPerson.search(text)
