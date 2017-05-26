@@ -225,6 +225,7 @@ class LdapPerson(models.Model):
     def save(self, *args, **kwargs):
         """Guarda determinados datos de la persona en LDAP """
         upd_person = []
+        curr_person = LdapPerson.get_by_uid(self.username)
         try:
             upd_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
                              str(self.telephone_number) or ''),
@@ -258,11 +259,21 @@ class LdapPerson(models.Model):
                     mails.append(str(self.alternative_email))
                 upd_person.append((ldap.MOD_REPLACE,'mail',mails))
                 
-            udn = LdapPerson.ldap_udn_for( str(self.username) )
 
+            udn = LdapPerson.ldap_udn_for( str(self.username) )
             logging.warning( "Updated ldap user data for {} \n".format(upd_person))
             LdapConn.new().modify_s(udn, upd_person)
             
+            curr_groups = [str(x.group_id) for x in LdapGroup.groups_by_uid(self.username)]
+            if self.group_id and (self.group_id not in curr_groups):
+                logging.warning('Adding user as a member of the new primary group..')
+                LdapGroup.add_member_to( self.username, self.group_id )
+
+            if (curr_person.group_id and self.group_id) and \
+               (curr_person.group_id != self.group_id): # update members!
+                logging.warning('Removing user as a member from the previous parent group..')
+                LdapGroup.remove_member_of_group( self.username, curr_person.group_id )
+
         except ldap.LDAPError, e:
             logging.error( e )
 
@@ -471,7 +482,7 @@ class LdapGroup(models.Model):
     @classmethod
     def ldap_ou(self):
         if hasattr(settings, 'LDAP_GROUP'):
-            return LdapGroup.ldap_ou()
+            return settings.LDAP_GROUP
         return None
 
     @classmethod

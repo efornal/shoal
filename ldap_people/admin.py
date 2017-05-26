@@ -59,7 +59,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
         form = LdapPersonForm(instance=person)
         groups = LdapGroup.all()
         groups_of_the_person = [str(x.group_id) for x in LdapGroup.groups_by_uid(person_id)]
-            
+
         context = {'form': form,
                    'groups': groups,
                    'groups_of_the_person': groups_of_the_person,
@@ -79,14 +79,13 @@ class LdapPersonAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         ldap_person= LdapPersonForm(request.POST)
         if ldap_person.is_valid():
-            logging.warning(dir(ldap_person))
             ldap_person.save()
         else:
             logging.error(ldap_person.errors)
 
         if 'groups_id' in request.POST:
             new_groups_ids = request.POST.getlist('groups_id')
-            LdapGroup.update_member_in_groups(ldap_person.username,new_groups_ids)
+            LdapGroup.update_member_in_groups(obj.username,new_groups_ids)
 
         super(LdapPersonAdmin, self).save_model(request, obj, form, change)
 
