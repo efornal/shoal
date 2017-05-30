@@ -49,6 +49,8 @@
         <div class="col-sm-4">
           <input class="form-control" type="text" name="telephone_number" 
                  value="{{ form.telephone_number.value|default:'' }}" />
+          <p class="help-block">{{ _('Examples') }} <strong>4571110 int 23</strong>,
+                {{ _('or_alone') }}: <strong>int 23</strong></p>
         </div>
         <label class="col-sm-2 control-label" for="textinput">{{ _('Home_telephone_number') }}</label>
         <div class="col-sm-4">

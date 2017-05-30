@@ -78,10 +78,9 @@ class LdapPersonForm(forms.ModelForm):
 
         
 def validate_telephone_number(val):
-    pattern = r'^\+?(\d{3,4})?(\s)?(\d{3,15})?(\sint\s\d{1,3})?$'    
+    pattern = r'^\+?(\d{3,4})?(\s)?(\d{3,15})?(\s)?(int\s\d{1,3})?$'
     return re.match(pattern, val)
 
-        
 class FrontLdapPersonForm(forms.ModelForm):
     username = forms.CharField(
         required=True,
@@ -116,8 +115,18 @@ class FrontLdapPersonForm(forms.ModelForm):
             
     def clean_telephone_number(self):
         telephone_number = self.cleaned_data.get('telephone_number')
-        logging.error(telephone_number)
         if not validate_telephone_number(telephone_number):
             logging.warning('invalid telephone number format')
-            self.add_error('telephone_number' , 'invalid format')
+            self.add_error('telephone_number' , _('invalid_format'))
         return self.cleaned_data.get('telephone_number')
+
+    
+    def clean_home_telephone_number(self):
+        if 'home_telephone_number' in self.cleaned_data and \
+           self.cleaned_data.get('home_telephone_number'):
+            telephone_number = self.cleaned_data.get('home_telephone_number')
+            if not validate_telephone_number(telephone_number):
+                logging.warning('invalid home telephone number format')
+                self.add_error('home_telephone_number' , _('invalid_format'))
+        return self.cleaned_data.get('home_telephone_number')
+    
