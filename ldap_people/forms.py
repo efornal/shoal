@@ -12,7 +12,7 @@ from django.conf import settings
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-
+import re
 
 class LdapPersonForm(forms.ModelForm):
     username = forms.CharField(
@@ -77,6 +77,11 @@ class LdapPersonForm(forms.ModelForm):
                   'office','telephone_number','home_telephone_number','other_office')
 
         
+def validate_telephone_number(val):
+    pattern = r'^\+?(\d{3,4})?(\s)?(\d{3,15})?(\sint\s\d{1,3})?$'    
+    return re.match(pattern, val)
+
+        
 class FrontLdapPersonForm(forms.ModelForm):
     username = forms.CharField(
         required=True,
@@ -108,4 +113,11 @@ class FrontLdapPersonForm(forms.ModelForm):
         if self.cleaned_data.get('email') != ldap_person.email:
             self.add_error('email' , _('person_without_institutional_email') )
 
-
+            
+    def clean_telephone_number(self):
+        telephone_number = self.cleaned_data.get('telephone_number')
+        logging.error(telephone_number)
+        if not validate_telephone_number(telephone_number):
+            logging.warning('invalid telephone number format')
+            self.add_error('telephone_number' , 'invalid format')
+        return self.cleaned_data.get('telephone_number')
