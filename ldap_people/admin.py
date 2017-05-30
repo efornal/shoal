@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from django.conf.urls import patterns
 from django.http import HttpResponse
 from ldap_people.models import LdapPerson
 from ldap_people.models import LdapGroup
