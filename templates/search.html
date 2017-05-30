@@ -1,40 +1,64 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
+<script>
+  $( function() {
+    $( "#dialog" ).dialog({
+      autoOpen: false,
+      show: {
+        effect: "highlight",
+        duration: 1000
+      },
+      hide: {
+        effect: "fade",
+        duration: 1000
+      }
+    });
+  } );
+  function show_mail(email){
+    document.getElementById("dialog").innerHTML = email;
+    $( "#dialog" ).dialog( "open" );
+  }
+</script>
+
+<div id="dialog" title="Email"></div>
 
 <div class="panel panel-default">
   <div class="table-responsive">
     <table class="table table-striped table-hover">
-    <thead>
-      <tr class="active">
-        <th>{{ _('Person') }}</th>
-        <th>{{ _('Phone') }}</th>
-        <th>{{ _('Office') }}</th>
-        {% if show_extra_info %}
-        <th>{{ _('Floor') }}</th>
-        <th>{{ _('Area') }}</th>
-        <th>{{ _('Position') }}</th>
+      <thead>
+        <tr class="active">
+          <th>{{ _('Person') }}</th>
+          <th>{{ _('Phone') }}</th>
+          <th>{{ _('Office') }}</th>
+          {% if show_extra_info %}
+          <th>{{ _('Floor') }}</th>
+          <th>{{ _('Area') }}</th>
+          <th>{{ _('Position') }}</th>
+          {% endif %}
+          <th>{{ _('Email') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if people %}
+        {% for person in people %}
+        <tr>
+          <td>{{ person.surname|default:'' }}, {{ person.name|default:'' }} </td>
+          <td>{{ person.telephone_number|default:'' }} </td>
+          <td>{{ person.office|default:'' }} </td>
+          {% if show_extra_info %}
+          <td>{{ person.floor|default:'' }} </td>
+          <td>{{ person.area|default:'' }} </td>
+          <td>{{ person.position|default:'' }}</td>
+          {% endif %}
+          <td>
+            <i class="glyphicon glyphicon-envelope icon-pointer"
+               onclick="show_mail('{{ person.email|default:'' }}')"></i>
+          </td>
+        </tr>
+        {% endfor %}
         {% endif %}
-        <th>{{ _('Email') }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% if people %}
-      {% for person in people %}
-      <tr>
-        <td>{{ person.surname|default:'' }}, {{ person.name|default:'' }} </td>
-        <td>{{ person.telephone_number|default:'' }} </td>
-        <td>{{ person.office|default:'' }} </td>
-        {% if show_extra_info %}
-        <td>{{ person.floor|default:'' }} </td>
-        <td>{{ person.area|default:'' }} </td>
-        <td>{{ person.position|default:'' }}</td>
-        {% endif %}
-        <td>{{ person.email|default:'' }}</td>
-      </tr>
-      {% endfor %}
-      {% endif %}
-    </tbody>
+      </tbody>
     </table>
   </div>
 </div>
