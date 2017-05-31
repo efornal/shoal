@@ -29,6 +29,9 @@
       <thead>
         <tr class="active">
           <th>{{ _('Person') }}</th>
+          {% if show_extra_info %}
+          <th>{{ _('Username') }}</th>
+          {% endif %}
           <th>{{ _('Phone') }}</th>
           <th>{{ _('Office') }}</th>
           {% if show_extra_info %}
@@ -44,6 +47,9 @@
         {% for person in people %}
         <tr>
           <td>{{ person.surname|default:'' }}, {{ person.name|default:'' }} </td>
+          {% if show_extra_info %}
+          <td>{{ person.username|default:'' }} </td>
+          {% endif %}
           <td>{{ person.telephone_number|default:'' }} </td>
           <td>{{ person.office|default:'' }} </td>
           {% if show_extra_info %}
