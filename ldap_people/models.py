@@ -161,7 +161,7 @@ class LdapPerson(models.Model):
         managed = False
         verbose_name = _('LdapPerson')
         verbose_name_plural = _('LdapPeople')
-        db_table = 'app_ldapperson'
+#        db_table = 'ldapperson'
 
         
     def __unicode__(self):
