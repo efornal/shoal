@@ -24,9 +24,9 @@ class LdapConn():
     def new_auth(cls, username, password):
         try:
             connection = ldap.initialize( LdapConn.ldap_server() )
-            connection.simple_bind_s( "cn={},{}".format( username, \
-                                                         LdapConn.ldap_dn() ),  \
-                                      password )
+            connection.simple_bind_s( "cn={},{}".format( str(username), \
+                                                         str(LdapConn.ldap_dn())),  \
+                                      str(password) )
             return connection
         except ldap.LDAPError, e:
             logging.error("Could not connect to the Ldap server: '{}'" \
@@ -161,7 +161,7 @@ class LdapPerson(models.Model):
         managed = False
         verbose_name = _('LdapPerson')
         verbose_name_plural = _('LdapPeople')
-
+        db_table = 'ldap_people_ldapperson'
         
     def __unicode__(self):
         return self.username
@@ -225,30 +225,47 @@ class LdapPerson(models.Model):
     def save(self, *args, **kwargs):
         """Guarda determinados datos de la persona en LDAP """
         upd_person = []
+        new_office = None
         curr_person = LdapPerson.get_by_uid(self.username)
+        
         try:
-            upd_person = [( ldap.MOD_REPLACE, 'telephoneNumber',
-                             str(self.telephone_number) or ''),
-                           ( ldap.MOD_REPLACE, 'homePhone',
-                             str(self.home_telephone_number) or ''),
-                           ( ldap.MOD_REPLACE, 'physicalDeliveryOfficeName',
-                             str(self.office) or ''),
-                           ( ldap.MOD_REPLACE, 'departmentNumber',
-                             str(self.floor) or ''),
-                           ( ldap.MOD_REPLACE, 'destinationIndicator',
-                             str(self.area) or ''),
-                           ( ldap.MOD_REPLACE, 'employeeType',
-                             str(self.position) or ''),]
+            if self.telephone_number is not None:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'telephoneNumber',
+                                    str(self.telephone_number) or str('')))
+                          
+            if self.home_telephone_number is not None:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'homePhone',
+                                    str(self.home_telephone_number) or str('')))
+                
+            if self.floor is not None:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'departmentNumber',
+                                    str(self.floor) or str('')))
+                
+            if self.area is not None:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'destinationIndicator',
+                                    str(self.area) or str('')))
+                
+            if self.position is not None:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'employeeType',
+                                    str(self.position) or str('')))
 
             if self.group_id:
-                upd_person.append((ldap.MOD_REPLACE, 'gidNumber', str(self.group_id)))
+                upd_person.append((ldap.MOD_REPLACE,
+                                   'gidNumber',
+                                   str(self.group_id)))
                 
             if self.office:
                 new_office = self.office
             elif self.other_office:
                 new_office = self.other_office
 
-            upd_person.append((ldap.MOD_REPLACE,
+            if new_office is not None:
+                upd_person.append((ldap.MOD_REPLACE,
                                 'physicalDeliveryOfficeName',
                                 str(new_office)))
 
@@ -419,7 +436,7 @@ class LdapPerson(models.Model):
             
         for dn,entry in ldap_result:
             person = LdapPerson()
-
+            
             if 'uid' in entry and entry['uid'][0]:
                 person.username = entry['uid'][0]
 
