@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'verbose_name': 'Persona Ldap',
-                'managed': False,
+                'managed': True,
                 'verbose_name_plural': 'Personas Ldap',
             },
         ),
