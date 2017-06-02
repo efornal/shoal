@@ -85,10 +85,27 @@ class FrontLdapPersonForm(forms.ModelForm):
     username = forms.CharField(
         required=True,
         max_length=200)
+    name = forms.CharField(
+        max_length=200,
+        required=False,
+        label=_('name'))
+    surname = forms.CharField(
+        max_length=200,
+        required=False)
+    office = forms.CharField(
+        max_length=200,
+        required=False,
+        label=_('office'))
     email = forms.EmailField(
         max_length=200,
         required=True)
     alternative_email = forms.EmailField(
+        max_length=200,
+        required=False)
+    document_number = forms.CharField(
+        max_length=200,
+        required=False)
+    type_document_number = forms.CharField(
         max_length=200,
         required=False)
     telephone_number = forms.CharField(
@@ -100,7 +117,8 @@ class FrontLdapPersonForm(forms.ModelForm):
 
     class Meta:
         model = LdapPerson
-        fields = ('username','email','alternative_email',
+        fields = ('username','name','surname','email','alternative_email',
+                  'document_number','type_document_number','office',
                   'telephone_number','home_telephone_number')
         
     def clean(self):

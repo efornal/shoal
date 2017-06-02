@@ -48,10 +48,15 @@ def save(request):
     context={}
     person = LdapPerson.get_by_uid(request.user)
     params = request.POST.copy()
-    params.update({'username':request.user.username})
-    params.update({'email': person.email})
+    params.update({'username':request.user.username,
+                   'email': person.email,
+                   'name': person.name,
+                   'surname': person.surname,
+                   'document_number': person.document_number,
+                   'type_document_number': person.type_document_number,
+                   'office': person.office})
     form = FrontLdapPersonForm(params,instance=person)
-
+    
     if form.is_valid():
         form.instance.save()
         messages.info(request, _('changes_saved'))
