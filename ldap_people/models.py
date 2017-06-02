@@ -227,33 +227,58 @@ class LdapPerson(models.Model):
         upd_person = []
         new_office = None
         curr_person = LdapPerson.get_by_uid(self.username)
-        
         try:
+
             if self.telephone_number is not None:
-                upd_person.append(( ldap.MOD_REPLACE,
-                                    'telephoneNumber',
-                                    str(self.telephone_number) or str('')))
+                if self.telephone_number:
+                    upd_person.append(( ldap.MOD_REPLACE,
+                                        'telephoneNumber',
+                                        str(self.telephone_number)))
+                else:
+                    upd_person.append(( ldap.MOD_DELETE,
+                                        'telephoneNumber',
+                                        str(curr_person.telephone_number)))
                           
             if self.home_telephone_number is not None:
-                upd_person.append(( ldap.MOD_REPLACE,
-                                    'homePhone',
-                                    str(self.home_telephone_number) or str('')))
-                
-            if self.floor is not None:
-                upd_person.append(( ldap.MOD_REPLACE,
-                                    'departmentNumber',
-                                    str(self.floor) or str('')))
-                
-            if self.area is not None:
-                upd_person.append(( ldap.MOD_REPLACE,
-                                    'destinationIndicator',
-                                    str(self.area) or str('')))
-                
-            if self.position is not None:
-                upd_person.append(( ldap.MOD_REPLACE,
-                                    'employeeType',
-                                    str(self.position) or str('')))
+                if self.home_telephone_number:
+                    upd_person.append(( ldap.MOD_REPLACE,
+                                        'homePhone',
+                                        str(self.home_telephone_number)))
+                else:
+                    upd_person.append(( ldap.MOD_DELETE,
+                                        'homePhone',
+                                        str(curr_person.home_telephone_number)))
 
+            if self.floor is not None:
+                if self.floor:
+                    upd_person.append(( ldap.MOD_REPLACE,
+                                        'departmentNumber',
+                                        str(self.floor)))
+                else:
+                    upd_person.append(( ldap.MOD_DELETE,
+                                        'departmentNumber',
+                                        str(curr_person.floor)))
+
+            if self.area is not None:
+                if self.area:
+                    upd_person.append(( ldap.MOD_REPLACE,
+                                        'destinationIndicator',
+                                        str(self.area)))
+                else:
+                    upd_person.append(( ldap.MOD_DELETE,
+                                        'destinationIndicator',
+                                        str(curr_person.area)))
+
+            if self.position is not None:
+                if self.position:
+                    upd_person.append(( ldap.MOD_REPLACE,
+                                        'employeeType',
+                                        str(self.position)))
+                else:
+                    upd_person.append(( ldap.MOD_DELETE,
+                                        'employeeType',
+                                        str(curr_person.position)))
+                    
             if self.group_id:
                 upd_person.append((ldap.MOD_REPLACE,
                                    'gidNumber',
