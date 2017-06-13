@@ -20,6 +20,7 @@ def set_language(request, lang='es'):
         lang = request.GET['lang']
     translation.activate(lang)
     request.session[translation.LANGUAGE_SESSION_KEY] = lang
+    logging.info("Language changed by the user to '{}'".format(lang))
     return redirect('index')
 
 
