@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jquery',
+    'jquery_ui',
+    'bootstrap_ui',
     'django_extensions',
     'bootstrap_themes',
     'app',
@@ -60,6 +63,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'app.middleware.ForceLangMiddleware',
 ]
 
 ROOT_URLCONF = 'shoal.urls'
