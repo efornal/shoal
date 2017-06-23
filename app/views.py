@@ -26,6 +26,27 @@ def set_language(request, lang='es'):
 
 def index(request):
     context={}
+    offi=LdapPerson.by_offices()
+    offices={}
+    offices_names=[]
+    offices_phones=[]
+    for o in offi:
+        curr = offices.get('{}'.format(o.office))
+        if curr is None:
+            curr = ''
+        if o.telephone_number and o.telephone_number not in curr:
+            if curr:
+                curr = '{}, {}'.format( curr,o.telephone_number)
+            else:
+                curr = '{}'.format( o.telephone_number)
+        offices.update({'{}'.format(o.office):curr})
+        logging.warning('{}: {}'.format(o.office,curr))
+        
+    context.update({'offices': offices})
+    if 'welcome message showed' in request.session:
+        request.session['welcome_message_showed'] = True
+        context.update({'show_welcome_message':True})
+        
     return render(request, 'index.html', context)
 
 

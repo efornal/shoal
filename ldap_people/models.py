@@ -408,6 +408,36 @@ class LdapPerson(models.Model):
 
         return ldap_result
 
+
+
+    @classmethod
+    def by_offices(cls):
+        ldap_condition = ""
+        #ldap_condition = "(|{})".format( ldap_condition )
+        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
+        attributes = ['uid','telephoneNumber','physicalDeliveryOfficeName',]
+        retrieve_attributes = [str(x) for x in attributes]
+        ldap_result = []
+            
+        try:
+            result = LdapConn.new().search_ext_s(
+                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
+                ldap.SCOPE_SUBTREE,
+                ldap_condition,
+                retrieve_attributes)
+            ldap_result = LdapPerson.ldap_to_obj(result)
+        except ldap.TIMEOUT, e:
+            logging.error( "Timeout exception {} \n".format(e))
+            ldap_result = None
+        except ldap.SIZELIMIT_EXCEEDED, e:
+            logging.error( "Size limit exceeded exception {} \n".format(e))
+            ldap_result = None
+        except ldap.LDAPError, e:
+            logging.error( e )
+            ldap_result = None
+
+        return ldap_result
+
     
     @classmethod
     def get_by_uid(cls, uid):
