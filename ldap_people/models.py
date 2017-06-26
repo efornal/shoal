@@ -5,7 +5,8 @@ from django.db import models
 import ldap
 from django.conf import settings
 from django.utils.translation import ugettext as _
-
+from collections import OrderedDict
+        
 class LdapConn():
     
     @classmethod
@@ -775,3 +776,22 @@ class Office(models.Model):
         
     def __unicode__(self):
         return self.name
+
+    
+    @classmethod    
+    def telephones(self):
+        people = LdapPerson.by_offices()
+        offices = {}
+        for person in people:
+            if person.office is not None \
+               and person.telephone_number is not None:
+                curr_phone = offices.get('{}'.format(person.office))
+                if curr_phone and person.telephone_number not in curr_phone:
+                    curr_phone = '{}, {}'.format( curr_phone,person.telephone_number)
+                else:
+                    curr_phone = '{}'.format( person.telephone_number)
+                offices.update({'{}'.format(person.office):'{}'.format(curr_phone)})
+
+        return OrderedDict(sorted(offices.items(), key=lambda t: t[0]))
+        
+

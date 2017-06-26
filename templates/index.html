@@ -10,29 +10,20 @@
 </div>
 {% endif %}
 
-<div class="panel panel-default">
-  <div class="table-responsive">
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr class="active">
-          <th>{{ _('Office') }}</th>
-          <th>{{ _('Phones') }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% if offices %}
-        {% for person in offices %}
-        <tr>
-          <td><a href="#">{{ person|default:'' }}-{{person}}</a></td>
-          <td> -{{person}}-</td>
-        </tr>
-        {% endfor %}
-        {% endif %}
-      </tbody>
-    </table>
-  </div>
+<div class="list-group">
+   <li class="list-group-item  disabled">
+    <span >{{ _('Office') }}</span>
+    <span style="float: right;">{{ _('Phone') }}</span>
+  </li>
+  {% if offices %}
+  {% for key, value in offices.items %}
+  <a href="#" class="list-group-item" style="overflow-y: auto;">
+    <span >{{ key|default:'' }}</span>
+    <span style="float: right;">{{ value }}</span>
+  </a>
+  {% endfor %}
+  {% endif %}
 </div>
-
 
 
 {% endblock %}

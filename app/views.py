@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
 from ldap_people.models import LdapPerson
+from ldap_people.models import Office
 from ldap_people.models import LdapGroup
 from django.shortcuts import redirect
 from django.utils import translation
@@ -26,23 +27,27 @@ def set_language(request, lang='es'):
 
 def index(request):
     context={}
-    offi=LdapPerson.by_offices()
-    offices={}
-    offices_names=[]
-    offices_phones=[]
-    for o in offi:
-        curr = offices.get('{}'.format(o.office))
-        if curr is None:
-            curr = ''
-        if o.telephone_number and o.telephone_number not in curr:
-            if curr:
-                curr = '{}, {}'.format( curr,o.telephone_number)
-            else:
-                curr = '{}'.format( o.telephone_number)
-        offices.update({'{}'.format(o.office):curr})
-        logging.warning('{}: {}'.format(o.office,curr))
+    people  = LdapPerson.by_offices()
+    offices = Office.telephones()
+
+    # for person in people:
+    #     logging.error(person)
+    #     if person.office is not None:
+    #         curr_phone = offices.get('{}'.format(person.office))
+    #         if curr_phone and person.telephone_number \
+    #            and person.telephone_number is not None \
+    #            and person.telephone_number not in curr_phone:
+    #             curr_phone = '{}, {}'.format( curr_phone,person.telephone_number)
+    #         else:
+    #             if person.telephone_number is not None:
+    #                 curr_phone = '{}'.format( person.telephone_number)
+    #             else:
+    #                 curr_phone = ''
+                    
+
         
     context.update({'offices': offices})
+
     if 'welcome message showed' in request.session:
         request.session['welcome_message_showed'] = True
         context.update({'show_welcome_message':True})
@@ -114,6 +119,23 @@ def is_in_group_with_extra_info(request):
 
 
 def search(request):
+    user_groups = []
+    context = {}
+    show_extra_info = is_in_group_with_extra_info(request)
+                
+    context={'show_extra_info':show_extra_info}
+    if 'text' in request.GET:
+        text = request.GET['text']
+        people = LdapPerson.search(text)
+        context.update({'people': people})
+
+        if people is None:
+            logging.warning ("Failed to perform text search {}".format(text))
+            messages.info(request, _('search_error'))
+        
+    return render(request, 'search.html', context)
+
+def search_by_office(request):
     user_groups = []
     context = {}
     show_extra_info = is_in_group_with_extra_info(request)

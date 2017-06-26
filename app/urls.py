@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^logout/message',views.logout_message, name='logout_message'),
     url(r'^logout/$', auth_views.logout,{'next_page': 'logout_message'},name='logout'),
     url(r'^search',views.search, name='search'),
+    url(r'^search/by_office',views.search_by_office, name='search_by_office'),
     url(r'^edit/$',views.edit, name='edit'),
     url(r'^save/$',views.save, name='save'),
     url(r'^en/$', views.index, name='index'),
