@@ -23,9 +23,6 @@ import logging
 import sys
 from django.conf import settings
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
 
 class IncorrectLookupParameters(Exception):
     pass

@@ -16,10 +16,11 @@
     <span style="float: right;">{{ _('Phone') }}</span>
   </li>
   {% if offices %}
-  {% for key, value in offices.items %}
-  <a href="#" class="list-group-item" style="overflow-y: auto;">
-    <span >{{ key|default:'' }}</span>
-    <span style="float: right;">{{ value }}</span>
+  {% for office_name, phones in offices.items %}
+   <a href="{% url 'search_by_office' office=office_name %}"
+      class="list-group-item" style="overflow-y: auto;">
+    <span >{{ office_name|default:'' }}</span>
+    <span style="float: right;">{{ phones }}</span>
   </a>
   {% endfor %}
   {% endif %}

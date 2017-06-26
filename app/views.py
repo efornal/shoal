@@ -29,23 +29,6 @@ def index(request):
     context={}
     people  = LdapPerson.by_offices()
     offices = Office.telephones()
-
-    # for person in people:
-    #     logging.error(person)
-    #     if person.office is not None:
-    #         curr_phone = offices.get('{}'.format(person.office))
-    #         if curr_phone and person.telephone_number \
-    #            and person.telephone_number is not None \
-    #            and person.telephone_number not in curr_phone:
-    #             curr_phone = '{}, {}'.format( curr_phone,person.telephone_number)
-    #         else:
-    #             if person.telephone_number is not None:
-    #                 curr_phone = '{}'.format( person.telephone_number)
-    #             else:
-    #                 curr_phone = ''
-                    
-
-        
     context.update({'offices': offices})
 
     if 'welcome message showed' in request.session:
@@ -135,19 +118,18 @@ def search(request):
         
     return render(request, 'search.html', context)
 
-def search_by_office(request):
+
+def search_by_office(request, office):
     user_groups = []
     context = {}
     show_extra_info = is_in_group_with_extra_info(request)
-                
     context={'show_extra_info':show_extra_info}
-    if 'text' in request.GET:
-        text = request.GET['text']
-        people = LdapPerson.search(text)
+    if office is not None:
+        people = LdapPerson.search_by_office(office)
         context.update({'people': people})
 
         if people is None:
-            logging.warning ("Failed to perform text search {}".format(text))
+            logging.warning ("Failed to perform text search {}".format(office))
             messages.info(request, _('search_error'))
         
     return render(request, 'search.html', context)

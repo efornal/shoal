@@ -409,6 +409,34 @@ class LdapPerson(models.Model):
 
         return ldap_result
 
+    
+    @classmethod
+    def search_by_office(cls, office_name):
+        ldap_condition = "(physicalDeliveryOfficeName=*{}*)".format( office_name )
+        ldap_condition = "(|{})".format( ldap_condition )
+        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
+        retrieve_attributes = [str(x) for x in LdapPerson.search_ldap_attrs()]
+        ldap_result = []
+        logging.error( ldap_condition)
+        try:
+            result = LdapConn.new().search_ext_s(
+                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
+                ldap.SCOPE_SUBTREE,
+                ldap_condition,
+                retrieve_attributes,
+                sizelimit = LdapPerson.ldap_size_limit())
+            ldap_result = LdapPerson.ldap_to_obj(result)
+        except ldap.TIMEOUT, e:
+            logging.error( "Timeout exception {} \n".format(e))
+            ldap_result = None
+        except ldap.SIZELIMIT_EXCEEDED, e:
+            logging.error( "Size limit exceeded exception {} \n".format(e))
+            ldap_result = None
+        except ldap.LDAPError, e:
+            logging.error( e )
+            ldap_result = None
+
+        return ldap_result
 
 
     @classmethod
@@ -417,7 +445,7 @@ class LdapPerson(models.Model):
         #ldap_condition = "(|{})".format( ldap_condition )
         ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
         attributes = ['uid','telephoneNumber','physicalDeliveryOfficeName',]
-        retrieve_attributes = [str(x) for x in attributes]
+        retrieve_attributes = [str(x) for x in  LdapPerson.search_ldap_attrs()]
         ldap_result = []
             
         try:
@@ -780,18 +808,23 @@ class Office(models.Model):
     
     @classmethod    
     def telephones(self):
-        people = LdapPerson.by_offices()
         offices = {}
-        for person in people:
-            if person.office is not None \
-               and person.telephone_number is not None:
-                curr_phone = offices.get('{}'.format(person.office))
-                if curr_phone and person.telephone_number not in curr_phone:
-                    curr_phone = '{}, {}'.format( curr_phone,person.telephone_number)
-                else:
-                    curr_phone = '{}'.format( person.telephone_number)
-                offices.update({'{}'.format(person.office):'{}'.format(curr_phone)})
+        try:
+            people = LdapPerson.by_offices()
+            for person in people:
+                if person.office is not None \
+                   and person.telephone_number is not None:
+                    curr_phone = offices.get('{}'.format(person.office))
+                    if curr_phone and person.telephone_number not in curr_phone:
+                        curr_phone = '{}, {}'.format( curr_phone,person.telephone_number)
+                    else:
+                        curr_phone = '{}'.format( person.telephone_number)
+                    offices.update({'{}'.format(person.office):'{}'.format(curr_phone)})
 
-        return OrderedDict(sorted(offices.items(), key=lambda t: t[0]))
+            return OrderedDict(sorted(offices.items(), key=lambda t: t[0]))
+        except Exception as e:
+            logging.error(e)
+
+        return offices
         
 
