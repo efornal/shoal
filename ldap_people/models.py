@@ -221,92 +221,92 @@ class LdapPerson(models.Model):
                                          extra_conditions,
                                          settings_condition)
         return extra_conditions
-        
+
     
     def save(self, *args, **kwargs):
         """Guarda determinados datos de la persona en LDAP """
         upd_person = []
         new_office = None
         curr_person = LdapPerson.get_by_uid(self.username)
-        try:
-
-            if self.telephone_number is not None:
-                if self.telephone_number:
-                    upd_person.append(( ldap.MOD_REPLACE,
-                                        'telephoneNumber',
-                                        str(self.telephone_number)))
-                else:
-                    upd_person.append(( ldap.MOD_DELETE,
-                                        'telephoneNumber',
-                                        str(curr_person.telephone_number)))
+        if self.telephone_number is not None:
+            if self.telephone_number:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'telephoneNumber',
+                                    str(self.telephone_number)))
+            else:
+                upd_person.append(( ldap.MOD_DELETE,
+                                    'telephoneNumber', None))
                           
-            if self.home_telephone_number is not None:
-                if self.home_telephone_number:
-                    upd_person.append(( ldap.MOD_REPLACE,
-                                        'homePhone',
-                                        str(self.home_telephone_number)))
-                else:
-                    upd_person.append(( ldap.MOD_DELETE,
-                                        'homePhone',
-                                        str(curr_person.home_telephone_number)))
+        if self.home_telephone_number is not None:
+            if self.home_telephone_number:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'homePhone',
+                                    str(self.home_telephone_number)))
+            else:
+                upd_person.append(( ldap.MOD_DELETE,
+                                    'homePhone',None))
 
-            if self.floor is not None:
-                if self.floor:
-                    upd_person.append(( ldap.MOD_REPLACE,
-                                        'departmentNumber',
-                                        str(self.floor)))
-                else:
-                    upd_person.append(( ldap.MOD_DELETE,
-                                        'departmentNumber',
-                                        str(curr_person.floor)))
-
-            if self.area is not None:
-                if self.area:
-                    upd_person.append(( ldap.MOD_REPLACE,
-                                        'destinationIndicator',
-                                        str(self.area)))
-                else:
-                    upd_person.append(( ldap.MOD_DELETE,
-                                        'destinationIndicator',
-                                        str(curr_person.area)))
-
-            if self.position is not None:
-                if self.position:
-                    upd_person.append(( ldap.MOD_REPLACE,
-                                        'employeeType',
-                                        str(self.position)))
-                else:
-                    upd_person.append(( ldap.MOD_DELETE,
-                                        'employeeType',
-                                        str(curr_person.position)))
-                    
-            if self.group_id:
-                upd_person.append((ldap.MOD_REPLACE,
-                                   'gidNumber',
-                                   str(self.group_id)))
+        if self.floor is not None:
+            if self.floor:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'departmentNumber',
+                                    str(self.floor)))
+            else:
+                upd_person.append(( ldap.MOD_DELETE,
+                                    'departmentNumber',None))
                 
-            if self.office:
-                new_office = self.office
-            elif self.other_office:
-                new_office = self.other_office
+        if self.area is not None:
+            if self.area:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'destinationIndicator',
+                                    str(self.area)))
+            else:
+                upd_person.append(( ldap.MOD_DELETE,
+                                    'destinationIndicator',None))
 
-            if new_office is not None:
-                upd_person.append((ldap.MOD_REPLACE,
-                                'physicalDeliveryOfficeName',
-                                str(new_office)))
+        if self.position is not None:
+            if self.position:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'employeeType',
+                                    str(self.position)))
+            else:
+                upd_person.append(( ldap.MOD_DELETE,
+                                    'employeeType',None))
+                
+        if self.group_id:
+            upd_person.append((ldap.MOD_REPLACE,
+                               'gidNumber',
+                               str(self.group_id)))
+                
+        if self.office:
+            new_office = self.office
+        elif self.other_office:
+            new_office = self.other_office
+            
+        if new_office is not None:
+            upd_person.append((ldap.MOD_REPLACE,
+                               'physicalDeliveryOfficeName',
+                               str(new_office)))
 
-            if self.email:
-                mails = []
-                mails.append(str(self.email))
-                if self.alternative_email:
-                    mails.append(str(self.alternative_email))
+        if self.email:
+            mails = []
+            mails.append(str(self.email))
+            if self.alternative_email:
+                mails.append(str(self.alternative_email))
                 upd_person.append((ldap.MOD_REPLACE,'mail',mails))
                 
 
-            udn = LdapPerson.ldap_udn_for( str(self.username) )
-            logging.warning( "Updated ldap user data for {} \n".format(upd_person))
-            LdapConn.new().modify_s(udn, upd_person)
-            
+        udn = LdapPerson.ldap_udn_for( str(self.username) )
+        logging.warning( "Updated ldap user data for {} \n".format(upd_person))
+
+        for upd in upd_person:
+            try:
+                logging.warning("updating.. {}".format(upd))
+                LdapConn.new().modify_s(udn, [upd])                
+            except ldap.LDAPError, e:
+                logging.error( e )
+
+        try:
             curr_groups = [str(x.group_id) for x in LdapGroup.groups_by_uid(self.username)]
             if self.group_id and (self.group_id not in curr_groups):
                 logging.warning('Adding user as a member of the new primary group..')
@@ -316,7 +316,6 @@ class LdapPerson(models.Model):
                (curr_person.group_id != self.group_id): # update members!
                 logging.warning('Removing user as a member from the previous parent group..')
                 LdapGroup.remove_member_of_group( self.username, curr_person.group_id )
-
         except ldap.LDAPError, e:
             logging.error( e )
 
