@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^login/$', auth_views.login,name='login'),
     url(r'^logout/message',views.logout_message, name='logout_message'),
     url(r'^logout/$', auth_views.logout,{'next_page': 'logout_message'},name='logout'),
-    url(r'^search/by_office/(?P<office>.*)/$',
+    url(r'^search/office/(?P<office>.*)/$',
         views.search_by_office, name='search_by_office'),
     url(r'^search',views.search, name='search'),
     url(r'^edit/$',views.edit, name='edit'),

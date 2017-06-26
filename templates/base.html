@@ -35,11 +35,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <img class="logo-header" src="{% static 'images/logo.png' %}">
-          <span class="navbar-brand">
+          <a href="{% url 'index' %}" title="{{ _('Home') }}">
+            <img class="logo-header" src="{% static 'images/logo.png' %}">
+          </a>
+          <a href="{% url 'index' %}" title="{{ _('Home') }}">
+            <span class="navbar-brand">
             <p>{{ ''|application_title }}</p>
             <small>{{ ''|application_subtitle }}</small>
-          </span>
+            </span>
+          </a>
         </div>
         
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -56,6 +60,8 @@
             <button type="submit" class="btn btn-default">{{ _('search') }}</button>
           </form>
           <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'index' %}"
+                   title="{{ _('Home') }}">{{ _('Home') }}</a></li>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download"
                  title="{{ _('language') }}">
