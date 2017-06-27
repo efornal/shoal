@@ -16,7 +16,8 @@
     });
   } );
   function show_mail(email){
-    document.getElementById("dialog").innerHTML = email;
+    email_link = "<a href='mailto:" + email + "'>" + email + "</a>";
+    document.getElementById("dialog").innerHTML = email_link;
     $( "#dialog" ).dialog( "open" );
   }
 </script>
@@ -57,7 +58,7 @@
           <td>{{ person.area|default:'' }} </td>
           <td>{{ person.position|default:'' }}</td>
           {% endif %}
-          <td>
+          <td title="{{ _('view_email') }}">
             <i class="glyphicon glyphicon-envelope icon-pointer"
                onclick="show_mail('{{ person.email|default:'' }}')"></i>
           </td>

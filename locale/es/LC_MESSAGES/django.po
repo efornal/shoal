@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-30 11:06-0300\n"
+"POT-Creation-Date: 2017-06-27 08:25-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/views.py:57
+#: app/views.py:72
 msgid "changes_saved"
 msgstr "Los cambios se guardaron correctamente"
 
-#: app/views.py:102 ldap_people/admin.py:127
+#: app/views.py:117 app/views.py:133 ldap_people/admin.py:123
 msgid "search_error"
 msgstr ""
 "La búsqueda no pudo realizarse. Verifique la conexión, o que el texto a "
@@ -33,109 +33,110 @@ msgid "person_was_not_found"
 msgstr ""
 "La persona registrada no se pudo validar. El servicio no está disponible."
 
-#: ldap_people/admin.py:120
+#: ldap_people/admin.py:116
 msgid "Database error"
 msgstr "Error de base de datos"
 
-#: ldap_people/forms.py:24 ldap_people/models.py:86 ldap_people/models.py:697
+#: ldap_people/forms.py:24 ldap_people/forms.py:91 ldap_people/models.py:87
+#: ldap_people/models.py:796
 msgid "name"
 msgstr "nombre"
 
-#: ldap_people/forms.py:43 ldap_people/models.py:109
+#: ldap_people/forms.py:43 ldap_people/forms.py:98 ldap_people/models.py:110
 msgid "office"
 msgstr "oficina"
 
-#: ldap_people/forms.py:47 ldap_people/models.py:114
+#: ldap_people/forms.py:47 ldap_people/models.py:115
 msgid "other_office"
 msgstr "otra oficina"
 
-#: ldap_people/forms.py:110
+#: ldap_people/forms.py:128
 msgid "person_without_email"
 msgstr "El email de la persona es un dato requerido"
 
-#: ldap_people/forms.py:113
+#: ldap_people/forms.py:131
 msgid "person_without_institutional_email"
 msgstr "El email institucional de la persona es un dato requerido"
 
-#: ldap_people/forms.py:120 ldap_people/forms.py:130
+#: ldap_people/forms.py:138 ldap_people/forms.py:148
 msgid "invalid_format"
 msgstr "El valor ingrasado no se corresponde con el formato requerido"
 
-#: ldap_people/models.py:77 templates/base.html:73
+#: ldap_people/models.py:78 templates/base.html:83
 msgid "username"
 msgstr "usuario"
 
-#: ldap_people/models.py:91
+#: ldap_people/models.py:92
 msgid "surname"
 msgstr "apellido"
 
-#: ldap_people/models.py:96
+#: ldap_people/models.py:97
 msgid "fullname"
 msgstr "nombre"
 
-#: ldap_people/models.py:100
+#: ldap_people/models.py:101
 msgid "email"
 msgstr "email"
 
-#: ldap_people/models.py:104
+#: ldap_people/models.py:105
 msgid "alternative_email"
 msgstr "email alternativo"
 
-#: ldap_people/models.py:123
+#: ldap_people/models.py:124
 msgid "document_number"
 msgstr "nro documento"
 
-#: ldap_people/models.py:128
+#: ldap_people/models.py:129
 msgid "type_document_number"
 msgstr "tipo documento"
 
-#: ldap_people/models.py:133
+#: ldap_people/models.py:134
 msgid "country_document_number"
 msgstr "nro documento país"
 
-#: ldap_people/models.py:138
+#: ldap_people/models.py:139
 msgid "telephone_number"
 msgstr "teléfono laboral"
 
-#: ldap_people/models.py:143
+#: ldap_people/models.py:144
 msgid "home_telephone_number"
 msgstr "teléfono personal"
 
-#: ldap_people/models.py:148
+#: ldap_people/models.py:149
 msgid "floor"
 msgstr "piso"
 
-#: ldap_people/models.py:153
+#: ldap_people/models.py:154
 msgid "area"
 msgstr "area"
 
-#: ldap_people/models.py:158
+#: ldap_people/models.py:159
 msgid "position"
 msgstr "cargo"
 
-#: ldap_people/models.py:162
+#: ldap_people/models.py:163
 msgid "LdapPerson"
 msgstr "Persona Ldap"
 
-#: ldap_people/models.py:163
+#: ldap_people/models.py:164
 msgid "LdapPeople"
 msgstr "Personas Ldap"
 
-#: ldap_people/models.py:500
+#: ldap_people/models.py:599
 msgid "Group"
 msgstr "Grupo"
 
-#: ldap_people/models.py:501
+#: ldap_people/models.py:600
 msgid "Groups"
 msgstr "Grupos"
 
-#: ldap_people/models.py:701
+#: ldap_people/models.py:800
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:89
-#: templates/edit.html:30 templates/search.html:33
+#: templates/edit.html:30 templates/index.html:15 templates/search.html:37
 msgid "Office"
 msgstr "Oficina"
 
-#: ldap_people/models.py:702
+#: ldap_people/models.py:801
 msgid "Offices"
 msgstr "Oficinas"
 
@@ -150,6 +151,7 @@ msgstr "Agregar"
 
 #: ldap_people/templates/admin/ldapperson/change_form.html:61
 #: ldap_people/templates/admin/ldapperson/change_list.html:42
+#: templates/base.html:38 templates/base.html:41 templates/base.html:64
 msgid "Home"
 msgstr "Inicio"
 
@@ -181,6 +183,7 @@ msgstr[1] "Por favor, corrija los errores indicados"
 
 #: ldap_people/templates/admin/ldapperson/change_list.html:124
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:15
+#: templates/search.html:34
 msgid "Username"
 msgstr "Usuario"
 
@@ -190,7 +193,7 @@ msgstr "Nombre"
 
 #: ldap_people/templates/admin/ldapperson/change_list.html:136
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:65
-#: templates/edit.html:37 templates/search.html:39
+#: templates/edit.html:37 templates/search.html:43
 msgid "Email"
 msgstr "Email"
 
@@ -246,17 +249,17 @@ msgid "Home_telephone_number"
 msgstr "Teléfono personal"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:142
-#: templates/search.html:35
+#: templates/search.html:39
 msgid "Floor"
 msgstr "Piso"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:153
-#: templates/search.html:36
+#: templates/search.html:40
 msgid "Area"
 msgstr "Area"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:164
-#: templates/search.html:37
+#: templates/search.html:41
 msgid "Position"
 msgstr "Cargo"
 
@@ -268,33 +271,37 @@ msgstr "Grupo principal"
 msgid "Secondary_groups"
 msgstr "Grupos secundarios"
 
-#: shoal/settings.py:134 shoal/settings.tpl.py:134 templates/base.html:59
-#: templates/base.html:64
+#: shoal/settings.py:139 shoal/settings.tpl.py:138 templates/base.html:69
+#: templates/base.html:74
 msgid "Spanish"
 msgstr "Español"
 
-#: shoal/settings.py:135 shoal/settings.tpl.py:135 templates/base.html:60
-#: templates/base.html:66
+#: shoal/settings.py:140 shoal/settings.tpl.py:139 templates/base.html:70
+#: templates/base.html:76
 msgid "English"
 msgstr "Inglés"
 
-#: templates/base.html:50 templates/base.html:52
+#: templates/base.html:58 templates/base.html:60
 msgid "search"
 msgstr "buscar"
 
-#: templates/base.html:57
+#: templates/base.html:64
+msgid "Go_home"
+msgstr "Ir a inicio"
+
+#: templates/base.html:67
 msgid "language"
 msgstr "idioma"
 
-#: templates/base.html:79
+#: templates/base.html:89
 msgid "Edit_account"
 msgstr "Editar cuenta"
 
-#: templates/base.html:82 templates/base.html:86
+#: templates/base.html:92 templates/base.html:96
 msgid "Close_session"
 msgstr "Cerrar sesión"
 
-#: templates/base.html:92
+#: templates/base.html:102
 msgid "Init_session"
 msgstr "Iniciar sesión"
 
@@ -322,17 +329,21 @@ msgstr "Cancelar"
 msgid "Save"
 msgstr "Guardar cambios"
 
-#: templates/index.html:6
+#: templates/index.html:8
 msgid "welcome_message_title"
 msgstr "Bienvenido!"
 
-#: templates/index.html:7
+#: templates/index.html:9
 msgid "welcome_message"
 msgstr ""
 "Este sistema le permitirá gestionar su cuenta de usuario de ldap y realizar "
 "búsquedas de otros usuarios. <br> Para poder editar los datos de tu cuenta, "
 "debes registrarte utilizando los datos de login de LDAP que utilizas "
 "normalmente."
+
+#: templates/index.html:16 templates/search.html:36
+msgid "Phone"
+msgstr "Teléfono"
 
 #: templates/logout.html:6
 msgid "logout_message_title"
@@ -358,19 +369,10 @@ msgstr "contraseña"
 msgid "log_in"
 msgstr "iniciar sesión"
 
-#: templates/search.html:31
+#: templates/search.html:32
 msgid "Person"
 msgstr "Persona"
 
-#: templates/search.html:32
-msgid "Phone"
-msgstr "Teléfono"
-
-#~ msgid "invalid_username_or_password"
-#~ msgstr "usuario o contraseña incorrectos"
-
-#~ msgid "spanish"
-#~ msgstr "español"
-
-#~ msgid "english"
-#~ msgstr "inglés"
+#: templates/search.html:61
+msgid "view_email"
+msgstr "Ver Email"
