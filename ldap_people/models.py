@@ -649,7 +649,7 @@ class LdapGroup(models.Model):
     @classmethod
     def _skip_groups_filter(cls):
         filters = ''
-        for gid in Group._skip_groups():
+        for gid in LdapGroup._skip_groups():
             filters += '(!({}={}))'.format(settings.LDAP_GROUP_FIELDS[0],gid)
         return filters
 
@@ -658,8 +658,10 @@ class LdapGroup(models.Model):
         rows = []
         ldap_result = []
         retrieve_attributes = [str(x) for x in LdapGroup.ldap_attrs()]
-        ldap_condition = "(&(cn=*)({}>={}))".format( retrieve_attributes[0],
-                                                     LdapGroup.ldap_min_gid_value())
+        ldap_condition = "(&(cn=*)({}>={}){})".format(settings.LDAP_GROUP_FIELDS[0],
+                                                      settings.LDAP_GROUP_MIN_VALUE,
+                                                      LdapGroup._skip_groups_filter())
+
         try:
             ldap_result = LdapConn.new().search_s( "ou={},{}".format(LdapGroup.ldap_ou(),
                                                                      LdapConn.ldap_dn()),

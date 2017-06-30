@@ -169,11 +169,13 @@ SUIT_CONFIG = {
 # =================================\
 # ldap configuration
 LDAP_SERVER = 'ldap://ldap_host:389'
--LDAP_DN = 'dc=*,dc=*,dc=*,dc=*'
+LDAP_DN = 'dc=*,dc=*,dc=*,dc=*'
 
 # Organizational Unit for Person
 LDAP_GROUP  = 'Group' # ou=Entry
 LDAP_PEOPLE = 'People' # ou=Entry
+LDAP_GROUP_FIELDS  = ['gidNumber','cn']  # id first!
+LDAP_PEOPLE_FIELDS = ['uid','cn'] # idfirst!
 
 LDAP_USERNAME='username'
 LDAP_PASSWORD='password'
