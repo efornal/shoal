@@ -312,7 +312,7 @@ class LdapPerson(models.Model):
                 
 
         udn = LdapPerson.ldap_udn_for( str(self.username) )
-        logging.warning( "Updated ldap user data for {} \n".format(upd_person))
+        logging.warning( "Updating ldap user data...\n")
 
         for upd in upd_person:
             try:
@@ -323,7 +323,8 @@ class LdapPerson(models.Model):
 
         try:
             curr_groups = [str(x.group_id) for x in LdapGroup.groups_by_uid(self.username)]
-            if self.group_id and (self.group_id not in curr_groups):
+            if self.group_id and (self.group_id not in curr_groups) and \
+               (curr_person.group_id != self.group_id):
                 logging.warning('Adding user as a member of the new primary group..')
                 LdapGroup.add_member_to( self.username, self.group_id )
 
@@ -658,9 +659,8 @@ class LdapGroup(models.Model):
         rows = []
         ldap_result = []
         retrieve_attributes = [str(x) for x in LdapGroup.ldap_attrs()]
-        ldap_condition = "(&(cn=*)({}>={}){})".format(settings.LDAP_GROUP_FIELDS[0],
-                                                      settings.LDAP_GROUP_MIN_VALUE,
-                                                      LdapGroup._skip_groups_filter())
+        ldap_condition = "(&(cn=*)({}>={}))".format(settings.LDAP_GROUP_FIELDS[0],
+                                                      settings.LDAP_GROUP_MIN_VALUE)
 
         try:
             ldap_result = LdapConn.new().search_s( "ou={},{}".format(LdapGroup.ldap_ou(),
