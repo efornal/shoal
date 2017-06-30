@@ -190,7 +190,11 @@ LDAP_DOMAIN_MAIL=''
 
 # Performs filtering to obtain LDAP groups
 # min group_id (group_id>= 500) for ldap search filter
-LDAP_GROUP_MIN_VALUE = 500 
+LDAP_GROUP_MIN_VALUE = 500
+#
+# group_id to exclude in ldap search filter
+LDAP_GROUP_SKIP_VALUES = [] 
+
 # Shows additional information in the search if the registered user
 # belongs to any of the indicated groups
 GROUPS_EXTRA_INFORMATION_SEARCH = []

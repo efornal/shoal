@@ -6,7 +6,9 @@ import ldap
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from collections import OrderedDict
-        
+from django.core.exceptions import ValidationError
+
+
 class LdapConn():
     
     @classmethod
@@ -272,11 +274,24 @@ class LdapPerson(models.Model):
             else:
                 upd_person.append(( ldap.MOD_DELETE,
                                     'employeeType',None))
-                
+
         if self.group_id:
-            upd_person.append((ldap.MOD_REPLACE,
-                               'gidNumber',
-                               str(self.group_id)))
+            if int(self.group_id) < LdapGroup.ldap_min_gid_value():
+                logging.error(_('setting_group_must_be_greater') \
+                              % {'group':self.group_id,'value':LdapGroup.ldap_min_gid_value()})
+            if int(curr_person.group_id) < LdapGroup.ldap_min_gid_value():
+                logging.error(_('changing_group_must_be_greater') \
+                              % {'group':curr_person.group_id,'value':LdapGroup.ldap_min_gid_value()})
+            elif int(self.group_id) in LdapGroup._skip_groups():
+                logging.error(_('setting_group_do_not_allow_edit') \
+                              % {'group':self.group_id,'value':LdapGroup._skip_groups()})
+            elif int(curr_person.group_id) in LdapGroup._skip_groups():
+                logging.error(_('changing_group_do_not_allow_edit') \
+                              % {'group':curr_person.group_id,'value':LdapGroup._skip_groups()})
+            else:
+                upd_person.append((ldap.MOD_REPLACE,
+                                   'gidNumber',
+                                   str(self.group_id)))
                 
         if self.office:
             new_office = self.office
@@ -316,6 +331,8 @@ class LdapPerson(models.Model):
                (curr_person.group_id != self.group_id): # update members!
                 logging.warning('Removing user as a member from the previous parent group..')
                 LdapGroup.remove_member_of_group( self.username, curr_person.group_id )
+        except ValidationError, e:
+            raise ValidationError( e )
         except ldap.LDAPError, e:
             logging.error( e )
 
@@ -621,7 +638,21 @@ class LdapGroup(models.Model):
     def ldap_attrs(cls):
         return ['gidNumber','cn'] # id first!
 
-    
+    @classmethod
+    def _skip_groups(cls):
+        groups = []
+        if hasattr(settings, 'LDAP_GROUP_SKIP_VALUES') \
+           and len(settings.LDAP_GROUP_SKIP_VALUES)>0:
+            groups = settings.LDAP_GROUP_SKIP_VALUES
+        return groups
+            
+    @classmethod
+    def _skip_groups_filter(cls):
+        filters = ''
+        for gid in Group._skip_groups():
+            filters += '(!({}={}))'.format(settings.LDAP_GROUP_FIELDS[0],gid)
+        return filters
+
     @classmethod
     def all(cls):
         rows = []
@@ -684,10 +715,21 @@ class LdapGroup(models.Model):
             
     @classmethod
     def add_member_to( cls,  ldap_username, group_id ):
-        if group_id < LdapGroup.ldap_min_gid_value():
-            logging.error("Error removing group {}, must be greater than {}" \
+        
+        if int(group_id) < LdapGroup.ldap_min_gid_value():
+            error_message = _('adding_group_must_be_greater') \
+                            % {'group':group_id,'value':LdapGroup.ldap_min_gid_value()}
+            logging.error("Error adding group {}, must be greater than {}" \
                           .format(group_id,LdapGroup.ldap_min_gid_value()))
-            return
+            raise ValidationError(error_message)
+
+        if int(group_id) in LdapGroup._skip_groups():
+            error_message = _('adding_group_do_not_allow_editing') \
+                            % {'group':group_id,'value':LdapGroup._skip_groups()}
+            logging.error("Error adding group {}, the settings do not allow editing" \
+                          " of the following groups: {}" \
+                          .format( group_id,LdapGroup._skip_groups()))
+            raise ValidationError(error_message)
 
         ldap_username = str(ldap_username)
         update_group = [( ldap.MOD_ADD, 'memberUid', ldap_username )]
@@ -708,17 +750,46 @@ class LdapGroup(models.Model):
             
     @classmethod
     def add_member_in_groups( cls,  ldap_username, group_ids ):
+        errors = []
         for group_id in group_ids:
-            LdapGroup.add_member_to(ldap_username,group_id)
+            try:
+                LdapGroup.add_member_to(ldap_username,group_id)
+            except Exception, e:
+                errors.append(e)
+        if errors:
+            raise ValidationError(errors)  
 
+        
+    @classmethod
+    def remove_member_of_groups( cls,  ldap_username, group_ids ):
+        errors = []
+        for group_id in group_ids:
+            try:
+                LdapGroup.remove_member_of_group(ldap_username,group_id)
+            except Exception, e:
+                errors.append(e)
+        if errors:
+            raise ValidationError(errors)  
+            
 
     @classmethod
     def remove_member_of_group( cls,  ldap_username, group_id ):
 
-        if group_id < LdapGroup.ldap_min_gid_value():
+        if int(group_id) < LdapGroup.ldap_min_gid_value():
+            error_message = _('removing_group_must_be_greater') \
+                            % {'group':group_id,'value':LdapGroup.ldap_min_gid_value()}
             logging.error("Error removing group {}, must be greater than {}" \
                           .format(group_id,LdapGroup.ldap_min_gid_value()))
-            return
+            raise ValidationError(error_message)
+
+        if int(group_id) in LdapGroup._skip_groups():
+            error_message = _('removing_group_do_not_allow_editing') \
+                            % {'group':group_id,'value':LdapGroup._skip_groups()}
+            logging.error("Error removing group {}, the settings do not allow editing" \
+                          " of the following groups: {}" \
+                          .format( group_id, LdapGroup._skip_groups()))
+            raise ValidationError(error_message)
+
         ldap_username = str(ldap_username)
         group_name = LdapGroup.cn_group_by_gid(group_id)
 
@@ -737,23 +808,21 @@ class LdapGroup(models.Model):
                          .format(ldap_username,group_name))
         except ldap.LDAPError, e:
             logging.error( "Error deleting member {} of group: {} \n" \
-                           .format(ldap_username,ldap_group))
+                           .format(ldap_username,group_name))
             logging.error( e )
 
             
-    @classmethod
-    def remove_member_of_groups( cls,  ldap_username, group_ids ):
-        for group_id in group_ids:
-            LdapGroup.remove_member_of_group(ldap_username,group_id)
-            
-
     @classmethod
     def update_member_in_groups( cls,  ldap_username, new_groups ):
         curr_groups = [str(x.group_id) for x in LdapGroup.groups_by_uid(ldap_username)]
         remove_groups = [item for item in curr_groups if item not in new_groups]
         add_groups = [item for item in new_groups if item not in curr_groups]
-        LdapGroup.add_member_in_groups( ldap_username, add_groups )
-        LdapGroup.remove_member_of_groups (ldap_username, remove_groups )
+        try:
+            LdapGroup.add_member_in_groups( ldap_username, add_groups )
+            LdapGroup.remove_member_of_groups (ldap_username, remove_groups )
+        except Exception, e:
+            raise ValidationError(e)  
+
 
         
     @classmethod
