@@ -150,6 +150,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+DEFAULT_CHARSET = 'utf-8'
 
 LOGIN_URL='/app/login/'
 LOGIN_REDIRECT_URL = '/'
