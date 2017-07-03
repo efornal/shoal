@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load staticfiles %}
+
 {% block content %}
+<script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+<link rel='stylesheet' type='text/css' href="{% static 'css/jquery-ui/smoothness/jquery-ui.css' %}" />
+
 <script>
   $( function() {
     $( "#dialog" ).dialog({
@@ -21,7 +26,7 @@
     $( "#dialog" ).dialog( "open" );
   }
 </script>
-
+ 
 <div id="dialog" title="Email"></div>
 
 <div class="panel panel-default">
