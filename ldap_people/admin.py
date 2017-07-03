@@ -136,5 +136,9 @@ class LdapPersonAdmin(admin.ModelAdmin):
     change_list_template = "admin/ldapperson/change_list.html"        
 
 
+class OfficeAdmin(admin.ModelAdmin):
+    search_fields = ['name']
+    ordering = ('name',)
+    
 admin.site.register(LdapPerson, LdapPersonAdmin)
-admin.site.register(Office)
+admin.site.register(Office, OfficeAdmin)
