@@ -58,10 +58,14 @@
           <td>{{ person.area|default:'' }} </td>
           <td>{{ person.position|default:'' }}</td>
           {% endif %}
+          {% if person.email %}
           <td title="{{ _('view_email') }}">
             <i class="glyphicon glyphicon-envelope icon-pointer"
                onclick="show_mail('{{ person.email|default:'' }}')"></i>
           </td>
+          {% else %}
+          <td></td>
+          {% endif %}
         </tr>
         {% endfor %}
         {% endif %}
