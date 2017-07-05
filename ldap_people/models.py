@@ -159,6 +159,11 @@ class LdapPerson(models.Model):
         null=True,
         blank=True,
         verbose_name=_('position'))
+    host_name = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_('host_name'))
     
     class Meta:
         managed = False
@@ -195,14 +200,14 @@ class LdapPerson(models.Model):
                 'gidNumber','uidNumber','mail',
                 'telephoneNumber','homePhone',
                 'employeeType','physicalDeliveryOfficeName',
-                'departmentNumber','businessCategory',]
+                'departmentNumber','businessCategory','host']
 
     
     @classmethod
     def search_ldap_attrs(cls):
         return ['uid','givenName','sn',
                 'departmentNumber','businessCategory','employeeType',
-                'telephoneNumber','physicalDeliveryOfficeName','mail']
+                'telephoneNumber','physicalDeliveryOfficeName','mail','host']
 
         
     @classmethod
@@ -274,6 +279,15 @@ class LdapPerson(models.Model):
             else:
                 upd_person.append(( ldap.MOD_DELETE,
                                     'employeeType',None))
+
+        if self.host_name is not None:
+            if self.host_name:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'host',
+                                    str(self.host_name)))
+            else:
+                upd_person.append(( ldap.MOD_DELETE,
+                                    'host',None))
 
         if self.group_id:
             if int(self.group_id) < LdapGroup.ldap_min_gid_value():
@@ -602,6 +616,9 @@ class LdapPerson(models.Model):
 
             if 'employeeType' in entry and entry['employeeType'][0]:
                 person.position = entry['employeeType'][0]
+
+            if 'host' in entry and entry['host'][0]:
+                person.host_name = entry['host'][0]
 
             cn_found.append(person)
 

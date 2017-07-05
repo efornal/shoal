@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-30 11:57-0300\n"
+"POT-Creation-Date: 2017-07-05 11:46-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "changes_saved"
 msgstr "Changes saved successfully"
 
-#: app/views.py:117 app/views.py:133 ldap_people/admin.py:127
+#: app/views.py:118 app/views.py:134 ldap_people/admin.py:127
 msgid "search_error"
 msgstr ""
 "The search could not be performed. Check the connection, or the text to "
@@ -35,12 +35,12 @@ msgstr "The registered person could not be validated. Service not available"
 msgid "Database error"
 msgstr "Database error"
 
-#: ldap_people/forms.py:24 ldap_people/forms.py:91 ldap_people/models.py:89
-#: ldap_people/models.py:865
+#: ldap_people/forms.py:24 ldap_people/forms.py:94 ldap_people/models.py:89
+#: ldap_people/models.py:884
 msgid "name"
 msgstr "name"
 
-#: ldap_people/forms.py:43 ldap_people/forms.py:98 ldap_people/models.py:112
+#: ldap_people/forms.py:43 ldap_people/forms.py:101 ldap_people/models.py:112
 msgid "office"
 msgstr "office"
 
@@ -48,15 +48,15 @@ msgstr "office"
 msgid "other_office"
 msgstr "other office"
 
-#: ldap_people/forms.py:128
+#: ldap_people/forms.py:131
 msgid "person_without_email"
 msgstr "The person's email is a required data"
 
-#: ldap_people/forms.py:131
+#: ldap_people/forms.py:134
 msgid "person_without_institutional_email"
 msgstr "The institutional email of the person is a required data"
 
-#: ldap_people/forms.py:138 ldap_people/forms.py:148
+#: ldap_people/forms.py:141 ldap_people/forms.py:151
 msgid "invalid_format"
 msgstr "The gutted value does not match the required format"
 
@@ -112,70 +112,74 @@ msgstr "area"
 msgid "position"
 msgstr "position"
 
-#: ldap_people/models.py:165
+#: ldap_people/models.py:166
+msgid "host_name"
+msgstr "Host"
+
+#: ldap_people/models.py:170
 msgid "LdapPerson"
 msgstr "Ldap Person"
 
-#: ldap_people/models.py:166
+#: ldap_people/models.py:171
 msgid "LdapPeople"
 msgstr "Ldap People"
 
-#: ldap_people/models.py:280
+#: ldap_people/models.py:294
 msgid "setting_group_must_be_greater"
 msgstr "Error setting group %(group)s, must be greater than %(value)s"
 
-#: ldap_people/models.py:283
+#: ldap_people/models.py:297
 msgid "changing_group_must_be_greater"
 msgstr ""
 "Error to change group %(group)s, the previous group is greater than %(value)s"
 
-#: ldap_people/models.py:286
+#: ldap_people/models.py:300
 msgid "setting_group_do_not_allow_edit"
 msgstr ""
 "Error setting group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:289
+#: ldap_people/models.py:303
 msgid "changing_group_do_not_allow_edit"
 msgstr ""
 "Error to change the previous group %(group)s, the settings do not allow "
 "editing of the following groups: %(value)s"
 
-#: ldap_people/models.py:616
+#: ldap_people/models.py:634
 msgid "Group"
 msgstr "Group"
 
-#: ldap_people/models.py:617
+#: ldap_people/models.py:635
 msgid "Groups"
 msgstr "Groups"
 
-#: ldap_people/models.py:720
+#: ldap_people/models.py:739
 msgid "adding_group_must_be_greater"
 msgstr "Error adding group  %(group)s, must be greater than  %(value)s"
 
-#: ldap_people/models.py:727
+#: ldap_people/models.py:746
 msgid "adding_group_do_not_allow_editing"
 msgstr ""
 "Error adding group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:779
+#: ldap_people/models.py:798
 msgid "removing_group_must_be_greater"
 msgstr "Error removing group %(group)s, must be greater than %(value)s"
 
-#: ldap_people/models.py:786
+#: ldap_people/models.py:805
 msgid "removing_group_do_not_allow_editing"
 msgstr ""
 "Error removing group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:869
+#: ldap_people/models.py:888
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:89
-#: templates/edit.html:30 templates/index.html:15 templates/search.html:37
+#: templates/edit.html:30 templates/index.html:15 templates/search.html:43
 msgid "Office"
 msgstr "Office"
 
-#: ldap_people/models.py:870
+#: ldap_people/models.py:889
 msgid "Offices"
 msgstr "Offices"
 
@@ -222,7 +226,7 @@ msgstr[1] "Please correct the errors below."
 
 #: ldap_people/templates/admin/ldapperson/change_list.html:124
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:15
-#: templates/search.html:34
+#: templates/search.html:39
 msgid "Username"
 msgstr "Username"
 
@@ -232,7 +236,7 @@ msgstr "Name"
 
 #: ldap_people/templates/admin/ldapperson/change_list.html:136
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:65
-#: templates/edit.html:37 templates/search.html:43
+#: templates/edit.html:37 templates/search.html:49
 msgid "Email"
 msgstr "Email"
 
@@ -288,25 +292,30 @@ msgid "Home_telephone_number"
 msgstr "Home telephone number"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:142
-#: templates/search.html:39
+#: templates/search.html:45
 msgid "Floor"
 msgstr "Floor"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:153
-#: templates/search.html:40
+#: templates/search.html:46
 msgid "Area"
 msgstr "Area"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:164
-#: templates/search.html:41
+#: templates/search.html:47
 msgid "Position"
 msgstr "Position"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:175
+#: templates/search.html:40
+msgid "Host_name"
+msgstr "Host"
+
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:186
 msgid "Main_group"
 msgstr "Main group"
 
-#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:194
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:205
 msgid "Secondary_groups"
 msgstr "Secondary groups"
 
@@ -379,7 +388,7 @@ msgstr ""
 "other users.<br> In order to edit your account data, you must register using "
 "the Ldap login data that you normally use."
 
-#: templates/index.html:16 templates/search.html:36
+#: templates/index.html:16 templates/search.html:42
 msgid "Phone"
 msgstr "Phone"
 
@@ -407,10 +416,10 @@ msgstr "password"
 msgid "log_in"
 msgstr "log in"
 
-#: templates/search.html:32
+#: templates/search.html:37
 msgid "Person"
 msgstr "Person"
 
-#: templates/search.html:61
+#: templates/search.html:69
 msgid "view_email"
 msgstr "View email"

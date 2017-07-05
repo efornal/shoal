@@ -37,6 +37,7 @@
           <th>{{ _('Person') }}</th>
           {% if show_extra_info %}
           <th>{{ _('Username') }}</th>
+          <th>{{ _('Host_name') }}</th>
           {% endif %}
           <th>{{ _('Phone') }}</th>
           <th>{{ _('Office') }}</th>
@@ -55,6 +56,7 @@
           <td>{{ person.surname|default:'' }}, {{ person.name|default:'' }} </td>
           {% if show_extra_info %}
           <td>{{ person.username|default:'' }} </td>
+          <td>{{ person.host_name|default:'' }} </td>
           {% endif %}
           <td>{{ person.telephone_number|default:'' }} </td>
           <td>{{ person.office|default:'' }} </td>

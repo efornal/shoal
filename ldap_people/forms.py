@@ -69,11 +69,14 @@ class LdapPersonForm(forms.ModelForm):
     position = forms.CharField(
         max_length=200,
         required=False)
+    host_name = forms.CharField(
+        max_length=200,
+        required=False)
 
     class Meta:
         model = LdapPerson
         fields = ('username','name','surname','email','alternative_email',
-                  'document_number','type_document_number', \
+                  'document_number','type_document_number', 'host_name', \
                   'office','telephone_number','home_telephone_number','other_office')
 
         

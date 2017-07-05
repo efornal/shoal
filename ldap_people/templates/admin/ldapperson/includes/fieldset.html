@@ -169,6 +169,17 @@
     </div>
   </div>
 
+  <div class="control-group form-row">
+    <div>
+      <div class="control-label">
+        <label for="id_host_name">{{ _('Host_name') }}:</label></div>
+      <div class="controls">
+        <input id="id_host_name" maxlength="200" name="host_name" type="text"
+               value="{{ result.host_name|default:'' }}">
+      </div>
+    </div>
+  </div>
+
   <div class="control-group form-row field-group_id ">
     <div>
       <div class="control-label">

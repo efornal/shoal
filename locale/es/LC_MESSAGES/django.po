@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-30 11:57-0300\n"
+"POT-Creation-Date: 2017-07-05 11:46-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "changes_saved"
 msgstr "Los cambios se guardaron correctamente"
 
-#: app/views.py:117 app/views.py:133 ldap_people/admin.py:127
+#: app/views.py:118 app/views.py:134 ldap_people/admin.py:127
 msgid "search_error"
 msgstr ""
 "La búsqueda no pudo realizarse. Verifique la conexión, o que el texto a "
@@ -37,12 +37,12 @@ msgstr ""
 msgid "Database error"
 msgstr "Error de base de datos"
 
-#: ldap_people/forms.py:24 ldap_people/forms.py:91 ldap_people/models.py:89
-#: ldap_people/models.py:865
+#: ldap_people/forms.py:24 ldap_people/forms.py:94 ldap_people/models.py:89
+#: ldap_people/models.py:884
 msgid "name"
 msgstr "nombre"
 
-#: ldap_people/forms.py:43 ldap_people/forms.py:98 ldap_people/models.py:112
+#: ldap_people/forms.py:43 ldap_people/forms.py:101 ldap_people/models.py:112
 msgid "office"
 msgstr "oficina"
 
@@ -50,15 +50,15 @@ msgstr "oficina"
 msgid "other_office"
 msgstr "otra oficina"
 
-#: ldap_people/forms.py:128
+#: ldap_people/forms.py:131
 msgid "person_without_email"
 msgstr "El email de la persona es un dato requerido"
 
-#: ldap_people/forms.py:131
+#: ldap_people/forms.py:134
 msgid "person_without_institutional_email"
 msgstr "El email institucional de la persona es un dato requerido"
 
-#: ldap_people/forms.py:138 ldap_people/forms.py:148
+#: ldap_people/forms.py:141 ldap_people/forms.py:151
 msgid "invalid_format"
 msgstr "El valor ingrasado no se corresponde con el formato requerido"
 
@@ -114,69 +114,74 @@ msgstr "area"
 msgid "position"
 msgstr "cargo"
 
-#: ldap_people/models.py:165
+#: ldap_people/models.py:166
+msgid "host_name"
+msgstr "host"
+
+#: ldap_people/models.py:170
 msgid "LdapPerson"
 msgstr "Persona Ldap"
 
-#: ldap_people/models.py:166
+#: ldap_people/models.py:171
 msgid "LdapPeople"
 msgstr "Personas Ldap"
 
-#: ldap_people/models.py:280
+#: ldap_people/models.py:294
 msgid "setting_group_must_be_greater"
 msgstr "Error definiendo el grupo %(group)s, debe ser mayor a %(value)s"
 
-#: ldap_people/models.py:283
+#: ldap_people/models.py:297
 msgid "changing_group_must_be_greater"
 msgstr ""
 "Error al cambiar el grupo %(group)s, el valor previo es mayor que %(value)s"
 
-#: ldap_people/models.py:286
+#: ldap_people/models.py:300
 msgid "setting_group_do_not_allow_edit"
 msgstr ""
 "Error definiendo el grupo %(group)s, la configuración no permite editar los "
 "grupos: %(value)s"
 
-#: ldap_people/models.py:289
+#: ldap_people/models.py:303
 msgid "changing_group_do_not_allow_edit"
 msgstr ""
 "Error al cambiar el grupo previo %(group)s, la configuración no permite "
 "editar los grupos: %(value)s"
 
-#: ldap_people/models.py:616
+#: ldap_people/models.py:634
 msgid "Group"
 msgstr "Grupo"
 
-#: ldap_people/models.py:617
+#: ldap_people/models.py:635
 msgid "Groups"
 msgstr "Grupos"
 
-#: ldap_people/models.py:720
+#: ldap_people/models.py:739
 msgid "adding_group_must_be_greater"
 msgstr "Error agregando el groupo  %(group)s, debe ser mayor a  %(value)s"
 
-#: ldap_people/models.py:727
+#: ldap_people/models.py:746
 msgid "adding_group_do_not_allow_editing"
 msgstr ""
 "Error agregando el grupo %(group)s, la configuración no permite editar los "
 "grupos: %(value)s"
 
-#: ldap_people/models.py:779
+#: ldap_people/models.py:798
 msgid "removing_group_must_be_greater"
 msgstr "Error eliminando el group %(group)s, debe ser mayor a %(value)s"
 
-#: ldap_people/models.py:786
+#: ldap_people/models.py:805
 msgid "removing_group_do_not_allow_editing"
-msgstr "Error eliminando group %(group)s, la configuración no permite editar los "
+msgstr ""
+"Error eliminando group %(group)s, la configuración no permite editar los "
 "grupos: %(value)s"
 
-#: ldap_people/models.py:869
+#: ldap_people/models.py:888
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:89
-#: templates/edit.html:30 templates/index.html:15 templates/search.html:37
+#: templates/edit.html:30 templates/index.html:15 templates/search.html:43
 msgid "Office"
 msgstr "Oficina"
 
-#: ldap_people/models.py:870
+#: ldap_people/models.py:889
 msgid "Offices"
 msgstr "Oficinas"
 
@@ -223,7 +228,7 @@ msgstr[1] "Por favor, corrija los errores indicados"
 
 #: ldap_people/templates/admin/ldapperson/change_list.html:124
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:15
-#: templates/search.html:34
+#: templates/search.html:39
 msgid "Username"
 msgstr "Usuario"
 
@@ -233,7 +238,7 @@ msgstr "Nombre"
 
 #: ldap_people/templates/admin/ldapperson/change_list.html:136
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:65
-#: templates/edit.html:37 templates/search.html:43
+#: templates/edit.html:37 templates/search.html:49
 msgid "Email"
 msgstr "Email"
 
@@ -289,25 +294,30 @@ msgid "Home_telephone_number"
 msgstr "Teléfono personal"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:142
-#: templates/search.html:39
+#: templates/search.html:45
 msgid "Floor"
 msgstr "Piso"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:153
-#: templates/search.html:40
+#: templates/search.html:46
 msgid "Area"
 msgstr "Area"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:164
-#: templates/search.html:41
+#: templates/search.html:47
 msgid "Position"
 msgstr "Cargo"
 
 #: ldap_people/templates/admin/ldapperson/includes/fieldset.html:175
+#: templates/search.html:40
+msgid "Host_name"
+msgstr "Host"
+
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:186
 msgid "Main_group"
 msgstr "Grupo principal"
 
-#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:194
+#: ldap_people/templates/admin/ldapperson/includes/fieldset.html:205
 msgid "Secondary_groups"
 msgstr "Grupos secundarios"
 
@@ -381,7 +391,7 @@ msgstr ""
 "debes registrarte utilizando los datos de login de LDAP que utilizas "
 "normalmente."
 
-#: templates/index.html:16 templates/search.html:36
+#: templates/index.html:16 templates/search.html:42
 msgid "Phone"
 msgstr "Teléfono"
 
@@ -409,10 +419,10 @@ msgstr "contraseña"
 msgid "log_in"
 msgstr "iniciar sesión"
 
-#: templates/search.html:32
+#: templates/search.html:37
 msgid "Person"
 msgstr "Persona"
 
-#: templates/search.html:61
+#: templates/search.html:69
 msgid "view_email"
 msgstr "Ver Email"
