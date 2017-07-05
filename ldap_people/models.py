@@ -195,13 +195,13 @@ class LdapPerson(models.Model):
                 'gidNumber','uidNumber','mail',
                 'telephoneNumber','homePhone',
                 'employeeType','physicalDeliveryOfficeName',
-                'departmentNumber','destinationIndicator',]
+                'departmentNumber','businessCategory',]
 
     
     @classmethod
     def search_ldap_attrs(cls):
         return ['uid','givenName','sn',
-                'departmentNumber','destinationIndicator','employeeType',
+                'departmentNumber','businessCategory','employeeType',
                 'telephoneNumber','physicalDeliveryOfficeName','mail']
 
         
@@ -260,11 +260,11 @@ class LdapPerson(models.Model):
         if self.area is not None:
             if self.area:
                 upd_person.append(( ldap.MOD_REPLACE,
-                                    'destinationIndicator',
+                                    'businessCategory',
                                     str(self.area)))
             else:
                 upd_person.append(( ldap.MOD_DELETE,
-                                    'destinationIndicator',None))
+                                    'businessCategory',None))
 
         if self.position is not None:
             if self.position:
@@ -597,8 +597,8 @@ class LdapPerson(models.Model):
             if 'departmentNumber' in entry and entry['departmentNumber'][0]:                
                 person.floor = entry['departmentNumber'][0]
 
-            if 'destinationIndicator' in entry and entry['destinationIndicator'][0]:
-                person.area = entry['destinationIndicator'][0]
+            if 'businessCategory' in entry and entry['businessCategory'][0]:
+                person.area = entry['businessCategory'][0]
 
             if 'employeeType' in entry and entry['employeeType'][0]:
                 person.position = entry['employeeType'][0]
