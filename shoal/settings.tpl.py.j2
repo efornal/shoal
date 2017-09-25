@@ -189,7 +189,7 @@ LDAP_PASSWORD = "{{ ldap_password }}"
 LDAP_SIZE_LIMIT = {{ ldap_size_limit }}
 #
 # If specified, add the ObjectClass to the search condition of ldap
-LDAP_FILTER_OBJECT_CLASS = {{ ldap_filter_object_class }}
+LDAP_FILTER_OBJECT_CLASS = {{ ldap_filter_object_class|to_json }}
 #
 # Domain name used to identify the institutional mail of an alternative
 # Ej: the (LDAP DN)
@@ -200,11 +200,11 @@ LDAP_DOMAIN_MAIL = "{{ ldap_domain_mail }}"
 LDAP_GROUP_MIN_VALUE = {{ ldap_group_min_value }}
 #
 # group_id to exclude in ldap search filter
-LDAP_GROUP_SKIP_VALUES = {{ ldap_group_skip_values }}
+LDAP_GROUP_SKIP_VALUES = {{ ldap_group_skip_values|to_json }}
 
 # Shows additional information in the search if the registered user
 # belongs to any of the indicated groups
-GROUPS_EXTRA_INFORMATION_SEARCH = {{ groups_extra_information_search }}
+GROUPS_EXTRA_INFORMATION_SEARCH = {{ groups_extra_information_search|to_json }}
 
 # =================================/
 
