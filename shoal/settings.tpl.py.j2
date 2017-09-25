@@ -179,8 +179,8 @@ LDAP_DN = "{{ ldap_dn }}"
 # Organizational Unit for Person
 LDAP_PEOPLE = "{{ ldap_people }}"
 LDAP_GROUP  = "{{ ldap_group }}"
-LDAP_GROUP_FIELDS  = {{ ldap_group_fields }}  # id first!
-LDAP_PEOPLE_FIELDS = {{ ldap_people_fields }} # idfirst!
+LDAP_GROUP_FIELDS  = {{ ldap_group_fields|to_json }}  # id first!
+LDAP_PEOPLE_FIELDS = {{ ldap_people_fields|to_json }} # idfirst!
 
 LDAP_USERNAME = "{{ ldap_username }}"
 LDAP_PASSWORD = "{{ ldap_password }}"
