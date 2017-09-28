@@ -892,6 +892,56 @@ class Office(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
+    
+class LdapOffice(models.Model):
+    id = models.AutoField(
+        primary_key=True,
+        null=False)
+    name = models.CharField(
+        max_length=200,
+        null=False,
+        verbose_name=_('name'))
+    
+    class Meta:
+#        managed = False
+        db_table = 'ldap_people_ldapoffices'
+        verbose_name = _('LdapOffice')
+        verbose_name_plural = _('LdapOffices')
+        
+    def __unicode__(self):
+        return self.name
+
+    def __str__(self):
+        return self.name
+
+    @classmethod
+    def all(cls):
+        ldap_condition = "(uid=*)"
+        ldap_condition = "(|{})".format( ldap_condition )
+        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
+        attrs = ['physicalDeliveryOfficeName']
+        retrieve_attributes = [str(x) for x in attrs]
+        ldap_result = []
+        try:
+            ldap_result = LdapConn.new().search_ext_s(
+                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
+                ldap.SCOPE_SUBTREE,
+                ldap_condition,
+                retrieve_attributes)
+        except ldap.TIMEOUT, e:
+            logging.error( "Timeout exception {} \n".format(e))
+            return None
+        except ldap.SIZELIMIT_EXCEEDED, e:
+            logging.error( "Size limit exceeded exception {} \n".format(e))
+            return None
+        except ldap.LDAPError, e:
+            logging.error( e )
+
+        return LdapOffice.ldap_to_obj(ldap_result)
+
     
     @classmethod    
     def telephones(self):
@@ -913,5 +963,23 @@ class Office(models.Model):
             logging.error(e)
 
         return offices
-        
 
+    @classmethod
+    def ldap_to_obj(cls, ldap_result):
+        cn_found = []
+        for dn,entry in ldap_result:
+            if 'physicalDeliveryOfficeName' in entry \
+               and entry['physicalDeliveryOfficeName'][0] \
+               and entry['physicalDeliveryOfficeName'][0] not in cn_found:
+                logging.warning(entry['physicalDeliveryOfficeName'][0])
+                cn_found.append(entry['physicalDeliveryOfficeName'][0])
+
+        office_names = []
+        office = None
+        for office_name in sorted(cn_found):
+            office = LdapOffice()
+            office.name = office_name
+            logging.warning(office_name)
+            office_names.append(office)
+        
+        return office_names

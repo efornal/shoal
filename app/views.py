@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
 from ldap_people.models import LdapPerson
+from ldap_people.models import LdapOffice
 from ldap_people.models import Office
 from ldap_people.models import LdapGroup
 from django.shortcuts import redirect
@@ -28,7 +29,7 @@ def set_language(request, lang='es'):
 def index(request):
     context={}
     people  = LdapPerson.by_offices()
-    offices = Office.telephones()
+    offices = LdapOffice.telephones()
     context.update({'offices': offices})
 
     if 'welcome message showed' in request.session:
