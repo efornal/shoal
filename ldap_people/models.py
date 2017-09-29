@@ -625,6 +625,71 @@ class LdapPerson(models.Model):
         return sorted(cn_found, key=lambda person: person.fullname)
 
 
+
+    @classmethod
+    def available_areas(cls):
+        ldap_condition = "(uid=*)"
+        ldap_condition = "(|{})".format( ldap_condition )
+        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
+        attrs = ['businessCategory']
+        retrieve_attributes = [str(x) for x in attrs]
+        ldap_result = []
+        areas = []
+        try:
+            ldap_result = LdapConn.new().search_ext_s(
+                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
+                ldap.SCOPE_SUBTREE,
+                ldap_condition,
+                retrieve_attributes)
+            for dn,entry in ldap_result:
+                if 'businessCategory' in entry \
+                   and entry['businessCategory'][0] \
+                   and not (entry['businessCategory'][0] in areas):
+                    areas.append(entry['businessCategory'][0])
+
+        except ldap.TIMEOUT, e:
+            logging.error( "Timeout exception {} \n".format(e))
+            return None
+        except ldap.SIZELIMIT_EXCEEDED, e:
+            logging.error( "Size limit exceeded exception {} \n".format(e))
+            return None
+        except ldap.LDAPError, e:
+            logging.error( e )
+
+        return areas
+
+    @classmethod
+    def available_floors(cls):
+        ldap_condition = "(uid=*)"
+        ldap_condition = "(|{})".format( ldap_condition )
+        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
+        attrs = ['departmentNumber']
+        retrieve_attributes = [str(x) for x in attrs]
+        ldap_result = []
+        floors = []
+        try:
+            ldap_result = LdapConn.new().search_ext_s(
+                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
+                ldap.SCOPE_SUBTREE,
+                ldap_condition,
+                retrieve_attributes)
+            for dn,entry in ldap_result:
+                if 'departmentNumber' in entry \
+                   and entry['departmentNumber'][0] \
+                   and not (entry['departmentNumber'][0] in floors):
+                    floors.append(entry['departmentNumber'][0])
+
+        except ldap.TIMEOUT, e:
+            logging.error( "Timeout exception {} \n".format(e))
+            return None
+        except ldap.SIZELIMIT_EXCEEDED, e:
+            logging.error( "Size limit exceeded exception {} \n".format(e))
+            return None
+        except ldap.LDAPError, e:
+            logging.error( e )
+
+        return floors
+
     
 class LdapGroup(models.Model):
     group_id = models.IntegerField()
@@ -971,7 +1036,6 @@ class LdapOffice(models.Model):
             if 'physicalDeliveryOfficeName' in entry \
                and entry['physicalDeliveryOfficeName'][0] \
                and entry['physicalDeliveryOfficeName'][0] not in cn_found:
-                logging.warning(entry['physicalDeliveryOfficeName'][0])
                 cn_found.append(entry['physicalDeliveryOfficeName'][0])
 
         office_names = []
@@ -979,7 +1043,6 @@ class LdapOffice(models.Model):
         for office_name in sorted(cn_found):
             office = LdapOffice()
             office.name = office_name
-            logging.warning(office_name)
             office_names.append(office)
         
         return office_names

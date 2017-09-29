@@ -1,12 +1,30 @@
 {% load suit_tags %}
 {% load application %}
+{% load staticfiles %}
 
 {% for line in fieldset %}
 {% with singlefield=line.fields|length_is:'1' %}
 {{ line.errors }}
 {% endwith %}
 {% endfor %}
-        
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+<link rel='stylesheet' type='text/css'
+      href="{% static 'css/jquery-ui/smoothness/jquery-ui.css' %}" />
+<script type="text/javascript" >
+  $( function() {
+  var availableArea = {{ available_areas|safe }};
+    $( "#id_area" ).autocomplete({
+      source: availableArea
+  });
+  } );
+  $( function() {
+  var availableFloors = {{ available_floors|safe }};
+    $( "#id_floor" ).autocomplete({
+      source: availableFloors
+  });
+  } );
+</script>
 <fieldset class="module aligned first ">
   
   {% if result.username %}
