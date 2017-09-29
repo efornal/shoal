@@ -647,6 +647,24 @@ class LdapPerson(models.Model):
         return sorted(cn_found, key=lambda person: person.fullname)
 
 
+    @classmethod
+    def available_employee_types(cls):
+        condition = "(uid=*)"
+        condition = "(|{})".format( condition )
+        condition = LdapPerson.compose_ldap_filter(condition)
+        attributes = ['employeeType']
+        employee_types = []
+        ldap_result = LdapConn.ldap_search(condition,attributes)
+        try:
+            for dn,entry in ldap_result:
+                if 'employeeType' in entry \
+                   and entry['employeeType'][0] \
+                   and not (entry['employeeType'][0] in employee_types):
+                    employee_types.append(entry['employeeType'][0])
+        except Exception, e:
+            logging.error( e )
+
+        return employee_types
 
     @classmethod
     def available_areas(cls):

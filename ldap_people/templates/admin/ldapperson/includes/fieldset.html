@@ -24,6 +24,13 @@
       source: availableFloors
   });
   } );
+  $( function() {
+  var availableEmployeeTypes = {{ available_employee_types|safe }};
+    $( "#id_position" ).autocomplete({
+      source: availableEmployeeTypes
+  });
+  } );
+  
 </script>
 <fieldset class="module aligned first ">
   

@@ -54,16 +54,14 @@ class LdapPersonAdmin(admin.ModelAdmin):
         person = LdapPerson.get_by_uid(person_id)
         form = LdapPersonForm(instance=person)
         groups = LdapGroup.all()
-        available_areas = LdapPerson.available_areas()
-        available_floors = LdapPerson.available_floors()
-
         groups_of_the_person = [str(x.group_id) for x in LdapGroup.groups_by_uid(person_id)]
 
         context = {'form': form,
                    'groups': groups,
                    'groups_of_the_person': groups_of_the_person,
-                   'available_areas': available_areas,
-                   'available_floors': available_floors,
+                   'available_areas': LdapPerson.available_areas(),
+                   'available_floors': LdapPerson.available_floors(),
+                   'available_employee_types': LdapPerson.available_employee_types(),
                    'result': person,}
 
         if extra_context is None:
