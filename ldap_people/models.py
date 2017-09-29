@@ -41,6 +41,28 @@ class LdapConn():
     def new(cls):
         return LdapConn.new_auth( LdapConn.ldap_username(), LdapConn.ldap_password() )
 
+
+    @classmethod
+    def ldap_search(cls, condition, attributes=[] ):
+        retrieve_attributes = [str(x) for x in attributes]
+        ldap_result = []
+        try:
+            ldap_result = LdapConn.new().search_ext_s(
+                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
+                ldap.SCOPE_SUBTREE,
+                condition,
+                retrieve_attributes)
+
+        except ldap.TIMEOUT, e:
+            logging.error( "Timeout exception {} \n".format(e))
+            return None
+        except ldap.SIZELIMIT_EXCEEDED, e:
+            logging.error( "Size limit exceeded exception {} \n".format(e))
+            return None
+        except ldap.LDAPError, e:
+            logging.error( e )
+
+        return ldap_result
     
     @classmethod
     def ldap_dn(self):
@@ -628,66 +650,39 @@ class LdapPerson(models.Model):
 
     @classmethod
     def available_areas(cls):
-        ldap_condition = "(uid=*)"
-        ldap_condition = "(|{})".format( ldap_condition )
-        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
-        attrs = ['businessCategory']
-        retrieve_attributes = [str(x) for x in attrs]
-        ldap_result = []
+        condition = "(uid=*)"
+        condition = "(|{})".format( condition )
+        condition = LdapPerson.compose_ldap_filter(condition)
+        attributes = ['businessCategory']
         areas = []
+        ldap_result = LdapConn.ldap_search(condition,attributes)
         try:
-            ldap_result = LdapConn.new().search_ext_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
-                ldap.SCOPE_SUBTREE,
-                ldap_condition,
-                retrieve_attributes)
             for dn,entry in ldap_result:
                 if 'businessCategory' in entry \
                    and entry['businessCategory'][0] \
                    and not (entry['businessCategory'][0] in areas):
                     areas.append(entry['businessCategory'][0])
-
-        except ldap.TIMEOUT, e:
-            logging.error( "Timeout exception {} \n".format(e))
-            return None
-        except ldap.SIZELIMIT_EXCEEDED, e:
-            logging.error( "Size limit exceeded exception {} \n".format(e))
-            return None
-        except ldap.LDAPError, e:
+        except Exception, e:
             logging.error( e )
 
         return areas
 
     @classmethod
     def available_floors(cls):
-        ldap_condition = "(uid=*)"
-        ldap_condition = "(|{})".format( ldap_condition )
-        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
-        attrs = ['departmentNumber']
-        retrieve_attributes = [str(x) for x in attrs]
-        ldap_result = []
+        condition = "(uid=*)"
+        condition = "(|{})".format( condition )
+        condition = LdapPerson.compose_ldap_filter(condition)
+        attributes = ['departmentNumber']
         floors = []
+        ldap_result = LdapConn.ldap_search(condition,attributes)
         try:
-            ldap_result = LdapConn.new().search_ext_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
-                ldap.SCOPE_SUBTREE,
-                ldap_condition,
-                retrieve_attributes)
             for dn,entry in ldap_result:
                 if 'departmentNumber' in entry \
                    and entry['departmentNumber'][0] \
                    and not (entry['departmentNumber'][0] in floors):
                     floors.append(entry['departmentNumber'][0])
-
-        except ldap.TIMEOUT, e:
-            logging.error( "Timeout exception {} \n".format(e))
-            return None
-        except ldap.SIZELIMIT_EXCEEDED, e:
-            logging.error( "Size limit exceeded exception {} \n".format(e))
-            return None
-        except ldap.LDAPError, e:
+        except Exception, e:
             logging.error( e )
-
         return floors
 
     
@@ -1024,7 +1019,7 @@ class LdapOffice(models.Model):
                     offices.update({'{}'.format(person.office):'{}'.format(curr_phone)})
 
             return OrderedDict(sorted(offices.items(), key=lambda t: t[0]))
-        except Exception as e:
+        except Exception, e:
             logging.error(e)
 
         return offices
