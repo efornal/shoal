@@ -648,60 +648,40 @@ class LdapPerson(models.Model):
 
 
     @classmethod
-    def available_employee_types(cls):
+    def available_attribute_values(cls, attribute_name):
         condition = "(uid=*)"
         condition = "(|{})".format( condition )
         condition = LdapPerson.compose_ldap_filter(condition)
-        attributes = ['employeeType']
-        employee_types = []
+        attributes = [attribute_name]
+        available_values = []
         ldap_result = LdapConn.ldap_search(condition,attributes)
         try:
             for dn,entry in ldap_result:
-                if 'employeeType' in entry \
-                   and entry['employeeType'][0] \
-                   and not (entry['employeeType'][0] in employee_types):
-                    employee_types.append(entry['employeeType'][0])
+                if attribute_name in entry \
+                   and entry[attribute_name][0] \
+                   and not (entry[attribute_name][0] in available_values):
+                    available_values.append(entry[attribute_name][0])
         except Exception, e:
             logging.error( e )
 
-        return employee_types
-
-    @classmethod
-    def available_areas(cls):
-        condition = "(uid=*)"
-        condition = "(|{})".format( condition )
-        condition = LdapPerson.compose_ldap_filter(condition)
-        attributes = ['businessCategory']
-        areas = []
-        ldap_result = LdapConn.ldap_search(condition,attributes)
-        try:
-            for dn,entry in ldap_result:
-                if 'businessCategory' in entry \
-                   and entry['businessCategory'][0] \
-                   and not (entry['businessCategory'][0] in areas):
-                    areas.append(entry['businessCategory'][0])
-        except Exception, e:
-            logging.error( e )
-
-        return areas
+        return available_values
 
     @classmethod
     def available_floors(cls):
-        condition = "(uid=*)"
-        condition = "(|{})".format( condition )
-        condition = LdapPerson.compose_ldap_filter(condition)
-        attributes = ['departmentNumber']
-        floors = []
-        ldap_result = LdapConn.ldap_search(condition,attributes)
-        try:
-            for dn,entry in ldap_result:
-                if 'departmentNumber' in entry \
-                   and entry['departmentNumber'][0] \
-                   and not (entry['departmentNumber'][0] in floors):
-                    floors.append(entry['departmentNumber'][0])
-        except Exception, e:
-            logging.error( e )
-        return floors
+        return LdapPerson.available_attribute_values('departmentNumber')
+    
+    @classmethod
+    def available_employee_types(cls):
+        return LdapPerson.available_attribute_values('employeeType')
+
+    @classmethod
+    def available_areas(cls):
+        return LdapPerson.available_attribute_values('businessCategory')
+
+    @classmethod
+    def available_floors(cls):
+        return LdapPerson.available_attribute_values('departmentNumber')
+
 
     
 class LdapGroup(models.Model):
