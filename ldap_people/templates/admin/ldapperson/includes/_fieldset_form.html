@@ -1,0 +1,211 @@
+
+  {% if result.username %}
+  <div class="control-group form-row field-username">
+    <div>
+      <div class="control-label"><label>{{ _('Username') }}:</label></div>
+      <div class="controls">
+        <input class="readonly" type="text" name="username"
+               value="{{ result.username|default:'' }}" readonly="true">
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="control-group form-row field-document_number ">
+    <div>
+      <div class="control-label">
+        <label for="id_document_number">{{ _('Document') }}:</label>
+      </div>
+      <div class="controls">
+        <span class="readonly">
+          <input class="readonly" type="text"
+                 value="{{ result.country_document_number|default:'' }} &nbsp; {{ result.type_document_number|default:'' }} &nbsp; {{ result.document_number|default:'' }}" readonly="true">
+        </span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="control-group form-row field-name ">
+    <div>
+      <div class="control-label">
+        <label for="id_name">{{ _('Name') }}:</label>
+      </div>
+      <div class="controls">
+        <input id="id_name" maxlength="200" name="name" type="text"
+               value="{{ result.name|default:'' }}" readonly="true">
+      </div>
+    </div>
+  </div>
+  
+  <div class="control-group form-row field-surname ">
+    <div>
+      <div class="control-label">
+        <label for="id_surname">{{ _('Surname') }}:</label>
+      </div>
+      <div class="controls">
+        <input id="id_surname" maxlength="200" name="surname" type="text"
+               value="{{ result.surname|default:'' }}" readonly="true">
+      </div>
+    </div>
+  </div>
+  
+  <div class="control-group form-row field-email ">
+    <div>
+      <div class="control-label">
+        <label for="id_email">{{ _('Email') }}:</label>
+      </div>
+      <div class="controls">
+        <input id="id_email" maxlength="200" name="email" type="text"
+               value="{{ result.email|default:'' }}" readonly="true">
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row field-email ">
+    <div>
+      <div class="control-label">
+        <label for="id_alternative_email">{{ _('Alternative_email') }}:</label>
+      </div>
+      <div class="controls">
+        <input id="id_alternative_email" maxlength="200" name="alternative_email" type="text"
+               value="{{ result.alternative_email|default:'' }}">
+      </div>
+    </div>
+  </div>
+  
+  <div class="control-group form-row field-office ">
+    <div>
+      <div class="control-label">
+        <label for="id_office">{{ _('Office') }}</label>
+      </div>
+      <div class="controls">
+        <select id="office_id" name="office">
+          <option value="">Seleccione uno</option>
+          {% if form.office %}
+            {% for office in form.office.field.choices %}
+              <option value="{{ office.1 }}"
+              {% if result.office == office.1 %} selected="selected" {%endif%}>{{ office.1 }}</option>
+            {% endfor%}
+          {% endif%}
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row field-email ">
+    <div>
+      <div class="control-label">
+        <label for="id_other_office">{{ _('Other_office') }}:</label>
+      </div>
+      <div class="controls">
+        <input id="id_other_office" maxlength="200" name="other_office" type="text"
+               value="{{ result.office|default:'' }}">
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row field-telephone_number ">
+    <div title="{{ _('telephone_number_example') }}">
+      <div class="control-label">
+        <label for="id_telephone_number">{{ _('Telephone_number') }}:</label></div>
+      <div class="controls">
+        <input id="id_telephone_number" maxlength="200" name="telephone_number" type="text"
+               value="{{ result.telephone_number|default:'' }}">
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row field-telephone_number ">
+    <div title="{{ _('telephone_number_example') }}">
+      <div class="control-label">
+        <label for="id_home_telephone_number">{{ _('Home_telephone_number') }}:</label></div>
+      <div class="controls">
+        <input id="id_home_telephone_number" maxlength="200" name="home_telephone_number" type="text"
+               value="{{ result.home_telephone_number|default:'' }}">
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row">
+    <div>
+      <div class="control-label">
+        <label for="id_floor">{{ _('Floor') }}:</label></div>
+      <div class="controls">
+        <input id="id_floor" maxlength="200" name="floor" type="text"
+               value="{{ result.floor|default:'' }}">
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row">
+    <div>
+      <div class="control-label">
+        <label for="id_area">{{ _('Area') }}:</label></div>
+      <div class="controls">
+        <input id="id_area" maxlength="200" name="area" type="text"
+               value="{{ result.area|default:'' }}">
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row">
+    <div>
+      <div class="control-label">
+        <label for="id_position">{{ _('Position') }}:</label></div>
+      <div class="controls">
+        <input id="id_position" maxlength="200" name="position" type="text"
+               value="{{ result.position|default:'' }}">
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row">
+    <div>
+      <div class="control-label">
+        <label for="id_host_name">{{ _('Host_name') }}:</label></div>
+      <div class="controls">
+        <input id="id_host_name" maxlength="200" name="host_name" type="text"
+               value="{{ result.host_name|default:'' }}">
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group form-row field-group_id ">
+    <div>
+      <div class="control-label">
+        <label for="id_office">{{ _('Main_group') }}:</label>
+      </div> 
+      <div class="controls">
+        <div class="related-widget-wrapper">
+          <select id="group_id" name="group_id">
+            {% for group in groups %}
+            <option value="{{ group.group_id }}"
+              {% if result.group_id == group.group_id %} selected="selected" {% endif %}>
+              {{ group.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="control-group form-row field-group_id ">
+    <div>
+      <div class="control-label">
+        <label for="id_office">{{ _('Secondary_groups') }}:</label>
+      </div>
+      <div class="controls">
+        <div class="related-widget-wrapper">
+          <select multiple="multiple" id="groups_id" name="groups_id" size="20">
+            {% for group in groups %}
+            <option value="{{ group.group_id }}"
+              {% if group.group_id in groups_of_the_person %} selected="selected" {% endif %}>
+              {{ group.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
