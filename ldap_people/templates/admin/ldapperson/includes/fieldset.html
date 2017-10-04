@@ -3,8 +3,7 @@
 {% load suit_tags %}
 {% include "./_header_fieldset.html" %}
 <fieldset class="module aligned{{ fieldset.name|yesno:' with-legend, first' }} {{ fieldset.classes }}">
-  {% include "./_fieldset_form.html" %}
-  --------
+
     {% if fieldset.name %}
         <h2 class="legend">{{ fieldset.name }}
             {% if fieldset.description %}

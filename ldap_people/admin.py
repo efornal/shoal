@@ -19,7 +19,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-from ldap_people.forms import LdapPersonForm
+from ldap_people.forms import LdapPersonAdminForm
 import logging
 import sys
 from django.conf import settings
@@ -30,90 +30,25 @@ class IncorrectLookupParameters(Exception):
 
 
 
-class LdapPersonAdminForm(forms.ModelForm):
-    username = forms.CharField(
-        required=True,
-        max_length=200)
-    name = forms.CharField(
-        max_length=200,
-        required=True,
-        label=_('name'))
-    surname = forms.CharField(
-        max_length=200,
-        required=True)
-    fullname = forms.CharField(
-        max_length=200,
-        required=False)
-    email = forms.EmailField(
-        max_length=200,
-        required=True)
-    alternative_email = forms.EmailField(
-        max_length=200,
-        required=False)
-    office = forms.ChoiceField(
-        choices=[(office.name, office.name) for office in LdapOffice.all()],
-        required=True,
-        label=_('office'))
-    other_office = forms.CharField(
-        max_length=200,
-        required=False,
-        label=_('other_office'))
-    group_id = forms.ChoiceField(
-        choices=[(group.name, group.name) for group in LdapGroup.all()],
-        required=False,
-        label=_('gooup'))
-    groups_id = forms.MultipleChoiceField(
-        widget=forms.SelectMultiple,
-        choices=[(group.name, group.name) for group in LdapGroup.all()],
-        required=False,
-        label=_('gooup'))
-
-    # group_id = forms.CharField(
-    #     max_length=200,
-    #     required=False)
-    document_number = forms.CharField(
-        max_length=200,
-        required=False)
-    type_document_number = forms.CharField(
-        max_length=200,
-        required=False)
-    telephone_number = forms.CharField(
-        max_length=200,
-        required=False)
-    home_telephone_number = forms.CharField(
-        max_length=200,
-        required=False)
-    floor = forms.CharField(
-        max_length=200,
-        required=False)
-    area = forms.CharField(
-        max_length=200,
-        required=False)
-    position = forms.CharField(
-        max_length=200,
-        required=False)
-    host_name = forms.CharField(
-        max_length=200,
-        required=False)
-
-    class Meta:
-        model = LdapPerson
-        fields = ('username','name','surname','email','alternative_email',
-                  'document_number','type_document_number', 'host_name', \
-                  'office','telephone_number','home_telephone_number','other_office')
-
-
-
 
 class LdapPersonAdmin(admin.ModelAdmin):
     form = LdapPersonAdminForm
-    readonly_fields = ('username',)
+    readonly_fields = ('username','name','surname','full_document')
     search_fields = ['username',]
-    list_display = ('username','name','surname','email','document_number', \
-                    'office','telephone_number','other_office')
+    list_display = ('username','name','surname','email','full_document', \
+                    'office','telephone_number','other_office',)
+    fields = ('username','name','surname','full_document','email', \
+              'alternative_email', 'office','other_office','telephone_number',
+              'home_telephone_number', 'floor', 'area', 'position', \
+              'host_name','group_id', 'groups_id')
+    
     actions = None
 
-
+    def full_document(self, obj):
+        return "{} {} {}".format( obj.country_document_number,
+                                obj.type_document_number,
+                                obj.document_number )
+    
     def get_object(self, request, object_id, from_field=None):
         """
         Returns an instance matching the field and value provided, the primary
@@ -129,7 +64,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
     def change_view(self, request, object_id, form_url='', extra_context=None):
         person_id = '{}'.format(object_id)
         person = LdapPerson.get_by_uid(person_id)
-        form = LdapPersonForm(instance=person)
+        form = LdapPersonAdminForm(instance=person)
         groups = LdapGroup.all()
         groups_of_the_person = [str(x.group_id) for x in LdapGroup.groups_by_uid(person_id)]
 
@@ -221,4 +156,4 @@ class OfficeAdmin(admin.ModelAdmin):
     ordering = ('name',)
     
 admin.site.register(LdapPerson, LdapPersonAdmin)
-admin.site.register(Office, OfficeAdmin)
+#admin.site.register(Office, OfficeAdmin)
