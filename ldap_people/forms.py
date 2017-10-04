@@ -17,25 +17,27 @@ sys.setdefaultencoding('utf-8')
 import re
 
 
-
-
 class LdapPersonAdminForm(forms.ModelForm):
     username = forms.CharField(
         required=True,
-        max_length=200)
+        max_length=200,
+        label=_('username'))
     name = forms.CharField(
         max_length=200,
         required=True,
         label=_('name'))
     surname = forms.CharField(
         max_length=200,
-        required=True)
+        required=True,
+        label=_('surname'))
     email = forms.EmailField(
         max_length=200,
-        required=True)
+        required=True,
+        label=_('email'))
     alternative_email = forms.EmailField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('alternative_email'))
     office = forms.ChoiceField(
         choices=[(office.name, office.name) for office in LdapOffice.all()],
         required=True,
@@ -47,36 +49,44 @@ class LdapPersonAdminForm(forms.ModelForm):
     group_id = forms.ChoiceField(
         choices=[(group.name, group.name) for group in LdapGroup.all()],
         required=False,
-        label=_('gooup'))
+        label=_('group'))
     groups_id = forms.MultipleChoiceField(
         widget=forms.SelectMultiple,
         choices=[(group.name, group.name) for group in LdapGroup.all()],
         required=False,
-        label=_('gooup'))
+        label=_('groups'))
     document_number = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('document_number'))
     type_document_number = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('type_document_number'))
     telephone_number = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('telephone_number'))
     home_telephone_number = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('home_telephone_number'))
     floor = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('floor'))
     area = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('area'))
     position = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('position'))
     host_name = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('host_name'))
 
     class Meta:
         model = LdapPerson
@@ -84,72 +94,7 @@ class LdapPersonAdminForm(forms.ModelForm):
                   'document_number','type_document_number', 'host_name', \
                   'office','telephone_number','home_telephone_number','other_office')
 
-# class LdapPersonForm(forms.ModelForm):
-#     username = forms.CharField(
-#         required=True,
-#         max_length=200)
-#     name = forms.CharField(
-#         max_length=200,
-#         required=True,
-#         label=_('name'))
-#     person_id = forms.CharField(
-#         max_length=200,
-#         required=False)
-#     surname = forms.CharField(
-#         max_length=200,
-#         required=True)
-#     fullname = forms.CharField(
-#         max_length=200,
-#         required=False)
-#     email = forms.EmailField(
-#         max_length=200,
-#         required=True)
-#     alternative_email = forms.EmailField(
-#         max_length=200,
-#         required=False)
-#     office = forms.ChoiceField(
-#         choices=[(office.name, office.name) for office in LdapOffice.all()],
-#         required=True,
-#         label=_('office'))
-#     other_office = forms.CharField(
-#         max_length=200,
-#         required=False,
-#         label=_('other_office'))
-#     group_id = forms.CharField(
-#         max_length=200,
-#         required=False)
-#     document_number = forms.CharField(
-#         max_length=200,
-#         required=False)
-#     type_document_number = forms.CharField(
-#         max_length=200,
-#         required=False)
-#     telephone_number = forms.CharField(
-#         max_length=200,
-#         required=False)
-#     home_telephone_number = forms.CharField(
-#         max_length=200,
-#         required=False)
-#     floor = forms.CharField(
-#         max_length=200,
-#         required=False)
-#     area = forms.CharField(
-#         max_length=200,
-#         required=False)
-#     position = forms.CharField(
-#         max_length=200,
-#         required=False)
-#     host_name = forms.CharField(
-#         max_length=200,
-#         required=False)
-
-#     class Meta:
-#         model = LdapPerson
-#         fields = ('username','name','surname','email','alternative_email',
-#                   'document_number','type_document_number', 'host_name', \
-#                   'office','telephone_number','home_telephone_number','other_office')
-
-        
+       
 def validate_telephone_number(val):
     pattern = r'^\+?(\d{3,4})?(\s)?(\d{3,15})?(\s)?(int\s\d{1,3})?$'
     return re.match(pattern, val)

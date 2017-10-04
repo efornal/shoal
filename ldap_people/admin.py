@@ -29,8 +29,6 @@ class IncorrectLookupParameters(Exception):
     pass
 
 
-
-
 class LdapPersonAdmin(admin.ModelAdmin):
     form = LdapPersonAdminForm
     readonly_fields = ('username','name','surname','full_document')
