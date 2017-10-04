@@ -46,6 +46,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
         return "{} {} {}".format( obj.country_document_number,
                                 obj.type_document_number,
                                 obj.document_number )
+    full_document.short_description = _('Full_document')
     
     def get_object(self, request, object_id, from_field=None):
         """
