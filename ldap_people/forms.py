@@ -47,12 +47,12 @@ class LdapPersonAdminForm(forms.ModelForm):
         required=False,
         label=_('Other_office'))
     group_id = forms.ChoiceField(
-        choices=[(group.name, group.name) for group in LdapGroup.all()],
+        choices=[(group.group_id, group.name) for group in LdapGroup.all()],
         required=False,
         label=_('Main_group'))
     groups_id = forms.MultipleChoiceField(
         widget=forms.SelectMultiple,
-        choices=[(group.name, group.name) for group in LdapGroup.all()],
+        choices=[(group.group_id, group.name) for group in LdapGroup.all()],
         required=False,
         label=_('Secondary_groups'))
     document_number = forms.CharField(
@@ -90,9 +90,15 @@ class LdapPersonAdminForm(forms.ModelForm):
 
     class Meta:
         model = LdapPerson
-        fields = ('username','name','surname','email','alternative_email',
+        fields = ('username','name','surname','email','alternative_email', \
                   'document_number','type_document_number', 'host_name', \
                   'office','telephone_number','home_telephone_number','other_office')
+
+    def __init__(self, *args, **kwargs):
+        super(LdapPersonAdminForm, self).__init__(*args, **kwargs)
+        if self.instance:
+            member_groups = [str(x.group_id) for x in LdapGroup.groups_by_uid(self.instance.username)]
+            self.initial['groups_id'] = member_groups
 
        
 def validate_telephone_number(val):

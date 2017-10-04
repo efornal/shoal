@@ -48,7 +48,7 @@ def logout_message(request):
 @ldap_user_required
 def edit(request):
     person = LdapPerson.get_by_uid(request.user)
-    form = LdapPersonForm(instance=person)
+    form = FrontLdapPersonForm(instance=person)
     context={'form':form}
     return render(request, 'edit.html', context)
 
