@@ -395,7 +395,7 @@ msgstr "Iniciar sesión"
 
 #: templates/edit.html:10
 msgid "data_of_the_person"
-msgstr "Datos de la persona"
+msgstr "Datos personales"
 
 #: templates/edit.html:42
 msgid "to_change_password"
