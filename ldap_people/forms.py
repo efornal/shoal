@@ -4,6 +4,7 @@ from django import forms
 from django.forms import ModelForm
 from ldap_people.models import LdapPerson
 from ldap_people.models import LdapOffice
+from ldap_people.models import LdapGroup
 from ldap_people.models import Office
 from django.utils.translation import ugettext as _
 from django.utils import translation
@@ -15,72 +16,91 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 import re
 
-class LdapPersonForm(forms.ModelForm):
+
+class LdapPersonAdminForm(forms.ModelForm):
     username = forms.CharField(
         required=True,
-        max_length=200)
+        max_length=200,
+        label=_('Username'))
     name = forms.CharField(
         max_length=200,
         required=True,
-        label=_('name'))
-    person_id = forms.CharField(
-        max_length=200,
-        required=False)
+        label=_('Name'))
     surname = forms.CharField(
         max_length=200,
-        required=True)
-    fullname = forms.CharField(
-        max_length=200,
-        required=False)
+        required=True,
+        label=_('Surname'))
     email = forms.EmailField(
         max_length=200,
-        required=True)
+        required=True,
+        label=_('Email'))
     alternative_email = forms.EmailField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('Alternative_email'))
     office = forms.ChoiceField(
         choices=[(office.name, office.name) for office in LdapOffice.all()],
         required=True,
-        label=_('office'))
+        label=_('Office'))
     other_office = forms.CharField(
         max_length=200,
         required=False,
-        label=_('other_office'))
-    group_id = forms.CharField(
-        max_length=200,
-        required=False)
+        label=_('Other_office'))
+    group_id = forms.ChoiceField(
+        choices=[(group.group_id, group.name) for group in LdapGroup.all()],
+        required=False,
+        label=_('Main_group'))
+    groups_id = forms.MultipleChoiceField(
+        widget=forms.SelectMultiple,
+        choices=[(group.group_id, group.name) for group in LdapGroup.all()],
+        required=False,
+        label=_('Secondary_groups'))
     document_number = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('Document_number'))
     type_document_number = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('Type_document_number'))
     telephone_number = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('Telephone_number'))
     home_telephone_number = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('Home_telephone_number'))
     floor = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('Floor'))
     area = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('Area'))
     position = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('Position'))
     host_name = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('Host_name'))
 
     class Meta:
         model = LdapPerson
-        fields = ('username','name','surname','email','alternative_email',
+        fields = ('username','name','surname','email','alternative_email', \
                   'document_number','type_document_number', 'host_name', \
                   'office','telephone_number','home_telephone_number','other_office')
 
-        
+    def __init__(self, *args, **kwargs):
+        super(LdapPersonAdminForm, self).__init__(*args, **kwargs)
+        if self.instance:
+            member_groups = [str(x.group_id) for x in LdapGroup.groups_by_uid(self.instance.username)]
+            self.initial['groups_id'] = member_groups
+
+       
 def validate_telephone_number(val):
     pattern = r'^\+?(\d{3,4})?(\s)?(\d{3,15})?(\s)?(int\s\d{1,3})?$'
     return re.match(pattern, val)
@@ -88,36 +108,44 @@ def validate_telephone_number(val):
 class FrontLdapPersonForm(forms.ModelForm):
     username = forms.CharField(
         required=True,
-        max_length=200)
+        max_length=200,
+        label=_('Username'))
     name = forms.CharField(
         max_length=200,
         required=False,
-        label=_('name'))
+        label=_('Name'))
     surname = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('Surname'))
     office = forms.CharField(
         max_length=200,
         required=False,
-        label=_('office'))
+        label=_('Office'))
     email = forms.EmailField(
         max_length=200,
-        required=True)
+        required=True,
+        label=_('Email'))
     alternative_email = forms.EmailField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('Alternative_email'))
     document_number = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('Document_number'))
     type_document_number = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('type_document_number'))
     telephone_number = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('telephone_number'))
     home_telephone_number = forms.CharField(
         max_length=200,
-        required=False)
+        required=False,
+        label=_('home_telephone_number'))
 
     class Meta:
         model = LdapPerson

@@ -12,7 +12,7 @@ from django.shortcuts import redirect
 from django.utils import translation
 import logging
 from django.contrib import messages
-from ldap_people.forms import LdapPersonForm, FrontLdapPersonForm
+from ldap_people.forms import FrontLdapPersonForm
 from decorators import ldap_user_required
 from django.conf import settings
 
@@ -48,7 +48,7 @@ def logout_message(request):
 @ldap_user_required
 def edit(request):
     person = LdapPerson.get_by_uid(request.user)
-    form = LdapPersonForm(instance=person)
+    form = FrontLdapPersonForm(instance=person)
     context={'form':form}
     return render(request, 'edit.html', context)
 

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from django.http import HttpResponse
 from ldap_people.models import LdapPerson
+from ldap_people.models import LdapOffice
 from ldap_people.models import LdapGroup
 from ldap_people.models import Office
 from django.forms import ModelForm
@@ -18,7 +19,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-from ldap_people.forms import LdapPersonForm
+from ldap_people.forms import LdapPersonAdminForm
 import logging
 import sys
 from django.conf import settings
@@ -27,16 +28,24 @@ from django.conf import settings
 class IncorrectLookupParameters(Exception):
     pass
 
-
 class LdapPersonAdmin(admin.ModelAdmin):
-    form = LdapPersonForm
-    readonly_fields = ('username',)
+    form = LdapPersonAdminForm
+
     search_fields = ['username',]
-    list_display = ('username','name','surname','email','document_number', \
-                    'office','telephone_number','other_office')
+    readonly_fields = ('full_document',)
+    
+    fields = ('username','name','surname','email', 'full_document', \
+              'alternative_email', 'office','other_office','telephone_number',
+              'home_telephone_number', 'floor', 'area', 'position', \
+              'host_name','group_id', 'groups_id')
     actions = None
 
-
+    def full_document(self, obj):
+        return "{} {} {}".format( obj.country_document_number,
+                                  obj.type_document_number,
+                                  obj.document_number )
+    full_document.short_description = _('Full_document')
+    
     def get_object(self, request, object_id, from_field=None):
         """
         Returns an instance matching the field and value provided, the primary
@@ -52,13 +61,10 @@ class LdapPersonAdmin(admin.ModelAdmin):
     def change_view(self, request, object_id, form_url='', extra_context=None):
         person_id = '{}'.format(object_id)
         person = LdapPerson.get_by_uid(person_id)
-        form = LdapPersonForm(instance=person)
-        groups = LdapGroup.all()
-        groups_of_the_person = [str(x.group_id) for x in LdapGroup.groups_by_uid(person_id)]
+
+        form = LdapPersonAdminForm(instance=person)
 
         context = {'form': form,
-                   'groups': groups,
-                   'groups_of_the_person': groups_of_the_person,
                    'available_areas': LdapPerson.available_areas(),
                    'available_floors': LdapPerson.available_floors(),
                    'available_employee_types': LdapPerson.available_employee_types(),
@@ -76,7 +82,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
     
     def save_model(self, request, obj, form, change):
-        ldap_person= LdapPersonForm(request.POST)
+        ldap_person= LdapPersonAdminForm(request.POST)
         try:
             if ldap_person.is_valid():
                 ldap_person.save()
@@ -144,4 +150,4 @@ class OfficeAdmin(admin.ModelAdmin):
     ordering = ('name',)
     
 admin.site.register(LdapPerson, LdapPersonAdmin)
-admin.site.register(Office, OfficeAdmin)
+#admin.site.register(Office, OfficeAdmin)

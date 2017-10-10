@@ -1,0 +1,28 @@
+{% load application %}
+{% load staticfiles %}
+
+<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+<link rel='stylesheet' type='text/css'
+      href="{% static 'css/jquery-ui/smoothness/jquery-ui.css' %}" />
+<script type="text/javascript" >
+  $( function() {
+  var availableArea = {{ available_areas|safe }};
+    $( "#id_area" ).autocomplete({
+      source: availableArea
+  });
+  } );
+  $( function() {
+  var availableFloors = {{ available_floors|safe }};
+    $( "#id_floor" ).autocomplete({
+      source: availableFloors
+  });
+  } );
+  $( function() {
+  var availableEmployeeTypes = {{ available_employee_types|safe }};
+    $( "#id_position" ).autocomplete({
+      source: availableEmployeeTypes
+  });
+  } );
+  
+</script>
