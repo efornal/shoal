@@ -108,6 +108,7 @@ def search(request):
     show_extra_info = is_in_group_with_extra_info(request)
                 
     context={'show_extra_info':show_extra_info}
+
     if 'text' in request.GET:
         text = request.GET['text']
         people = LdapPerson.search(text)

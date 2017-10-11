@@ -41,29 +41,6 @@ class LdapConn():
     def new(cls):
         return LdapConn.new_auth( LdapConn.ldap_username(), LdapConn.ldap_password() )
 
-
-    @classmethod
-    def ldap_search(cls, condition, attributes=[] ):
-        retrieve_attributes = [str(x) for x in attributes]
-        ldap_result = []
-        try:
-            ldap_result = LdapConn.new().search_ext_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
-                ldap.SCOPE_SUBTREE,
-                condition,
-                retrieve_attributes)
-
-        except ldap.TIMEOUT, e:
-            logging.error( "Timeout exception {} \n".format(e))
-            return None
-        except ldap.SIZELIMIT_EXCEEDED, e:
-            logging.error( "Size limit exceeded exception {} \n".format(e))
-            return None
-        except ldap.LDAPError, e:
-            logging.error( e )
-
-        return ldap_result
-    
     @classmethod
     def ldap_dn(self):
         if hasattr(settings, 'LDAP_DN'):
@@ -88,6 +65,35 @@ class LdapConn():
             return settings.LDAP_USERNAME
         return None
 
+    
+    @classmethod
+    def ldap_search(cls, dn, condition, attributes=[], size_limit=None ):
+        retrieve_attributes = [str(x) for x in attributes]
+        ldap_result = []
+        try:
+            if size_limit is None:
+                ldap_result = LdapConn.new().search_ext_s(
+                    dn,
+                    ldap.SCOPE_SUBTREE,
+                    condition,
+                    retrieve_attributes)
+            else:
+                ldap_result = LdapConn.new().search_ext_s(
+                    dn,
+                    ldap.SCOPE_SUBTREE,
+                    condition,
+                    retrieve_attributes,
+                    sizelimit = size_limit)
+        except ldap.TIMEOUT, e:
+            logging.error( "Timeout exception {} \n".format(e))
+            return None
+        except ldap.SIZELIMIT_EXCEEDED, e:
+            logging.error( "Size limit exceeded exception {} \n".format(e))
+            return None
+        except ldap.LDAPError, e:
+            logging.error( e )
+
+        return ldap_result
 
     
 class LdapPerson(models.Model):
@@ -375,148 +381,92 @@ class LdapPerson(models.Model):
 
 
     @classmethod
+    def ldap_search(cls, condition, attributes=[], size_limit=None ):
+        dn = "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn())
+        return LdapConn.ldap_search( dn, condition, attributes, size_limit )
+
+    
+    @classmethod
     def search_by_uid(cls, uid):
-        ldap_condition = "(uid=*{}*)".format( uid )
-        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
-        attributes = LdapPerson.search_ldap_attrs()
-        retrieve_attributes = [str(x) for x in attributes]
+        condition = "(uid=*{}*)".format( uid )
+        condition = cls.compose_ldap_filter(condition)
+        attributes = [str(x) for x in cls.search_ldap_attrs()]
         ldap_result = []
-            
         try:
-            ldap_result = LdapConn.new().search_ext_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),
-                                  LdapConn.ldap_dn()),
-                ldap.SCOPE_SUBTREE,
-                ldap_condition,
-                retrieve_attributes,
-                sizelimit=LdapPerson.ldap_size_limit())
-        except ldap.TIMEOUT, e:
-            logging.error( "Timeout exception {} \n".format(e))
-            return None
-        except ldap.SIZELIMIT_EXCEEDED, e:
-            logging.error( "Size limit exceeded exception {} \n".format(e))
-            return None
-        except ldap.LDAPError, e:
+            result = cls.ldap_search( condition, attributes, LdapPerson.ldap_size_limit() )
+            ldap_result = cls.ldap_to_obj( result )
+        except Exception, e:
             logging.error( e )
 
-        return LdapPerson.ldap_to_obj(ldap_result)
+        return ldap_result
 
     
     @classmethod
     def all(cls):
-        ldap_condition = "(uid=*)"
-        ldap_condition = "(|{})".format( ldap_condition )
-        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
-        retrieve_attributes = [str(x) for x in LdapPerson.search_ldap_attrs()]
+        condition = "(uid=*)"
+        condition = "(|{})".format( condition )
+        condition = cls.compose_ldap_filter(condition)
+        attributes = [str(x) for x in cls.search_ldap_attrs()]
         ldap_result = []
-        logging.error(ldap_condition)
         try:
-            ldap_result = LdapConn.new().search_ext_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
-                ldap.SCOPE_SUBTREE,
-                ldap_condition,
-                retrieve_attributes)
-        except ldap.TIMEOUT, e:
-            logging.error( "Timeout exception {} \n".format(e))
-            return None
-        except ldap.SIZELIMIT_EXCEEDED, e:
-            logging.error( "Size limit exceeded exception {} \n".format(e))
-            return None
-        except ldap.LDAPError, e:
+            result = cls.ldap_search(condition,attributes)
+            ldap_result = cls.ldap_to_obj(result)
+        except Exception, e:
             logging.error( e )
 
-        return LdapPerson.ldap_to_obj(ldap_result)
+        return ldap_result
 
     
     @classmethod
     def search(cls, text):
-        ldap_condition = "(uid=*{}*)".format( text )
-        ldap_condition += "(cn=*{}*)".format( text )
-        ldap_condition += "(sn=*{}*)".format( text )
-        ldap_condition += "(givenName=*{}*)".format( text )
-        ldap_condition += "(numdoc=*{}*)".format( text )
-        ldap_condition += "(physicalDeliveryOfficeName=*{}*)".format( text )
-        ldap_condition += "(telephoneNumber=*{}*)".format( text )
-        ldap_condition = "(|{})".format( ldap_condition )
-        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
-        retrieve_attributes = [str(x) for x in LdapPerson.search_ldap_attrs()]
+        condition = "(uid=*{}*)".format( text )
+        condition += "(cn=*{}*)".format( text )
+        condition += "(sn=*{}*)".format( text )
+        condition += "(givenName=*{}*)".format( text )
+        condition += "(numdoc=*{}*)".format( text )
+        condition += "(physicalDeliveryOfficeName=*{}*)".format( text )
+        condition += "(telephoneNumber=*{}*)".format( text )
+        condition = "(|{})".format( condition )
+        condition = cls.compose_ldap_filter(condition)
+        attributes = [str(x) for x in cls.search_ldap_attrs()]
         ldap_result = []
-            
         try:
-            result = LdapConn.new().search_ext_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
-                ldap.SCOPE_SUBTREE,
-                ldap_condition,
-                retrieve_attributes,
-                sizelimit = LdapPerson.ldap_size_limit())
-            ldap_result = LdapPerson.ldap_to_obj(result)
-        except ldap.TIMEOUT, e:
-            logging.error( "Timeout exception {} \n".format(e))
-            ldap_result = None
-        except ldap.SIZELIMIT_EXCEEDED, e:
-            logging.error( "Size limit exceeded exception {} \n".format(e))
-            ldap_result = None
-        except ldap.LDAPError, e:
+            result = cls.ldap_search( condition, attributes, cls.ldap_size_limit() )
+            ldap_result = cls.ldap_to_obj( result )
+        except Exception, e:
             logging.error( e )
-            ldap_result = None
 
         return ldap_result
 
     
     @classmethod
     def search_by_office(cls, office_name):
-        ldap_condition = "(physicalDeliveryOfficeName=*{}*)".format( office_name )
-        ldap_condition = "(|{})".format( ldap_condition )
-        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
-        retrieve_attributes = [str(x) for x in LdapPerson.search_ldap_attrs()]
+        condition = "(physicalDeliveryOfficeName=*{}*)".format( office_name )
+        condition = "(|{})".format( condition )
+        condition = cls.compose_ldap_filter(condition)
+        attributes = [str(x) for x in cls.search_ldap_attrs()]
         ldap_result = []
-        logging.error( ldap_condition)
+
         try:
-            result = LdapConn.new().search_ext_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
-                ldap.SCOPE_SUBTREE,
-                ldap_condition,
-                retrieve_attributes,
-                sizelimit = LdapPerson.ldap_size_limit())
-            ldap_result = LdapPerson.ldap_to_obj(result)
-        except ldap.TIMEOUT, e:
-            logging.error( "Timeout exception {} \n".format(e))
-            ldap_result = None
-        except ldap.SIZELIMIT_EXCEEDED, e:
-            logging.error( "Size limit exceeded exception {} \n".format(e))
-            ldap_result = None
-        except ldap.LDAPError, e:
+            result = cls.ldap_search( condition, attributes, LdapPerson.ldap_size_limit() )
+            ldap_result = cls.ldap_to_obj( result )
+        except Exception, e:
             logging.error( e )
-            ldap_result = None
 
         return ldap_result
 
 
     @classmethod
     def by_offices(cls):
-        ldap_condition = ""
-        #ldap_condition = "(|{})".format( ldap_condition )
-        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
-        attributes = ['uid','telephoneNumber','physicalDeliveryOfficeName',]
-        retrieve_attributes = [str(x) for x in  LdapPerson.search_ldap_attrs()]
+        condition = ""
+        condition = cls.compose_ldap_filter(condition)
+        attributes = [str(x) for x in  LdapPerson.search_ldap_attrs()]
         ldap_result = []
-            
         try:
-            result = LdapConn.new().search_ext_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
-                ldap.SCOPE_SUBTREE,
-                ldap_condition,
-                retrieve_attributes)
-            ldap_result = LdapPerson.ldap_to_obj(result)
-        except ldap.TIMEOUT, e:
-            logging.error( "Timeout exception {} \n".format(e))
-            ldap_result = None
-        except ldap.SIZELIMIT_EXCEEDED, e:
-            logging.error( "Size limit exceeded exception {} \n".format(e))
-            ldap_result = None
-        except ldap.LDAPError, e:
+            result = cls.ldap_search( condition, attributes)
+            ldap_result = cls.ldap_to_obj( result )
+        except Exception, e:
             logging.error( e )
-            ldap_result = None
 
         return ldap_result
 
@@ -566,8 +516,13 @@ class LdapPerson(models.Model):
     
     @classmethod
     def ldap_to_obj(cls, ldap_result):
+        if ldap_result is None:
+            logging.warning ("Omitted object conversion, the list has None value.")
+            return ldap_result
+        
         cn_found = []
         ldap_domain_mail = ''
+
         if hasattr(settings, 'LDAP_DOMAIN_MAIL') and settings.LDAP_DOMAIN_MAIL:
             ldap_domain_mail = settings.LDAP_DOMAIN_MAIL
             
@@ -651,10 +606,10 @@ class LdapPerson(models.Model):
     def available_attribute_values(cls, attribute_name):
         condition = "(uid=*)"
         condition = "(|{})".format( condition )
-        condition = LdapPerson.compose_ldap_filter(condition)
+        condition = cls.compose_ldap_filter(condition)
         attributes = [attribute_name]
         available_values = []
-        ldap_result = LdapConn.ldap_search(condition,attributes)
+        ldap_result = cls.ldap_search(condition,attributes)
         try:
             for dn,entry in ldap_result:
                 if attribute_name in entry \
@@ -729,41 +684,38 @@ class LdapGroup(models.Model):
             filters += '(!({}={}))'.format(settings.LDAP_GROUP_FIELDS[0],gid)
         return filters
 
+
+    @classmethod
+    def ldap_search(cls, condition, attributes=[], size_limit=None ):
+        dn = "ou={},{}".format(LdapGroup.ldap_ou(), LdapConn.ldap_dn())
+        return LdapConn.ldap_search( dn, condition, attributes, size_limit )
+
+    
     @classmethod
     def all(cls):
         rows = []
         ldap_result = []
-        retrieve_attributes = [str(x) for x in LdapGroup.ldap_attrs()]
-        ldap_condition = "(&(cn=*)({}>={}))".format(settings.LDAP_GROUP_FIELDS[0],
+        attributes = [str(x) for x in LdapGroup.ldap_attrs()]
+        condition = "(&(cn=*)({}>={}))".format(settings.LDAP_GROUP_FIELDS[0],
                                                       settings.LDAP_GROUP_MIN_VALUE)
-
         try:
-            ldap_result = LdapConn.new().search_s( "ou={},{}".format(LdapGroup.ldap_ou(),
-                                                                     LdapConn.ldap_dn()),
-                                                        ldap.SCOPE_SUBTREE,
-                                                        ldap_condition,
-                                                        retrieve_attributes )
-        except ldap.LDAPError, e:
+            result = cls.ldap_search( condition, attributes)
+            ldap_result = cls.ldap_to_obj( result )
+        except Exception, e:
             logging.error( e )
         
-        return LdapGroup.ldap_to_obj(ldap_result)
+        return ldap_result
 
     
     @classmethod
     def members_of(cls, gid):
-        ldap_result = []
-        retrieve_attributes = [str('memberUid')]
-        ldap_condition = "(cn={})" .format(gid)
+        attributes = [str('memberUid')]
+        condition = "(cn={})" .format(gid)
         members = []
         try:
-            ldap_result = LdapConn.new().search_s("ou={},{}".format(LdapGroup.ldap_ou(),
-                                                                    LdapConn.ldap_dn()),
-                                                  ldap.SCOPE_SUBTREE,
-                                                  ldap_condition,
-                                                  retrieve_attributes )
-            for dn,entry in ldap_result:
+            result = cls.ldap_search( condition, attributes)
+            for dn,entry in result:
                 members = entry['memberUid']
-                
         except ldap.LDAPError, e:
             logging.error( e )
         
@@ -773,21 +725,18 @@ class LdapGroup(models.Model):
     @classmethod
     def groups_by_uid(cls, uid):
         ldap_result = []
-        retrieve_attributes = [str(x) for x in  LdapGroup.ldap_attrs()]
-        ldap_condition = "(&(cn=*)(memberUid={0})({1}>={2}))" \
-            .format( uid,
-                     retrieve_attributes[0],
-                     LdapGroup.ldap_min_gid_value())
+        attributes = [str(x) for x in  LdapGroup.ldap_attrs()]
+        condition = "(&(cn=*)(memberUid={0})({1}>={2}))" \
+                    .format( uid,
+                             attributes[0],
+                             LdapGroup.ldap_min_gid_value())
         try:
-            ldap_result = LdapConn.new().search_s("ou={},{}".format(LdapGroup.ldap_ou(),
-                                                                    LdapConn.ldap_dn()),
-                                                  ldap.SCOPE_SUBTREE,
-                                                  ldap_condition,
-                                                  retrieve_attributes )
-        except ldap.LDAPError, e:
+            result = cls.ldap_search( condition, attributes)
+            ldap_result = cls.ldap_to_obj( result )
+        except Exception, e:
             logging.error( e )
-        
-        return LdapGroup.ldap_to_obj(ldap_result)
+
+        return ldap_result
     
             
     @classmethod
@@ -975,30 +924,22 @@ class LdapOffice(models.Model):
     def __str__(self):
         return self.name
 
+    
     @classmethod
     def all(cls):
-        ldap_condition = "(uid=*)"
-        ldap_condition = "(|{})".format( ldap_condition )
-        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
-        attrs = ['physicalDeliveryOfficeName']
-        retrieve_attributes = [str(x) for x in attrs]
+        condition = "(uid=*)"
+        condition = "(|{})".format( condition )
+        condition = LdapPerson.compose_ldap_filter( condition )
+        attributes = ['physicalDeliveryOfficeName']
+        attributes = [str(x) for x in attributes]
         ldap_result = []
         try:
-            ldap_result = LdapConn.new().search_ext_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
-                ldap.SCOPE_SUBTREE,
-                ldap_condition,
-                retrieve_attributes)
-        except ldap.TIMEOUT, e:
-            logging.error( "Timeout exception {} \n".format(e))
-            return None
-        except ldap.SIZELIMIT_EXCEEDED, e:
-            logging.error( "Size limit exceeded exception {} \n".format(e))
-            return None
-        except ldap.LDAPError, e:
+            result = LdapPerson.ldap_search( condition, attributes)
+            ldap_result = cls.ldap_to_obj( result )
+        except Exception, e:
             logging.error( e )
 
-        return LdapOffice.ldap_to_obj(ldap_result)
+        return ldap_result
 
     
     @classmethod    
