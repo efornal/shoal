@@ -29,6 +29,8 @@ def set_language(request, lang='es'):
 def index(request):
     context={}
     people  = LdapPerson.by_offices()
+    filter_groups = getattr(settings, "LDAP_FILTER_MEMBERS_OUT_OF_GROUPS", [])
+    people = LdapPerson.filter_members_out_of_groups(people,filter_groups)
     offices = LdapOffice.telephones()
     context.update({'offices': offices})
 
@@ -111,7 +113,9 @@ def search(request):
 
     if 'text' in request.GET:
         text = request.GET['text']
+        filter_groups = getattr(settings, "LDAP_FILTER_MEMBERS_OUT_OF_GROUPS", [])
         people = LdapPerson.search(text)
+        people = LdapPerson.filter_members_out_of_groups(people,filter_groups)
         context.update({'people': people})
 
         if people is None:
