@@ -207,6 +207,7 @@ class LdapPerson(models.Model):
         super(LdapPerson, self).__init__(*args, **kwargs)
 
 
+
     @classmethod
     def ldap_size_limit(self):
         if hasattr(settings, 'LDAP_SIZE_LIMIT'):
@@ -640,6 +641,10 @@ class LdapPerson(models.Model):
     @classmethod
     def available_floors(cls):
         return LdapPerson.available_attribute_values('departmentNumber')
+
+    @classmethod
+    def available_offices(cls):
+        return LdapPerson.available_attribute_values('physicalDeliveryOfficeName')
     
     @classmethod
     def available_employee_types(cls):
@@ -648,10 +653,6 @@ class LdapPerson(models.Model):
     @classmethod
     def available_areas(cls):
         return LdapPerson.available_attribute_values('businessCategory')
-
-    @classmethod
-    def available_floors(cls):
-        return LdapPerson.available_attribute_values('departmentNumber')
 
 
     
@@ -996,3 +997,10 @@ class LdapOffice(models.Model):
             office_names.append(office)
         
         return office_names
+
+
+    @classmethod
+    def choices_with_blank(cls):
+        choices = [(office.name, office.name) for office in LdapOffice.all()]
+        choices.insert(0,('', _('select_one')))
+        return choices

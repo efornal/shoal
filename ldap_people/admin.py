@@ -68,6 +68,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
                    'available_areas': LdapPerson.available_areas(),
                    'available_floors': LdapPerson.available_floors(),
                    'available_employee_types': LdapPerson.available_employee_types(),
+                   'available_offices': LdapPerson.available_offices(),
                    'result': person,}
 
         if extra_context is None:

@@ -24,5 +24,11 @@
       source: availableEmployeeTypes
   });
   } );
+  $( function() {
+  var availableOffices = {{ available_offices|safe }};
+    $( "#id_office" ).autocomplete({
+      source: availableOffice
+  });
+  } );
   
 </script>

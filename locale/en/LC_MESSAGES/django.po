@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-04 09:20-0300\n"
+"POT-Creation-Date: 2017-11-21 08:58-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/views.py:73
+#: app/views.py:75
 msgid "changes_saved"
 msgstr "Changes saved successfully"
 
-#: app/views.py:118 app/views.py:134 ldap_people/admin.py:141
+#: app/views.py:123 app/views.py:139 ldap_people/admin.py:136
 msgid "search_error"
 msgstr ""
 "The search could not be performed. Check the connection, or the text to "
@@ -31,259 +31,263 @@ msgstr ""
 msgid "person_was_not_found"
 msgstr "The registered person could not be validated. Service not available"
 
-#: ldap_people/admin.py:49
+#: ldap_people/admin.py:47
 msgid "Full_document"
 msgstr "National identifier"
 
-#: ldap_people/admin.py:134
+#: ldap_people/admin.py:129
 msgid "Database error"
 msgstr "Database error"
 
-#: ldap_people/forms.py:24 ldap_people/forms.py:106
+#: ldap_people/forms.py:23 ldap_people/forms.py:113
 #: ldap_people/templates/admin/ldapperson/change_list.html:124
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:5
 #: templates/search.html:39
 msgid "Username"
 msgstr "Username"
 
-#: ldap_people/forms.py:28 ldap_people/forms.py:110
+#: ldap_people/forms.py:27 ldap_people/forms.py:117
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:31
 #: templates/edit.html:13
 msgid "Name"
 msgstr "Name"
 
-#: ldap_people/forms.py:32 ldap_people/forms.py:114
+#: ldap_people/forms.py:31 ldap_people/forms.py:121
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:43
 msgid "Surname"
 msgstr "Surname"
 
-#: ldap_people/forms.py:36 ldap_people/forms.py:122
+#: ldap_people/forms.py:35 ldap_people/forms.py:129
 #: ldap_people/templates/admin/ldapperson/change_list.html:136
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:55
 #: templates/edit.html:37 templates/search.html:49
 msgid "Email"
 msgstr "Email"
 
-#: ldap_people/forms.py:40 ldap_people/forms.py:126
+#: ldap_people/forms.py:39 ldap_people/forms.py:133
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:67
 #: templates/edit.html:41
 msgid "Alternative_email"
 msgstr "Alternative email"
 
-#: ldap_people/forms.py:44 ldap_people/forms.py:118 ldap_people/models.py:946
+#: ldap_people/forms.py:43 ldap_people/forms.py:125 ldap_people/models.py:913
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:79
 #: templates/edit.html:30 templates/index.html:15 templates/search.html:43
 msgid "Office"
 msgstr "Office"
 
-#: ldap_people/forms.py:48
+#: ldap_people/forms.py:47
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:98
 msgid "Other_office"
 msgstr "Other office"
 
-#: ldap_people/forms.py:52
+#: ldap_people/forms.py:51
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:176
 msgid "Main_group"
 msgstr "Main group"
 
-#: ldap_people/forms.py:57
+#: ldap_people/forms.py:56
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:195
 msgid "Secondary_groups"
 msgstr "Secondary groups"
 
-#: ldap_people/forms.py:61 ldap_people/forms.py:130
+#: ldap_people/forms.py:60 ldap_people/forms.py:137
 msgid "Document_number"
 msgstr "Document number"
 
-#: ldap_people/forms.py:65
+#: ldap_people/forms.py:64
 msgid "Type_document_number"
 msgstr "Type document number"
 
-#: ldap_people/forms.py:69
+#: ldap_people/forms.py:68
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:110
 #: templates/edit.html:48
 msgid "Telephone_number"
 msgstr "Work telephone number"
 
-#: ldap_people/forms.py:73
+#: ldap_people/forms.py:72
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:121
 #: templates/edit.html:55
 msgid "Home_telephone_number"
 msgstr "Home telephone number"
 
-#: ldap_people/forms.py:77
+#: ldap_people/forms.py:76
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:132
 #: templates/search.html:45
 msgid "Floor"
 msgstr "Floor"
 
-#: ldap_people/forms.py:81
+#: ldap_people/forms.py:80
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:143
 #: templates/search.html:46
 msgid "Area"
 msgstr "Area"
 
-#: ldap_people/forms.py:85
+#: ldap_people/forms.py:84
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:154
 #: templates/search.html:47
 msgid "Position"
 msgstr "Position"
 
-#: ldap_people/forms.py:89
+#: ldap_people/forms.py:88
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:165
 #: templates/search.html:40
 msgid "Host_name"
 msgstr "Host name"
 
-#: ldap_people/forms.py:134 ldap_people/models.py:153
+#: ldap_people/forms.py:141 ldap_people/models.py:160
 msgid "type_document_number"
 msgstr "type document number"
 
-#: ldap_people/forms.py:138 ldap_people/models.py:163
+#: ldap_people/forms.py:145 ldap_people/models.py:170
 msgid "telephone_number"
 msgstr "work telephone number"
 
-#: ldap_people/forms.py:142 ldap_people/models.py:168
+#: ldap_people/forms.py:149 ldap_people/models.py:175
 msgid "home_telephone_number"
 msgstr "personal telephone number"
 
-#: ldap_people/forms.py:154
+#: ldap_people/forms.py:161
 msgid "person_without_email"
 msgstr "The person's email is a required data"
 
-#: ldap_people/forms.py:157
+#: ldap_people/forms.py:164
 msgid "person_without_institutional_email"
 msgstr "The institutional email of the person is a required data"
 
-#: ldap_people/forms.py:164 ldap_people/forms.py:174
+#: ldap_people/forms.py:171 ldap_people/forms.py:181
 msgid "invalid_format"
 msgstr "The gutted value does not match the required format"
 
-#: ldap_people/models.py:102 templates/base.html:83
+#: ldap_people/models.py:108 templates/base.html:83
 msgid "username"
 msgstr "username"
 
-#: ldap_people/models.py:111 ldap_people/models.py:942
-#: ldap_people/models.py:964
+#: ldap_people/models.py:117 ldap_people/models.py:909
+#: ldap_people/models.py:931
 msgid "name"
 msgstr "name"
 
-#: ldap_people/models.py:116
+#: ldap_people/models.py:122
 msgid "surname"
 msgstr "Surname"
 
-#: ldap_people/models.py:121
+#: ldap_people/models.py:127
 msgid "fullname"
 msgstr "name"
 
-#: ldap_people/models.py:125
+#: ldap_people/models.py:131
 msgid "email"
 msgstr "email"
 
-#: ldap_people/models.py:129
+#: ldap_people/models.py:135
 msgid "alternative_email"
 msgstr "alternative email"
 
-#: ldap_people/models.py:134
+#: ldap_people/models.py:141
 msgid "office"
 msgstr "office"
 
-#: ldap_people/models.py:139
+#: ldap_people/models.py:146
 msgid "other_office"
 msgstr "other office"
 
-#: ldap_people/models.py:148
+#: ldap_people/models.py:155
 msgid "document_number"
 msgstr "document number"
 
-#: ldap_people/models.py:158
+#: ldap_people/models.py:165
 msgid "country_document_number"
 msgstr "country document number"
 
-#: ldap_people/models.py:173
+#: ldap_people/models.py:180
 msgid "floor"
 msgstr "floor"
 
-#: ldap_people/models.py:178
+#: ldap_people/models.py:185
 msgid "area"
 msgstr "area"
 
-#: ldap_people/models.py:183
+#: ldap_people/models.py:190
 msgid "position"
 msgstr "position"
 
-#: ldap_people/models.py:188
+#: ldap_people/models.py:195
 msgid "host_name"
 msgstr "host name"
 
-#: ldap_people/models.py:192
+#: ldap_people/models.py:199
 msgid "LdapPerson"
 msgstr "Ldap Person"
 
-#: ldap_people/models.py:193
+#: ldap_people/models.py:200
 msgid "LdapPeople"
 msgstr "Ldap People"
 
-#: ldap_people/models.py:316
+#: ldap_people/models.py:324
 msgid "setting_group_must_be_greater"
 msgstr "Error setting group %(group)s, must be greater than %(value)s"
 
-#: ldap_people/models.py:319
+#: ldap_people/models.py:327
 msgid "changing_group_must_be_greater"
 msgstr ""
 "Error to change group %(group)s, the previous group is greater than %(value)s"
 
-#: ldap_people/models.py:322
+#: ldap_people/models.py:330
 msgid "setting_group_do_not_allow_edit"
 msgstr ""
 "Error setting group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:325
+#: ldap_people/models.py:333
 msgid "changing_group_do_not_allow_edit"
 msgstr ""
 "Error to change the previous group %(group)s, the settings do not allow "
 "editing of the following groups: %(value)s"
 
-#: ldap_people/models.py:692
+#: ldap_people/models.py:665
 msgid "Group"
 msgstr "Group"
 
-#: ldap_people/models.py:693
+#: ldap_people/models.py:666
 msgid "Groups"
 msgstr "Groups"
 
-#: ldap_people/models.py:797
+#: ldap_people/models.py:764
 msgid "adding_group_must_be_greater"
 msgstr "Error adding group  %(group)s, must be greater than  %(value)s"
 
-#: ldap_people/models.py:804
+#: ldap_people/models.py:771
 msgid "adding_group_do_not_allow_editing"
 msgstr ""
 "Error adding group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:856
+#: ldap_people/models.py:823
 msgid "removing_group_must_be_greater"
 msgstr "Error removing group %(group)s, must be greater than %(value)s"
 
-#: ldap_people/models.py:863
+#: ldap_people/models.py:830
 msgid "removing_group_do_not_allow_editing"
 msgstr ""
 "Error removing group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:947
+#: ldap_people/models.py:914
 msgid "Offices"
 msgstr "Offices"
 
-#: ldap_people/models.py:969
+#: ldap_people/models.py:936
 msgid "LdapOffice"
 msgstr "Office"
 
-#: ldap_people/models.py:970
+#: ldap_people/models.py:937
 msgid "LdapOffices"
 msgstr "Offices"
+
+#: ldap_people/models.py:1006
+msgid "select_one"
+msgstr "Select one"
 
 #: ldap_people/templates/admin/ldapperson/change_form.html:21
 msgid "You have unsaved changes"

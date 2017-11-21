@@ -16,7 +16,6 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 import re
 
-
 class LdapPersonAdminForm(forms.ModelForm):
     username = forms.CharField(
         required=True,
@@ -39,8 +38,8 @@ class LdapPersonAdminForm(forms.ModelForm):
         required=False,
         label=_('Alternative_email'))
     office = forms.ChoiceField(
-        choices=[(office.name, office.name) for office in LdapOffice.all()],
-        required=True,
+        choices=LdapOffice.choices_with_blank(),
+        required=False,
         label=_('Office'))
     other_office = forms.CharField(
         max_length=200,
