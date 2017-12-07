@@ -108,11 +108,13 @@ def search(request):
     user_groups = []
     context = {}
     show_extra_info = is_in_group_with_extra_info(request)
-                
+    text = None
     context={'show_extra_info':show_extra_info}
 
     if 'text' in request.GET:
         text = request.GET['text']
+
+    if not text is None:
         filter_groups = getattr(settings, "LDAP_FILTER_MEMBERS_OUT_OF_GROUPS", [])
         people = LdapPerson.search(text)
         people = LdapPerson.filter_members_out_of_groups(people,filter_groups)
