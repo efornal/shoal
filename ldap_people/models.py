@@ -319,9 +319,6 @@ class LdapPerson(models.Model):
             logging.warning( "Updating ldap user password for {} ...\n".format(ldap_username))
             update_person = [( ldap.MOD_REPLACE, 'userPassword', new_password )]
             udn = cls.ldap_udn_for( ldap_username )
-
-            logging.error(update_person)
-            logging.error(udn)
             LdapConn.new_user_auth(ldap_username, old_password).modify_s(udn, update_person)
         except ldap.LDAPError, e:
             logging.error( "Error updating ldap user password for %s \n" % ldap_username)
