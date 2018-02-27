@@ -73,7 +73,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates'),
-                 os.path.join(BASE_DIR, 'ldap_people/templates')],
+                 os.path.join(BASE_DIR, 'ldap_people/templates'),
+                 os.path.join(BASE_DIR, 'password_change/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'debug': {{ app_debug }},

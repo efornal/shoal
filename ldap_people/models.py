@@ -7,7 +7,10 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 from collections import OrderedDict
 from django.core.exceptions import ValidationError
-
+import unicodedata
+import hashlib
+import os
+import re
 
 class LdapConn():
     
@@ -36,6 +39,22 @@ class LdapConn():
                           .format(LdapConn.ldap_server()))
             logging.error(e)
             raise
+
+    @classmethod
+    def new_user_auth(cls, username, password):
+        try:
+            connection = ldap.initialize( LdapConn.ldap_server() )
+            connection.simple_bind_s( "uid={},ou={},{}" \
+                                      .format( str(username),
+                                               str(LdapConn.ldap_people()),
+                                               str(LdapConn.ldap_dn())),
+                                      str(password) )
+            return connection
+        except ldap.LDAPError, e:
+            logging.error("Could not connect to the Ldap server: '{}'" \
+                          .format(LdapConn.ldap_server()))
+            logging.error(e)
+            raise
         
     @classmethod
     def new(cls):
@@ -45,6 +64,12 @@ class LdapConn():
     def ldap_dn(self):
         if hasattr(settings, 'LDAP_DN'):
             return settings.LDAP_DN
+        return None
+
+    @classmethod
+    def ldap_people(self):
+        if hasattr(settings, 'LDAP_PEOPLE'):
+            return settings.LDAP_PEOPLE
         return None
 
     @classmethod
@@ -257,6 +282,51 @@ class LdapPerson(models.Model):
                                          extra_conditions,
                                          settings_condition)
         return extra_conditions
+
+    @classmethod
+    def make_secret(cls,password):
+        """
+        Encodes the given password as a base64 SSHA hash+salt buffer
+        Taken from: https://gist.github.com/rca/7217540
+        """
+        salt = os.urandom(4)
+        sha = hashlib.sha1(password)
+        sha.update(salt)
+
+        digest_salt_b64 = sha.digest() + salt
+
+        digest_salt_b64 = digest_salt_b64.encode('base64').strip()
+
+        tagged_digest_salt = '{{SSHA}}{}'.format(digest_salt_b64)
+
+        return tagged_digest_salt
+    
+    @classmethod
+    def is_password_valid (cls, password):
+        if re.match( r'.{8,}([A-Za-z0-9@#$%^&+=]*)', password ):
+            return True
+        else:
+            return False
+    
+    @classmethod
+    def change_password( cls, ldap_username, old_password, new_password ):
+        new_password = str(cls.make_secret(new_password))
+        # new password is a raw password
+        try:
+            if not cls.is_password_valid(new_password):
+                raise("Invalid password format")
+            
+            logging.warning( "Updating ldap user password for {} ...\n".format(ldap_username))
+            update_person = [( ldap.MOD_REPLACE, 'userPassword', new_password )]
+            udn = cls.ldap_udn_for( ldap_username )
+
+            logging.error(update_person)
+            logging.error(udn)
+            LdapConn.new_user_auth(ldap_username, old_password).modify_s(udn, update_person)
+        except ldap.LDAPError, e:
+            logging.error( "Error updating ldap user password for %s \n" % ldap_username)
+            logging.error( e )
+            raise(e)
 
     
     def save(self, *args, **kwargs):

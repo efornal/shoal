@@ -6,8 +6,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 from django.contrib.auth import views as auth_views
+from password_change import urls as change_password_urls
 
 urlpatterns = [
+    url(r'^', include(change_password_urls)),
     url(r'^login/$', auth_views.login,name='login'),
     url(r'^logout/message',views.logout_message, name='logout_message'),
     url(r'^logout/$', auth_views.logout,{'next_page': 'logout_message'},name='logout'),

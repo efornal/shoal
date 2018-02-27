@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-11 07:53-0300\n"
+"POT-Creation-Date: 2018-02-26 08:45-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -361,11 +361,82 @@ msgstr "Document"
 msgid "telephone_number_example"
 msgstr "Example: (4571110[/4571111] int 172[/173])"
 
-#: shoal/settings.py:139 templates/base.html:71 templates/base.html:76
+#: password_change/forms.py:24
+msgid "email_must_be_unique"
+msgstr ""
+
+#: password_change/forms.py:34
+#, fuzzy
+#| msgid "username"
+msgid "duplicate_username"
+msgstr "username"
+
+#: password_change/forms.py:60
+#, fuzzy
+#| msgid "alternative_email"
+msgid "invalid_alternative_email"
+msgstr "alternative email"
+
+#: password_change/forms.py:64
+#, fuzzy
+#| msgid "alternative_email"
+msgid "without_alternative_email"
+msgstr "alternative email"
+
+#: password_change/templates/password_change.html:34
+#, fuzzy
+#| msgid "to_change_password"
+msgid "change_password"
+msgstr "It will be used to change the password"
+
+#: password_change/templates/password_change.html:39
+#, fuzzy
+#| msgid "password"
+msgid "old_password"
+msgstr "password"
+
+#: password_change/templates/password_change.html:46
+#, fuzzy
+#| msgid "password"
+msgid "new_password"
+msgstr "password"
+
+#: password_change/templates/password_change.html:53
+#, fuzzy
+#| msgid "to_change_password"
+msgid "confirm_new_password"
+msgstr "It will be used to change the password"
+
+#: password_change/templates/password_change.html:59
+#, fuzzy
+#| msgid "to_change_password"
+msgid "confirm_change_password_message"
+msgstr "It will be used to change the password"
+
+#: password_change/templates/password_change.html:66
+#, fuzzy
+#| msgid "to_change_password"
+msgid "_confirm_change_password"
+msgstr "It will be used to change the password"
+
+#: password_change/validators.py:17 password_change/validators.py:35
+#: password_change/validators.py:59
+msgid "email_domain_not_exist"
+msgstr ""
+
+#: password_change/validators.py:22
+msgid "email_domain_to_exclude"
+msgstr ""
+
+#: password_change/validators.py:40
+msgid "email_domain_restriction"
+msgstr ""
+
+#: shoal/settings.py:163 templates/base.html:71 templates/base.html:76
 msgid "Spanish"
 msgstr "Spanish"
 
-#: shoal/settings.py:140 templates/base.html:72 templates/base.html:78
+#: shoal/settings.py:164 templates/base.html:72 templates/base.html:78
 msgid "English"
 msgstr "English"
 
@@ -385,11 +456,17 @@ msgstr "language"
 msgid "Edit_account"
 msgstr "Edit account"
 
-#: templates/base.html:94 templates/base.html:98
+#: templates/base.html:93
+#, fuzzy
+#| msgid "to_change_password"
+msgid "Change_password"
+msgstr "It will be used to change the password"
+
+#: templates/base.html:96 templates/base.html:100
 msgid "Close_session"
 msgstr "Close session"
 
-#: templates/base.html:104
+#: templates/base.html:106
 msgid "Init_session"
 msgstr "Init session"
 
