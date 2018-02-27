@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-26 08:45-0300\n"
+"POT-Creation-Date: 2018-02-27 10:42-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,7 @@ msgstr "Email"
 msgid "Alternative_email"
 msgstr "Email alternativo"
 
-#: ldap_people/forms.py:43 ldap_people/forms.py:123 ldap_people/models.py:912
+#: ldap_people/forms.py:43 ldap_people/forms.py:123 ldap_people/models.py:982
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:79
 #: templates/edit.html:30 templates/index.html:15 templates/search.html:43
 msgid "Office"
@@ -137,15 +137,15 @@ msgstr "Cargo"
 msgid "Host_name"
 msgstr "Máquina"
 
-#: ldap_people/forms.py:139 ldap_people/models.py:159
+#: ldap_people/forms.py:139 ldap_people/models.py:184
 msgid "type_document_number"
 msgstr "Tipo documento"
 
-#: ldap_people/forms.py:143 ldap_people/models.py:169
+#: ldap_people/forms.py:143 ldap_people/models.py:194
 msgid "telephone_number"
 msgstr "Teléfono laboral"
 
-#: ldap_people/forms.py:147 ldap_people/models.py:174
+#: ldap_people/forms.py:147 ldap_people/models.py:199
 msgid "home_telephone_number"
 msgstr "Teléfono personal"
 
@@ -161,133 +161,133 @@ msgstr "El email institucional de la persona es un dato requerido"
 msgid "invalid_format"
 msgstr "El valor ingrasado no se corresponde con el formato requerido"
 
-#: ldap_people/models.py:108 templates/base.html:85
+#: ldap_people/models.py:133 templates/base.html:85
 msgid "username"
 msgstr "usuario"
 
-#: ldap_people/models.py:117 ldap_people/models.py:908
-#: ldap_people/models.py:930
+#: ldap_people/models.py:142 ldap_people/models.py:978
+#: ldap_people/models.py:1000
 msgid "name"
 msgstr "nombre"
 
-#: ldap_people/models.py:122
+#: ldap_people/models.py:147
 msgid "surname"
 msgstr "apellido"
 
-#: ldap_people/models.py:127
+#: ldap_people/models.py:152
 msgid "fullname"
 msgstr "nombre completo"
 
-#: ldap_people/models.py:131
+#: ldap_people/models.py:156
 msgid "email"
 msgstr "email"
 
-#: ldap_people/models.py:135
+#: ldap_people/models.py:160
 msgid "alternative_email"
 msgstr "email alternativo"
 
-#: ldap_people/models.py:140
+#: ldap_people/models.py:165
 msgid "office"
 msgstr "oficina"
 
-#: ldap_people/models.py:145
+#: ldap_people/models.py:170
 msgid "other_office"
 msgstr "otra oficina"
 
-#: ldap_people/models.py:154
+#: ldap_people/models.py:179
 msgid "document_number"
 msgstr "nro documento"
 
-#: ldap_people/models.py:164
+#: ldap_people/models.py:189
 msgid "country_document_number"
 msgstr "nro documento país"
 
-#: ldap_people/models.py:179
+#: ldap_people/models.py:204
 msgid "floor"
 msgstr "piso"
 
-#: ldap_people/models.py:184
+#: ldap_people/models.py:209
 msgid "area"
 msgstr "area"
 
-#: ldap_people/models.py:189
+#: ldap_people/models.py:214
 msgid "position"
 msgstr "cargo"
 
-#: ldap_people/models.py:194
+#: ldap_people/models.py:219
 msgid "host_name"
 msgstr "máquina"
 
-#: ldap_people/models.py:198
+#: ldap_people/models.py:223
 msgid "LdapPerson"
 msgstr "Persona Ldap"
 
-#: ldap_people/models.py:199
+#: ldap_people/models.py:224
 msgid "LdapPeople"
 msgstr "Personas Ldap"
 
-#: ldap_people/models.py:323
+#: ldap_people/models.py:393
 msgid "setting_group_must_be_greater"
 msgstr "Error definiendo el grupo %(group)s, debe ser mayor a %(value)s"
 
-#: ldap_people/models.py:326
+#: ldap_people/models.py:396
 msgid "changing_group_must_be_greater"
 msgstr ""
 "Error al cambiar el grupo %(group)s, el valor previo es mayor que %(value)s"
 
-#: ldap_people/models.py:329
+#: ldap_people/models.py:399
 msgid "setting_group_do_not_allow_edit"
 msgstr ""
 "Error definiendo el grupo %(group)s, la configuración no permite editar los "
 "grupos: %(value)s"
 
-#: ldap_people/models.py:332
+#: ldap_people/models.py:402
 msgid "changing_group_do_not_allow_edit"
 msgstr ""
 "Error al cambiar el grupo previo %(group)s, la configuración no permite "
 "editar los grupos: %(value)s"
 
-#: ldap_people/models.py:664
+#: ldap_people/models.py:734
 msgid "Group"
 msgstr "Grupo"
 
-#: ldap_people/models.py:665
+#: ldap_people/models.py:735
 msgid "Groups"
 msgstr "Grupos"
 
-#: ldap_people/models.py:763
+#: ldap_people/models.py:833
 msgid "adding_group_must_be_greater"
 msgstr "Error agregando el groupo  %(group)s, debe ser mayor a  %(value)s"
 
-#: ldap_people/models.py:770
+#: ldap_people/models.py:840
 msgid "adding_group_do_not_allow_editing"
 msgstr ""
 "Error agregando el grupo %(group)s, la configuración no permite editar los "
 "grupos: %(value)s"
 
-#: ldap_people/models.py:822
+#: ldap_people/models.py:892
 msgid "removing_group_must_be_greater"
 msgstr "Error eliminando el group %(group)s, debe ser mayor a %(value)s"
 
-#: ldap_people/models.py:829
+#: ldap_people/models.py:899
 msgid "removing_group_do_not_allow_editing"
 msgstr ""
 "Error eliminando group %(group)s, la configuración no permite editar los "
 "grupos: %(value)s"
 
-#: ldap_people/models.py:913
+#: ldap_people/models.py:983
 msgid "Offices"
 msgstr "Oficinas"
 
-#: ldap_people/models.py:935
+#: ldap_people/models.py:1005
 msgid "LdapOffice"
 msgstr "Oficina"
 
-#: ldap_people/models.py:936
+#: ldap_people/models.py:1006
 msgid "LdapOffices"
 msgstr "Oficinas"
 
-#: ldap_people/models.py:1005
+#: ldap_people/models.py:1075
 msgid "select_one"
 msgstr "Seleccionar uno"
 
@@ -363,76 +363,37 @@ msgstr "Documento"
 msgid "telephone_number_example"
 msgstr "Ejemplo: (4571110[/4571111] int 172[/173])"
 
-#: password_change/forms.py:24
-msgid "email_must_be_unique"
-msgstr ""
-
-#: password_change/forms.py:34
-#, fuzzy
-#| msgid "username"
-msgid "duplicate_username"
-msgstr "usuario"
-
-#: password_change/forms.py:60
-#, fuzzy
-#| msgid "alternative_email"
-msgid "invalid_alternative_email"
-msgstr "email alternativo"
-
-#: password_change/forms.py:64
-#, fuzzy
-#| msgid "alternative_email"
-msgid "without_alternative_email"
-msgstr "email alternativo"
-
 #: password_change/templates/password_change.html:34
-#, fuzzy
-#| msgid "to_change_password"
 msgid "change_password"
-msgstr "Se usará para modificar la contraseña"
+msgstr "Cambiar contraseña"
 
 #: password_change/templates/password_change.html:39
-#, fuzzy
-#| msgid "password"
 msgid "old_password"
-msgstr "contraseña"
+msgstr "contraseña anterior"
 
 #: password_change/templates/password_change.html:46
-#, fuzzy
-#| msgid "password"
 msgid "new_password"
-msgstr "contraseña"
+msgstr "nueva contraseña"
 
 #: password_change/templates/password_change.html:53
-#, fuzzy
-#| msgid "to_change_password"
 msgid "confirm_new_password"
-msgstr "Se usará para modificar la contraseña"
+msgstr "confirmar nueva contraseña"
 
 #: password_change/templates/password_change.html:59
-#, fuzzy
-#| msgid "to_change_password"
 msgid "confirm_change_password_message"
-msgstr "Se usará para modificar la contraseña"
+msgstr "Ingrese las contraseñas correspondientes para poder modificarla"
 
 #: password_change/templates/password_change.html:66
-#, fuzzy
-#| msgid "to_change_password"
 msgid "_confirm_change_password"
-msgstr "Se usará para modificar la contraseña"
+msgstr "Cambiar contraseña"
 
-#: password_change/validators.py:17 password_change/validators.py:35
-#: password_change/validators.py:59
-msgid "email_domain_not_exist"
-msgstr ""
+#: password_change/templates/password_change_complete.html:6
+msgid "password_has_been_changed"
+msgstr "Contraseña modificada"
 
-#: password_change/validators.py:22
-msgid "email_domain_to_exclude"
-msgstr ""
-
-#: password_change/validators.py:40
-msgid "email_domain_restriction"
-msgstr ""
+#: password_change/templates/password_change_error.html:6
+msgid "password_has_not_been_changed"
+msgstr "Contraseña no modificada"
 
 #: shoal/settings.py:163 templates/base.html:71 templates/base.html:76
 msgid "Spanish"
@@ -459,10 +420,8 @@ msgid "Edit_account"
 msgstr "Editar cuenta"
 
 #: templates/base.html:93
-#, fuzzy
-#| msgid "to_change_password"
 msgid "Change_password"
-msgstr "Se usará para modificar la contraseña"
+msgstr "Cambiar contraseña"
 
 #: templates/base.html:96 templates/base.html:100
 msgid "Close_session"

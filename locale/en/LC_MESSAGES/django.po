@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-26 08:45-0300\n"
+"POT-Creation-Date: 2018-02-27 10:42-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,7 +70,7 @@ msgstr "Email"
 msgid "Alternative_email"
 msgstr "Alternative email"
 
-#: ldap_people/forms.py:43 ldap_people/forms.py:123 ldap_people/models.py:912
+#: ldap_people/forms.py:43 ldap_people/forms.py:123 ldap_people/models.py:982
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:79
 #: templates/edit.html:30 templates/index.html:15 templates/search.html:43
 msgid "Office"
@@ -135,15 +135,15 @@ msgstr "Position"
 msgid "Host_name"
 msgstr "Host name"
 
-#: ldap_people/forms.py:139 ldap_people/models.py:159
+#: ldap_people/forms.py:139 ldap_people/models.py:184
 msgid "type_document_number"
 msgstr "type document number"
 
-#: ldap_people/forms.py:143 ldap_people/models.py:169
+#: ldap_people/forms.py:143 ldap_people/models.py:194
 msgid "telephone_number"
 msgstr "work telephone number"
 
-#: ldap_people/forms.py:147 ldap_people/models.py:174
+#: ldap_people/forms.py:147 ldap_people/models.py:199
 msgid "home_telephone_number"
 msgstr "personal telephone number"
 
@@ -159,133 +159,133 @@ msgstr "The institutional email of the person is a required data"
 msgid "invalid_format"
 msgstr "The gutted value does not match the required format"
 
-#: ldap_people/models.py:108 templates/base.html:85
+#: ldap_people/models.py:133 templates/base.html:85
 msgid "username"
 msgstr "username"
 
-#: ldap_people/models.py:117 ldap_people/models.py:908
-#: ldap_people/models.py:930
+#: ldap_people/models.py:142 ldap_people/models.py:978
+#: ldap_people/models.py:1000
 msgid "name"
 msgstr "name"
 
-#: ldap_people/models.py:122
+#: ldap_people/models.py:147
 msgid "surname"
 msgstr "Surname"
 
-#: ldap_people/models.py:127
+#: ldap_people/models.py:152
 msgid "fullname"
 msgstr "name"
 
-#: ldap_people/models.py:131
+#: ldap_people/models.py:156
 msgid "email"
 msgstr "email"
 
-#: ldap_people/models.py:135
+#: ldap_people/models.py:160
 msgid "alternative_email"
 msgstr "alternative email"
 
-#: ldap_people/models.py:140
+#: ldap_people/models.py:165
 msgid "office"
 msgstr "office"
 
-#: ldap_people/models.py:145
+#: ldap_people/models.py:170
 msgid "other_office"
 msgstr "other office"
 
-#: ldap_people/models.py:154
+#: ldap_people/models.py:179
 msgid "document_number"
 msgstr "document number"
 
-#: ldap_people/models.py:164
+#: ldap_people/models.py:189
 msgid "country_document_number"
 msgstr "country document number"
 
-#: ldap_people/models.py:179
+#: ldap_people/models.py:204
 msgid "floor"
 msgstr "floor"
 
-#: ldap_people/models.py:184
+#: ldap_people/models.py:209
 msgid "area"
 msgstr "area"
 
-#: ldap_people/models.py:189
+#: ldap_people/models.py:214
 msgid "position"
 msgstr "position"
 
-#: ldap_people/models.py:194
+#: ldap_people/models.py:219
 msgid "host_name"
 msgstr "host name"
 
-#: ldap_people/models.py:198
+#: ldap_people/models.py:223
 msgid "LdapPerson"
 msgstr "Ldap Person"
 
-#: ldap_people/models.py:199
+#: ldap_people/models.py:224
 msgid "LdapPeople"
 msgstr "Ldap People"
 
-#: ldap_people/models.py:323
+#: ldap_people/models.py:393
 msgid "setting_group_must_be_greater"
 msgstr "Error setting group %(group)s, must be greater than %(value)s"
 
-#: ldap_people/models.py:326
+#: ldap_people/models.py:396
 msgid "changing_group_must_be_greater"
 msgstr ""
 "Error to change group %(group)s, the previous group is greater than %(value)s"
 
-#: ldap_people/models.py:329
+#: ldap_people/models.py:399
 msgid "setting_group_do_not_allow_edit"
 msgstr ""
 "Error setting group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:332
+#: ldap_people/models.py:402
 msgid "changing_group_do_not_allow_edit"
 msgstr ""
 "Error to change the previous group %(group)s, the settings do not allow "
 "editing of the following groups: %(value)s"
 
-#: ldap_people/models.py:664
+#: ldap_people/models.py:734
 msgid "Group"
 msgstr "Group"
 
-#: ldap_people/models.py:665
+#: ldap_people/models.py:735
 msgid "Groups"
 msgstr "Groups"
 
-#: ldap_people/models.py:763
+#: ldap_people/models.py:833
 msgid "adding_group_must_be_greater"
 msgstr "Error adding group  %(group)s, must be greater than  %(value)s"
 
-#: ldap_people/models.py:770
+#: ldap_people/models.py:840
 msgid "adding_group_do_not_allow_editing"
 msgstr ""
 "Error adding group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:822
+#: ldap_people/models.py:892
 msgid "removing_group_must_be_greater"
 msgstr "Error removing group %(group)s, must be greater than %(value)s"
 
-#: ldap_people/models.py:829
+#: ldap_people/models.py:899
 msgid "removing_group_do_not_allow_editing"
 msgstr ""
 "Error removing group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:913
+#: ldap_people/models.py:983
 msgid "Offices"
 msgstr "Offices"
 
-#: ldap_people/models.py:935
+#: ldap_people/models.py:1005
 msgid "LdapOffice"
 msgstr "Office"
 
-#: ldap_people/models.py:936
+#: ldap_people/models.py:1006
 msgid "LdapOffices"
 msgstr "Offices"
 
-#: ldap_people/models.py:1005
+#: ldap_people/models.py:1075
 msgid "select_one"
 msgstr "Select one"
 
@@ -361,76 +361,37 @@ msgstr "Document"
 msgid "telephone_number_example"
 msgstr "Example: (4571110[/4571111] int 172[/173])"
 
-#: password_change/forms.py:24
-msgid "email_must_be_unique"
-msgstr ""
-
-#: password_change/forms.py:34
-#, fuzzy
-#| msgid "username"
-msgid "duplicate_username"
-msgstr "username"
-
-#: password_change/forms.py:60
-#, fuzzy
-#| msgid "alternative_email"
-msgid "invalid_alternative_email"
-msgstr "alternative email"
-
-#: password_change/forms.py:64
-#, fuzzy
-#| msgid "alternative_email"
-msgid "without_alternative_email"
-msgstr "alternative email"
-
 #: password_change/templates/password_change.html:34
-#, fuzzy
-#| msgid "to_change_password"
 msgid "change_password"
-msgstr "It will be used to change the password"
+msgstr "change password"
 
 #: password_change/templates/password_change.html:39
-#, fuzzy
-#| msgid "password"
 msgid "old_password"
-msgstr "password"
+msgstr "old password"
 
 #: password_change/templates/password_change.html:46
-#, fuzzy
-#| msgid "password"
 msgid "new_password"
-msgstr "password"
+msgstr "new password"
 
 #: password_change/templates/password_change.html:53
-#, fuzzy
-#| msgid "to_change_password"
 msgid "confirm_new_password"
-msgstr "It will be used to change the password"
+msgstr "confirm new password"
 
 #: password_change/templates/password_change.html:59
-#, fuzzy
-#| msgid "to_change_password"
 msgid "confirm_change_password_message"
-msgstr "It will be used to change the password"
+msgstr "Enter the corresponding passwords to be able to modify it"
 
 #: password_change/templates/password_change.html:66
-#, fuzzy
-#| msgid "to_change_password"
 msgid "_confirm_change_password"
-msgstr "It will be used to change the password"
+msgstr "confirm change password"
 
-#: password_change/validators.py:17 password_change/validators.py:35
-#: password_change/validators.py:59
-msgid "email_domain_not_exist"
-msgstr ""
+#: password_change/templates/password_change_complete.html:6
+msgid "password_has_been_changed"
+msgstr "password has been changed"
 
-#: password_change/validators.py:22
-msgid "email_domain_to_exclude"
-msgstr ""
-
-#: password_change/validators.py:40
-msgid "email_domain_restriction"
-msgstr ""
+#: password_change/templates/password_change_error.html:6
+msgid "password_has_not_been_changed"
+msgstr "password has not been changed"
 
 #: shoal/settings.py:163 templates/base.html:71 templates/base.html:76
 msgid "Spanish"
@@ -540,3 +501,18 @@ msgstr "Person"
 #: templates/search.html:69
 msgid "view_email"
 msgstr "View email"
+
+#, fuzzy
+#~| msgid "username"
+#~ msgid "duplicate_username"
+#~ msgstr "username"
+
+#, fuzzy
+#~| msgid "alternative_email"
+#~ msgid "invalid_alternative_email"
+#~ msgstr "alternative email"
+
+#, fuzzy
+#~| msgid "alternative_email"
+#~ msgid "without_alternative_email"
+#~ msgstr "alternative email"
