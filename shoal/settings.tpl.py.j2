@@ -194,6 +194,9 @@ LDAP_FILTER_OBJECT_CLASS = {{ ldap_filter_object_class|to_json }}
 #
 # If specified, add the ObjectClass to the search condition of ldap
 LDAP_FILTER_MEMBERS_OUT_OF_GROUPS = {{ ldap_filter_members_out_of_groups|to_json }}
+# restricts the password change functionality
+# for users who are in the indicated groups
+RESTRICT_PASSWORD_CHANGE_TO_GROUPS = {{ restrict_password_change_to_groups|to_json }}
 #
 # Domain name used to identify the institutional mail of an alternative
 # Ej: the (LDAP DN)

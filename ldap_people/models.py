@@ -307,12 +307,26 @@ class LdapPerson(models.Model):
             return True
         else:
             return False
+
+    @classmethod        
+    def belongs_to_restricted_group(cls, username):
+        ldap_user_groups = LdapGroup.groups_by_uid(username)
+        if hasattr(settings, 'RESTRICT_PASSWORD_CHANGE_TO_GROUPS'):
+            for group_id in ldap_user_groups:
+                if unicode(group_id) in settings.RESTRICT_PASSWORD_CHANGE_TO_GROUPS:
+                    return True
+        return False
+
     
     @classmethod
     def change_password( cls, ldap_username, old_password, new_password ):
         new_password = str(cls.make_secret(new_password))
         # new password is a raw password
+        
         try:
+            if cls.belongs_to_restricted_group(ldap_username):
+                raise("The user belongs to a group that is not allowed to change the password")
+
             if not cls.is_password_valid(new_password):
                 raise("Invalid password format")
             

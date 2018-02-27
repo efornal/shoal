@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-27 10:42-0300\n"
+"POT-Creation-Date: 2018-02-27 11:38-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,7 @@ msgstr "Email"
 msgid "Alternative_email"
 msgstr "Email alternativo"
 
-#: ldap_people/forms.py:43 ldap_people/forms.py:123 ldap_people/models.py:982
+#: ldap_people/forms.py:43 ldap_people/forms.py:123 ldap_people/models.py:979
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:79
 #: templates/edit.html:30 templates/index.html:15 templates/search.html:43
 msgid "Office"
@@ -165,8 +165,8 @@ msgstr "El valor ingrasado no se corresponde con el formato requerido"
 msgid "username"
 msgstr "usuario"
 
-#: ldap_people/models.py:142 ldap_people/models.py:978
-#: ldap_people/models.py:1000
+#: ldap_people/models.py:142 ldap_people/models.py:975
+#: ldap_people/models.py:997
 msgid "name"
 msgstr "nombre"
 
@@ -226,68 +226,68 @@ msgstr "Persona Ldap"
 msgid "LdapPeople"
 msgstr "Personas Ldap"
 
-#: ldap_people/models.py:393
+#: ldap_people/models.py:390
 msgid "setting_group_must_be_greater"
 msgstr "Error definiendo el grupo %(group)s, debe ser mayor a %(value)s"
 
-#: ldap_people/models.py:396
+#: ldap_people/models.py:393
 msgid "changing_group_must_be_greater"
 msgstr ""
 "Error al cambiar el grupo %(group)s, el valor previo es mayor que %(value)s"
 
-#: ldap_people/models.py:399
+#: ldap_people/models.py:396
 msgid "setting_group_do_not_allow_edit"
 msgstr ""
 "Error definiendo el grupo %(group)s, la configuración no permite editar los "
 "grupos: %(value)s"
 
-#: ldap_people/models.py:402
+#: ldap_people/models.py:399
 msgid "changing_group_do_not_allow_edit"
 msgstr ""
 "Error al cambiar el grupo previo %(group)s, la configuración no permite "
 "editar los grupos: %(value)s"
 
-#: ldap_people/models.py:734
+#: ldap_people/models.py:731
 msgid "Group"
 msgstr "Grupo"
 
-#: ldap_people/models.py:735
+#: ldap_people/models.py:732
 msgid "Groups"
 msgstr "Grupos"
 
-#: ldap_people/models.py:833
+#: ldap_people/models.py:830
 msgid "adding_group_must_be_greater"
 msgstr "Error agregando el groupo  %(group)s, debe ser mayor a  %(value)s"
 
-#: ldap_people/models.py:840
+#: ldap_people/models.py:837
 msgid "adding_group_do_not_allow_editing"
 msgstr ""
 "Error agregando el grupo %(group)s, la configuración no permite editar los "
 "grupos: %(value)s"
 
-#: ldap_people/models.py:892
+#: ldap_people/models.py:889
 msgid "removing_group_must_be_greater"
 msgstr "Error eliminando el group %(group)s, debe ser mayor a %(value)s"
 
-#: ldap_people/models.py:899
+#: ldap_people/models.py:896
 msgid "removing_group_do_not_allow_editing"
 msgstr ""
 "Error eliminando group %(group)s, la configuración no permite editar los "
 "grupos: %(value)s"
 
-#: ldap_people/models.py:983
+#: ldap_people/models.py:980
 msgid "Offices"
 msgstr "Oficinas"
 
-#: ldap_people/models.py:1005
+#: ldap_people/models.py:1002
 msgid "LdapOffice"
 msgstr "Oficina"
 
-#: ldap_people/models.py:1006
+#: ldap_people/models.py:1003
 msgid "LdapOffices"
 msgstr "Oficinas"
 
-#: ldap_people/models.py:1075
+#: ldap_people/models.py:1072
 msgid "select_one"
 msgstr "Seleccionar uno"
 
@@ -362,6 +362,16 @@ msgstr "Documento"
 #: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:119
 msgid "telephone_number_example"
 msgstr "Ejemplo: (4571110[/4571111] int 172[/173])"
+
+#: password_change/auth.py:65
+msgid "user_not_found"
+msgstr ""
+"Los datos ingresados no se corresponden con un usuario válido"
+
+#: password_change/auth.py:72
+msgid "user_not_valid_for_this_action"
+msgstr ""
+"El usuario pertenece a un grupo que no permite el cambio de contraseña"
 
 #: password_change/templates/password_change.html:34
 msgid "change_password"
