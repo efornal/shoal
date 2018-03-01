@@ -23,28 +23,91 @@ from ldap_people.forms import LdapPersonAdminForm
 import logging
 import sys
 from django.conf import settings
+from django.utils.html import format_html
+from django.contrib import messages
+from functools import update_wrapper
+from django.contrib import admin
+from django.contrib.admin import ModelAdmin
+from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import render
 
 
 class IncorrectLookupParameters(Exception):
     pass
 
+
 class LdapPersonAdmin(admin.ModelAdmin):
     form = LdapPersonAdminForm
 
     search_fields = ['username',]
-    readonly_fields = ('full_document',)
+    readonly_fields = ('full_document','update_password')
     
-    fields = ('username','name','surname','email', 'full_document', \
+    fields = ('username','name','surname','email', 'full_document', 'update_password', \
               'alternative_email', 'office','other_office','telephone_number',
               'home_telephone_number', 'floor', 'area', 'position', \
               'host_name','group_id', 'groups_id')
     actions = None
 
+    
     def full_document(self, obj):
         return "{} {} {}".format( obj.country_document_number,
                                   obj.type_document_number,
                                   obj.document_number )
     full_document.short_description = _('Full_document')
+
+    def update_password(self, obj):
+        return format_html(
+            '<a class="button" href="{}">Change Pass</a>&nbsp;',
+            reverse('admin:ldapperson_update_password', args=[obj.username]),
+        )
+    update_password.short_description = _('Update_password')
+
+    def get_urls(self):
+
+        def wrap(view):
+            def wrapper(*args, **kwargs):
+                return self.admin_site.admin_view(view)(*args, **kwargs)
+            return update_wrapper(wrapper, view)
+
+        info = self.model._meta.app_label, self.model._meta.model_name
+        urls = [
+            url(
+                r'^update_password/(?P<id>\w+)/$',
+                self.admin_site.admin_view(self.manage_view),
+                name='ldapperson_update_password',
+            ),
+        ]
+        super_urls = super(LdapPersonAdmin, self).get_urls()
+
+        return urls + super_urls
+
+
+
+    def manage_view(self, request, id, form_url='', extra_context=None):
+        logging.error(request.POST)
+        opts = LdapPerson._meta
+        context = {
+            'opts':  opts,    
+            'change': True,
+            'is_popup': False,
+            'save_as': False,
+            'has_delete_permission': False,
+            'has_add_permission': False,
+            'has_change_permission': False
+        }
+      
+        if 'password' in request.POST:
+            password = request.POST.get('password')
+            logging.error("change password to {} by {}".format(id,password))
+            messages.info(request, _('Se actualizó contraseña de usuario {}'.format(id)))
+
+        return render(request, 'admin/ldapperson/update_password.html', context)
+
+
+
+    
+
     
     def get_object(self, request, object_id, from_field=None):
         """
@@ -151,4 +214,4 @@ class OfficeAdmin(admin.ModelAdmin):
     ordering = ('name',)
     
 admin.site.register(LdapPerson, LdapPersonAdmin)
-#admin.site.register(Office, OfficeAdmin)
+#admin.site.register(AccountAdmin)
