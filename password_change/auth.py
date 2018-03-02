@@ -76,7 +76,7 @@ def password_change_complete(request):
             user.save()
 
             logging.warning("changing password for ldap user ...")
-            LdapPerson.change_password(user.username, password, new_password)
+            LdapPerson.change_password_per_user(user.username, password, new_password)
         
             logout(request)
             return render(request, 'password_change_complete.html')
