@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-27 11:38-0300\n"
+"POT-Creation-Date: 2018-03-02 07:41-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "changes_saved"
 msgstr "Changes saved successfully"
 
-#: app/views.py:125 app/views.py:141 ldap_people/admin.py:137
+#: app/views.py:125 app/views.py:141 ldap_people/admin.py:221
 msgid "search_error"
 msgstr ""
 "The search could not be performed. Check the connection, or the text to "
@@ -31,131 +31,116 @@ msgstr ""
 msgid "person_was_not_found"
 msgstr "The registered person could not be validated. Service not available"
 
-#: ldap_people/admin.py:47
+#: ldap_people/admin.py:57
 msgid "Full_document"
 msgstr "National identifier"
 
-#: ldap_people/admin.py:130
+#: ldap_people/admin.py:63 ldap_people/admin.py:65
+msgid "Update_password"
+msgstr "Update password"
+
+#: ldap_people/admin.py:117
+msgid "password_modified_successfully"
+msgstr "The password was modified successfully"
+
+#: ldap_people/admin.py:214
 msgid "Database error"
 msgstr "Database error"
 
-#: ldap_people/forms.py:23 ldap_people/forms.py:111
+#: ldap_people/forms.py:26 ldap_people/forms.py:114
 #: ldap_people/templates/admin/ldapperson/change_list.html:124
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:5
 #: templates/search.html:39
 msgid "Username"
 msgstr "Username"
 
-#: ldap_people/forms.py:27 ldap_people/forms.py:115
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:31
-#: templates/edit.html:13
+#: ldap_people/forms.py:30 ldap_people/forms.py:118 templates/edit.html:13
 msgid "Name"
 msgstr "Name"
 
-#: ldap_people/forms.py:31 ldap_people/forms.py:119
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:43
+#: ldap_people/forms.py:34 ldap_people/forms.py:122
 msgid "Surname"
 msgstr "Surname"
 
-#: ldap_people/forms.py:35 ldap_people/forms.py:127
+#: ldap_people/forms.py:38 ldap_people/forms.py:130
 #: ldap_people/templates/admin/ldapperson/change_list.html:136
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:55
 #: templates/edit.html:37 templates/search.html:49
 msgid "Email"
 msgstr "Email"
 
-#: ldap_people/forms.py:39 ldap_people/forms.py:131
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:67
-#: templates/edit.html:41
+#: ldap_people/forms.py:42 ldap_people/forms.py:134 templates/edit.html:41
 msgid "Alternative_email"
 msgstr "Alternative email"
 
-#: ldap_people/forms.py:43 ldap_people/forms.py:123 ldap_people/models.py:979
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:79
+#: ldap_people/forms.py:46 ldap_people/forms.py:126 ldap_people/models.py:1021
 #: templates/edit.html:30 templates/index.html:15 templates/search.html:43
 msgid "Office"
 msgstr "Office"
 
-#: ldap_people/forms.py:47
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:98
+#: ldap_people/forms.py:50
 msgid "Other_office"
 msgstr "Other office"
 
-#: ldap_people/forms.py:51
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:176
+#: ldap_people/forms.py:54
 msgid "Main_group"
 msgstr "Main group"
 
-#: ldap_people/forms.py:56
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:195
+#: ldap_people/forms.py:59
 msgid "Secondary_groups"
 msgstr "Secondary groups"
 
-#: ldap_people/forms.py:60 ldap_people/forms.py:135
+#: ldap_people/forms.py:63 ldap_people/forms.py:138
 msgid "Document_number"
 msgstr "Document number"
 
-#: ldap_people/forms.py:64
+#: ldap_people/forms.py:67
 msgid "Type_document_number"
 msgstr "Type document number"
 
-#: ldap_people/forms.py:68
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:110
-#: templates/edit.html:48
+#: ldap_people/forms.py:71 templates/edit.html:48
 msgid "Telephone_number"
 msgstr "Work telephone number"
 
-#: ldap_people/forms.py:72
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:121
-#: templates/edit.html:55
+#: ldap_people/forms.py:75 templates/edit.html:55
 msgid "Home_telephone_number"
 msgstr "Home telephone number"
 
-#: ldap_people/forms.py:76
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:132
-#: templates/search.html:45
+#: ldap_people/forms.py:79 templates/search.html:45
 msgid "Floor"
 msgstr "Floor"
 
-#: ldap_people/forms.py:80
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:143
-#: templates/search.html:46
+#: ldap_people/forms.py:83 templates/search.html:46
 msgid "Area"
 msgstr "Area"
 
-#: ldap_people/forms.py:84
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:154
-#: templates/search.html:47
+#: ldap_people/forms.py:87 templates/search.html:47
 msgid "Position"
 msgstr "Position"
 
-#: ldap_people/forms.py:88
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:165
-#: templates/search.html:40
+#: ldap_people/forms.py:91 templates/search.html:40
 msgid "Host_name"
 msgstr "Host name"
 
-#: ldap_people/forms.py:139 ldap_people/models.py:184
+#: ldap_people/forms.py:142 ldap_people/models.py:184
 msgid "type_document_number"
 msgstr "type document number"
 
-#: ldap_people/forms.py:143 ldap_people/models.py:194
+#: ldap_people/forms.py:146 ldap_people/models.py:194
 msgid "telephone_number"
 msgstr "work telephone number"
 
-#: ldap_people/forms.py:147 ldap_people/models.py:199
+#: ldap_people/forms.py:150 ldap_people/models.py:199
 msgid "home_telephone_number"
 msgstr "personal telephone number"
 
-#: ldap_people/forms.py:159
+#: ldap_people/forms.py:162
 msgid "person_without_email"
 msgstr "The person's email is a required data"
 
-#: ldap_people/forms.py:162
+#: ldap_people/forms.py:165
 msgid "person_without_institutional_email"
 msgstr "The institutional email of the person is a required data"
 
-#: ldap_people/forms.py:169 ldap_people/forms.py:179
+#: ldap_people/forms.py:172 ldap_people/forms.py:182
 msgid "invalid_format"
 msgstr "The gutted value does not match the required format"
 
@@ -163,8 +148,8 @@ msgstr "The gutted value does not match the required format"
 msgid "username"
 msgstr "username"
 
-#: ldap_people/models.py:142 ldap_people/models.py:975
-#: ldap_people/models.py:997
+#: ldap_people/models.py:142 ldap_people/models.py:1017
+#: ldap_people/models.py:1039
 msgid "name"
 msgstr "name"
 
@@ -224,113 +209,128 @@ msgstr "Ldap Person"
 msgid "LdapPeople"
 msgstr "Ldap People"
 
-#: ldap_people/models.py:390
+#: ldap_people/models.py:334 ldap_people/models.py:359
+#: password_change/auth.py:63
+msgid "user_not_valid_for_this_action"
+msgstr "The user belongs to a group that does not allow the password change"
+
+#: ldap_people/models.py:432
 msgid "setting_group_must_be_greater"
 msgstr "Error setting group %(group)s, must be greater than %(value)s"
 
-#: ldap_people/models.py:393
+#: ldap_people/models.py:435
 msgid "changing_group_must_be_greater"
 msgstr ""
 "Error to change group %(group)s, the previous group is greater than %(value)s"
 
-#: ldap_people/models.py:396
+#: ldap_people/models.py:438
 msgid "setting_group_do_not_allow_edit"
 msgstr ""
 "Error setting group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:399
+#: ldap_people/models.py:441
 msgid "changing_group_do_not_allow_edit"
 msgstr ""
 "Error to change the previous group %(group)s, the settings do not allow "
 "editing of the following groups: %(value)s"
 
-#: ldap_people/models.py:731
+#: ldap_people/models.py:773
 msgid "Group"
 msgstr "Group"
 
-#: ldap_people/models.py:732
+#: ldap_people/models.py:774
 msgid "Groups"
 msgstr "Groups"
 
-#: ldap_people/models.py:830
+#: ldap_people/models.py:872
 msgid "adding_group_must_be_greater"
 msgstr "Error adding group  %(group)s, must be greater than  %(value)s"
 
-#: ldap_people/models.py:837
+#: ldap_people/models.py:879
 msgid "adding_group_do_not_allow_editing"
 msgstr ""
 "Error adding group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:889
+#: ldap_people/models.py:931
 msgid "removing_group_must_be_greater"
 msgstr "Error removing group %(group)s, must be greater than %(value)s"
 
-#: ldap_people/models.py:896
+#: ldap_people/models.py:938
 msgid "removing_group_do_not_allow_editing"
 msgstr ""
 "Error removing group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:980
+#: ldap_people/models.py:1022
 msgid "Offices"
 msgstr "Offices"
 
-#: ldap_people/models.py:1002
+#: ldap_people/models.py:1044
 msgid "LdapOffice"
 msgstr "Office"
 
-#: ldap_people/models.py:1003
+#: ldap_people/models.py:1045
 msgid "LdapOffices"
 msgstr "Offices"
 
-#: ldap_people/models.py:1072
+#: ldap_people/models.py:1114
 msgid "select_one"
 msgstr "Select one"
 
 #: ldap_people/templates/admin/ldapperson/change_form.html:21
+#: ldap_people/templates/admin/ldapperson/update_password.html:21
 msgid "You have unsaved changes"
 msgstr "You have unsaved changes"
 
 #: ldap_people/templates/admin/ldapperson/change_form.html:50
 #: ldap_people/templates/admin/ldapperson/change_form.html:76
+#: ldap_people/templates/admin/ldapperson/update_password.html:50
+#: ldap_people/templates/admin/ldapperson/update_password.html:76
 msgid "Add"
 msgstr "Add"
 
 #: ldap_people/templates/admin/ldapperson/change_form.html:61
 #: ldap_people/templates/admin/ldapperson/change_list.html:42
+#: ldap_people/templates/admin/ldapperson/update_password.html:61
 #: templates/base.html:64
 msgid "Home"
 msgstr "Home"
 
 #: ldap_people/templates/admin/ldapperson/change_form.html:98
+#: ldap_people/templates/admin/ldapperson/update_password.html:98
 msgid "tools"
 msgstr "tools"
 
 #: ldap_people/templates/admin/ldapperson/change_form.html:108
+#: ldap_people/templates/admin/ldapperson/update_password.html:108
 msgid "History"
 msgstr "History"
 
 #: ldap_people/templates/admin/ldapperson/change_form.html:112
+#: ldap_people/templates/admin/ldapperson/update_password.html:112
 msgid "View on site"
 msgstr "View on site"
 
 #: ldap_people/templates/admin/ldapperson/change_form.html:123
 #: ldap_people/templates/admin/ldapperson/change_list.html:68
 #: ldap_people/templates/admin/ldapperson/change_list.html:176
+#: ldap_people/templates/admin/ldapperson/update_password.html:123
 #, python-format
 msgid "Add %(name)s"
 msgstr "Add %(name)s"
 
 #: ldap_people/templates/admin/ldapperson/change_form.html:152
 #: ldap_people/templates/admin/ldapperson/change_list.html:86
+#: ldap_people/templates/admin/ldapperson/update_password.html:152
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
 msgstr[0] "Please correct the error below."
 msgstr[1] "Please correct the errors below."
 
 #: ldap_people/templates/admin/ldapperson/change_form.html:152
+#: ldap_people/templates/admin/ldapperson/update_password.html:152
 msgid "Please correct the errors below."
 msgstr "Please correct the error below."
 
@@ -351,23 +351,17 @@ msgstr "Reset search and filters"
 msgid "%(name_plural)s are not created yet"
 msgstr "%(name_plural)s are not created yet"
 
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:17
-#: templates/edit.html:21
-msgid "Document"
-msgstr "Document"
+#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form_update_password.html:5
+msgid "New_password"
+msgstr "New password"
 
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:108
-#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form.html:119
-msgid "telephone_number_example"
-msgstr "Example: (4571110[/4571111] int 172[/173])"
+#: ldap_people/templates/admin/ldapperson/includes/_fieldset_form_update_password.html:16
+msgid "Confirm_new_password"
+msgstr "Confirm new password"
 
-#: password_change/auth.py:65
+#: password_change/auth.py:56
 msgid "user_not_found"
 msgstr "The data entered does not correspond to a valid user"
-
-#: password_change/auth.py:72
-msgid "user_not_valid_for_this_action"
-msgstr "The user belongs to a group that does not allow the password change"
 
 #: password_change/templates/password_change.html:34
 msgid "change_password"
@@ -426,10 +420,8 @@ msgid "Edit_account"
 msgstr "Edit account"
 
 #: templates/base.html:93
-#, fuzzy
-#| msgid "to_change_password"
 msgid "Change_password"
-msgstr "It will be used to change the password"
+msgstr "Change password"
 
 #: templates/base.html:96 templates/base.html:100
 msgid "Close_session"
@@ -442,6 +434,10 @@ msgstr "Init session"
 #: templates/edit.html:10
 msgid "data_of_the_person"
 msgstr "Personal information"
+
+#: templates/edit.html:21
+msgid "Document"
+msgstr "Document"
 
 #: templates/edit.html:42
 msgid "to_change_password"
@@ -510,17 +506,8 @@ msgstr "Person"
 msgid "view_email"
 msgstr "View email"
 
-#, fuzzy
-#~| msgid "username"
-#~ msgid "duplicate_username"
-#~ msgstr "username"
+#~ msgid "Password"
+#~ msgstr "Password"
 
-#, fuzzy
-#~| msgid "alternative_email"
-#~ msgid "invalid_alternative_email"
-#~ msgstr "alternative email"
-
-#, fuzzy
-#~| msgid "alternative_email"
-#~ msgid "without_alternative_email"
-#~ msgstr "alternative email"
+#~ msgid "Password_confirm"
+#~ msgstr "Password confirm"

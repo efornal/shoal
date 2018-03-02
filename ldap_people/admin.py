@@ -31,7 +31,7 @@ from django.contrib.admin import ModelAdmin
 from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
-
+from .forms import AdminChangePasswordForm
 
 class IncorrectLookupParameters(Exception):
     pass
@@ -58,8 +58,9 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
     def update_password(self, obj):
         return format_html(
-            '<a class="button" href="{}">Change Pass</a>&nbsp;',
+            '<a class="button" href="{}">{}</a>&nbsp;',
             reverse('admin:ldapperson_update_password', args=[obj.username]),
+            _('Update_password'),
         )
     update_password.short_description = _('Update_password')
 
@@ -85,7 +86,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
 
     def manage_view(self, request, id, form_url='', extra_context=None):
-        logging.error(request.POST)
+
         opts = LdapPerson._meta
         context = {
             'opts':  opts,    
@@ -96,14 +97,34 @@ class LdapPersonAdmin(admin.ModelAdmin):
             'has_add_permission': False,
             'has_change_permission': False
         }
-      
-        if 'password' in request.POST:
-            password = request.POST.get('password')
-            logging.error("change password to {} by {}".format(id,password))
-            messages.info(request, _('Se actualizó contraseña de usuario {}'.format(id)))
+        
+        if 'password1' not in request.POST:
+            return render(request, 'admin/ldapperson/update_password.html', context)
 
-        return render(request, 'admin/ldapperson/update_password.html', context)
+        params = request.POST.copy()
+        form =  AdminChangePasswordForm(params)
+        if form.is_valid():
+            try:
+                new_password = form.cleaned_data['password1']
 
+                logging.warning("changing password for ldap user ...")
+                LdapPerson.change_password(id, new_password)
+
+                logging.warning("changing password for django user ...")
+                user.set_password(new_password)
+                user.save()
+                
+                messages.info(request, _('password_modified_successfully'))
+                return redirect('admin:ldap_people_ldapperson_change', args=(id))
+            except Exception, e:
+                logging.warning(e)
+                messages.info(request, e)
+                return render(request, 'admin/ldapperson/update_password.html', context)
+        else:
+            context.update({'form': form})
+            messages.info(request, form.errors)
+            logging.warning("Invalid confirm change password form, errors: %s" % form.errors)
+            return render(request, 'admin/ldapperson/update_password.html', context)
 
 
     

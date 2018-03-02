@@ -15,6 +15,9 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 import re
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
 
 class LdapPersonAdminForm(forms.ModelForm):
     username = forms.CharField(
@@ -179,3 +182,18 @@ class FrontLdapPersonForm(forms.ModelForm):
                 self.add_error('home_telephone_number' , _('invalid_format'))
         return self.cleaned_data.get('home_telephone_number')
     
+
+        
+class AdminChangePasswordForm(UserCreationForm):
+
+    class Meta:
+        model = User
+        fields = ('password2','password1',)
+
+    # def clean(self):
+    #     if LdapPerson.belongs_to_restricted_group(self.cleaned_data.get('username')):
+    #         logging.warning("The user belongs to a group that is " \
+    #                         " not allowed to change the password")
+    #         self.add_error('username', _('user_not_valid_for_this_action'))
+
+

@@ -311,34 +311,62 @@ class LdapPerson(models.Model):
     @classmethod        
     def belongs_to_restricted_group(cls, username):
         ldap_user_groups = LdapGroup.groups_by_uid(username)
-        if hasattr(settings, 'RESTRICT_PASSWORD_CHANGE_TO_GROUPS'):
-            for group_id in ldap_user_groups:
-                if unicode(group_id) in settings.RESTRICT_PASSWORD_CHANGE_TO_GROUPS:
-                    return True
-        return False
+        try:
+            if hasattr(settings, 'RESTRICT_PASSWORD_CHANGE_TO_GROUPS'):
+                for group_id in ldap_user_groups:
+                    if unicode(group_id) in settings.RESTRICT_PASSWORD_CHANGE_TO_GROUPS:
+                        return True
+            return False                    
+        except Exception as e:
+            logging.error(e)
+            return False
+
 
     
     @classmethod
     def change_password( cls, ldap_username, old_password, new_password ):
         new_password = str(cls.make_secret(new_password))
         # new password is a raw password
-        
         try:
-            if cls.belongs_to_restricted_group(ldap_username):
-                raise("The user belongs to a group that is not allowed to change the password")
-
-            if not cls.is_password_valid(new_password):
-                raise("Invalid password format")
-            
             logging.warning( "Updating ldap user password for {} ...\n".format(ldap_username))
+            
+            if cls.belongs_to_restricted_group(ldap_username):
+                raise Exception(_('user_not_valid_for_this_action'))
+                                
+            if not cls.is_password_valid(new_password):
+                raise Exception("Invalid password format")
+
             update_person = [( ldap.MOD_REPLACE, 'userPassword', new_password )]
             udn = cls.ldap_udn_for( ldap_username )
+            
             LdapConn.new_user_auth(ldap_username, old_password).modify_s(udn, update_person)
-        except ldap.LDAPError, e:
+            
+        except ldap.LDAPError as e:
             logging.error( "Error updating ldap user password for %s \n" % ldap_username)
             logging.error( e )
-            raise(e)
+            raise Exception (e)
 
+        
+    @classmethod
+    def change_password( cls, ldap_username, new_password ):
+        new_password = str(cls.make_secret(new_password))
+
+        # new password is a raw password
+        try:
+            logging.warning( "Updating ldap user password for {} ...\n".format(ldap_username))
+            
+            if cls.belongs_to_restricted_group(ldap_username):
+                raise Exception(_('user_not_valid_for_this_action'))                
+
+            if not cls.is_password_valid(new_password):
+                raise Exception("Invalid password format")
+
+            update_person = [( ldap.MOD_REPLACE, 'userPassword', new_password )]
+            udn = cls.ldap_udn_for( ldap_username )
+            LdapConn.new().modify_s(udn, update_person)
+        except ldap.LDAPError as e:
+            logging.error( e )
+            raise(e)
     
     def save(self, *args, **kwargs):
         """Guarda determinados datos de la persona en LDAP """
