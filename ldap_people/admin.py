@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from django.shortcuts import redirect
 from django.contrib import admin
 from django.http import HttpResponse
 from ldap_people.models import LdapPerson
@@ -86,7 +86,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
 
     def manage_view(self, request, id, form_url='', extra_context=None):
-
+        user = None
         opts = LdapPerson._meta
         context = {
             'opts':  opts,    
@@ -103,6 +103,12 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
         params = request.POST.copy()
         form =  AdminChangePasswordForm(params)
+
+        try:
+            user = User.objects.get(username=id)
+        except Exception as e:
+            logging.error(e)
+        
         if form.is_valid():
             try:
                 new_password = form.cleaned_data['password1']
@@ -110,12 +116,13 @@ class LdapPersonAdmin(admin.ModelAdmin):
                 logging.warning("changing password for ldap user ...")
                 LdapPerson.change_password(id, new_password)
 
-                logging.warning("changing password for django user ...")
-                user.set_password(new_password)
-                user.save()
+                if not user is None:
+                    logging.warning("changing password for django user ...")
+                    user.set_password(new_password)
+                    user.save()
                 
                 messages.info(request, _('password_modified_successfully'))
-                return redirect('admin:ldap_people_ldapperson_change', args=(id))
+                return HttpResponseRedirect(reverse('admin:ldap_people_ldapperson_change', args=[id]))
             except Exception, e:
                 logging.warning(e)
                 messages.info(request, e)
