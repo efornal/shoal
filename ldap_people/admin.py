@@ -36,17 +36,24 @@ from .forms import AdminChangePasswordForm
 class IncorrectLookupParameters(Exception):
     pass
 
+def enable_admin_password_change():
+    if hasattr(settings, 'ENABLE_ADMIN_PASSWORD_CHANGE'):
+        return settings.ENABLE_ADMIN_PASSWORD_CHANGE
+    return False
 
 class LdapPersonAdmin(admin.ModelAdmin):
     form = LdapPersonAdminForm
 
     search_fields = ['username',]
-    readonly_fields = ('full_document','update_password')
-    
-    fields = ('username','name','surname','email', 'full_document', 'update_password', \
+    readonly_fields = ('full_document',)
+    if enable_admin_password_change():
+        readonly_fields += ('update_password',)
+    fields = ('username','name','surname','email', 'full_document', \
               'alternative_email', 'office','other_office','telephone_number',
               'home_telephone_number', 'floor', 'area', 'position', \
               'host_name','group_id', 'groups_id')
+    if enable_admin_password_change():
+        fields += ('update_password',)
     actions = None
 
     
@@ -57,28 +64,38 @@ class LdapPersonAdmin(admin.ModelAdmin):
     full_document.short_description = _('Full_document')
 
     def update_password(self, obj):
-        return format_html(
-            '<a class="button" href="{}">{}</a>&nbsp;',
-            reverse('admin:ldapperson_update_password', args=[obj.username]),
-            _('Update_password'),
-        )
+        if enable_admin_password_change():
+            return format_html(
+                '<a class="button" href="{}">{}</a>&nbsp;',
+                reverse('admin:ldapperson_update_password', args=[obj.username]),
+                _('Update_password'),
+            )
+        else:
+            return ''
     update_password.short_description = _('Update_password')
 
     def get_urls(self):
+        
 
+            
         def wrap(view):
             def wrapper(*args, **kwargs):
                 return self.admin_site.admin_view(view)(*args, **kwargs)
             return update_wrapper(wrapper, view)
 
         info = self.model._meta.app_label, self.model._meta.model_name
-        urls = [
-            url(
-                r'^update_password/(?P<id>\w+)/$',
-                self.admin_site.admin_view(self.manage_view),
-                name='ldapperson_update_password',
-            ),
-        ]
+
+
+        urls = []
+        if enable_admin_password_change():
+            urls = [
+                url(
+                    r'^update_password/(?P<id>\w+)/$',
+                    self.admin_site.admin_view(self.manage_view),
+                    name='ldapperson_update_password',
+                ),
+            ]
+            
         super_urls = super(LdapPersonAdmin, self).get_urls()
 
         return urls + super_urls
@@ -88,7 +105,13 @@ class LdapPersonAdmin(admin.ModelAdmin):
     def manage_view(self, request, id, form_url='', extra_context=None):
         user = None
         opts = LdapPerson._meta
-        default_password = User.objects.make_random_password(15)
+
+        default_password_lenght = 10
+        if hasattr(settings, 'DEFAULT_PASSWORD_LENGHT'):
+            default_password_lenght = settings.DEFAULT_PASSWORD_LENGHT
+            
+        default_password = User.objects.make_random_password(default_password_lenght)
+        
         context = {
             'opts':  opts,    
             'change': True,

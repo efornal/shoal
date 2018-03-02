@@ -194,6 +194,13 @@ LDAP_FILTER_OBJECT_CLASS = {{ ldap_filter_object_class|to_json }}
 #
 # If specified, add the ObjectClass to the search condition of ldap
 LDAP_FILTER_MEMBERS_OUT_OF_GROUPS = {{ ldap_filter_members_out_of_groups|to_json }}
+#
+# Enable password change functionality
+ENABLE_ADMIN_PASSWORD_CHANGE = {{ enable_admin_password_change }}
+#
+# Enable password change functionality
+ENABLE_USER_PASSWORD_CHANGE = {{ enable_user_password_change }}
+#
 # restricts the password change functionality
 # for users who are in the indicated groups
 RESTRICT_PASSWORD_CHANGE_TO_GROUPS = {{ restrict_password_change_to_groups|to_json }}
@@ -212,7 +219,9 @@ LDAP_GROUP_SKIP_VALUES = {{ ldap_group_skip_values|to_json }}
 # Shows additional information in the search if the registered user
 # belongs to any of the indicated groups
 GROUPS_EXTRA_INFORMATION_SEARCH = {{ groups_extra_information_search|to_json }}
-
+#
+# Password length used by default in password change functionality
+DEFAULT_PASSWORD_LENGHT = {{ default_password_lenght }}
 # =================================/
 
 

@@ -20,10 +20,17 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.auth.decorators import login_required
+from .decorators import enable_user_password_change
 from django.utils.translation import ugettext as _
 from django.contrib import messages
+
+# def enable_user_password_change():
+#     if hasattr(settings, 'ENABLE_USER_PASSWORD_CHANGE'):
+#         return settings.ENABLE_USER_PASSWORD_CHANGE
+#     return False
             
 @login_required
+@enable_user_password_change
 def password_change(request):
     context={}
     return render(request, 'password_change.html', context)
