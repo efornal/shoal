@@ -89,8 +89,10 @@
               <ul class="dropdown-menu" aria-labelledby="download">
                 <li><a href="{% url 'edit' %}"
                        title="{{ _('Edit_account') }}">{{ _('Edit_account') }}</a></li>
+                {% if enable_user_password_change %}
                 <li><a href="{% url 'auth_password_change' %}"
                        title="{{ _('Change_password') }}">{{ _('Change_password') }}</a></li>
+                {% endif %}
                 <li class="divider"></li>
                 <li><a href="{% url 'logout' %}"
                        title="{{ _('Close_session') }}">{{ _('Close_session') }}</a></li>

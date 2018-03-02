@@ -32,3 +32,10 @@ def if_not_exist_in(value,objects):
         if o.name == value:
             result = ''
     return result
+
+
+@register.filter
+def enable_user_password_change (value,objects):
+    if hasattr(settings, 'ENABLE_USER_PASSWORD_CHANGE'):
+        return settings.ENABLE_USER_PASSWORD_CHANGE
+    return False

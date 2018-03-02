@@ -24,11 +24,7 @@ from .decorators import enable_user_password_change
 from django.utils.translation import ugettext as _
 from django.contrib import messages
 
-# def enable_user_password_change():
-#     if hasattr(settings, 'ENABLE_USER_PASSWORD_CHANGE'):
-#         return settings.ENABLE_USER_PASSWORD_CHANGE
-#     return False
-            
+
 @login_required
 @enable_user_password_change
 def password_change(request):
@@ -37,6 +33,7 @@ def password_change(request):
 
    
 @login_required
+@enable_user_password_change
 def password_change_complete(request):
     context = {}
     user = None

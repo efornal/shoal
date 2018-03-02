@@ -13,7 +13,7 @@ from django.utils import translation
 import logging
 from django.contrib import messages
 from ldap_people.forms import FrontLdapPersonForm
-from decorators import ldap_user_required
+from app.decorators import ldap_user_required
 from django.conf import settings
 
 
