@@ -88,6 +88,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
     def manage_view(self, request, id, form_url='', extra_context=None):
         user = None
         opts = LdapPerson._meta
+        default_password = User.objects.make_random_password(15)
         context = {
             'opts':  opts,    
             'change': True,
@@ -95,9 +96,10 @@ class LdapPersonAdmin(admin.ModelAdmin):
             'save_as': False,
             'has_delete_permission': False,
             'has_add_permission': False,
-            'has_change_permission': False
+            'has_change_permission': False,
+            'default_password': default_password,
         }
-        
+
         if 'password1' not in request.POST:
             return render(request, 'admin/ldapperson/update_password.html', context)
 
