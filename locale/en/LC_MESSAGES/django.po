@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-02 07:41-0300\n"
+"POT-Creation-Date: 2018-03-19 11:33-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,33 +17,33 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: app/decorators.py:14
+msgid "person_was_not_found"
+msgstr "The registered person could not be validated. Service not available"
+
 #: app/views.py:75
 msgid "changes_saved"
 msgstr "Changes saved successfully"
 
-#: app/views.py:125 app/views.py:141 ldap_people/admin.py:221
+#: app/views.py:125 app/views.py:141 ldap_people/admin.py:253
 msgid "search_error"
 msgstr ""
 "The search could not be performed. Check the connection, or the text to "
 "search does not generate excess results"
 
-#: decorators.py:14
-msgid "person_was_not_found"
-msgstr "The registered person could not be validated. Service not available"
-
-#: ldap_people/admin.py:57
+#: ldap_people/admin.py:64
 msgid "Full_document"
 msgstr "National identifier"
 
-#: ldap_people/admin.py:63 ldap_people/admin.py:65
+#: ldap_people/admin.py:71 ldap_people/admin.py:75
 msgid "Update_password"
 msgstr "Update password"
 
-#: ldap_people/admin.py:117
+#: ldap_people/admin.py:149
 msgid "password_modified_successfully"
 msgstr "The password was modified successfully"
 
-#: ldap_people/admin.py:214
+#: ldap_people/admin.py:246
 msgid "Database error"
 msgstr "Database error"
 
@@ -210,7 +210,7 @@ msgid "LdapPeople"
 msgstr "Ldap People"
 
 #: ldap_people/models.py:334 ldap_people/models.py:359
-#: password_change/auth.py:63
+#: password_change/auth.py:67
 msgid "user_not_valid_for_this_action"
 msgstr "The user belongs to a group that does not allow the password change"
 
@@ -359,7 +359,7 @@ msgstr "New password"
 msgid "Confirm_new_password"
 msgstr "Confirm new password"
 
-#: password_change/auth.py:56
+#: password_change/auth.py:60
 msgid "user_not_found"
 msgstr "The data entered does not correspond to a valid user"
 
@@ -395,11 +395,11 @@ msgstr "password has been changed"
 msgid "password_has_not_been_changed"
 msgstr "password has not been changed"
 
-#: shoal/settings.py:163 templates/base.html:71 templates/base.html:76
+#: shoal/settings.py:166 templates/base.html:71 templates/base.html:76
 msgid "Spanish"
 msgstr "Spanish"
 
-#: shoal/settings.py:164 templates/base.html:72 templates/base.html:78
+#: shoal/settings.py:167 templates/base.html:72 templates/base.html:78
 msgid "English"
 msgstr "English"
 
@@ -419,15 +419,15 @@ msgstr "language"
 msgid "Edit_account"
 msgstr "Edit account"
 
-#: templates/base.html:93
+#: templates/base.html:94
 msgid "Change_password"
 msgstr "Change password"
 
-#: templates/base.html:96 templates/base.html:100
+#: templates/base.html:98 templates/base.html:102
 msgid "Close_session"
 msgstr "Close session"
 
-#: templates/base.html:106
+#: templates/base.html:108
 msgid "Init_session"
 msgstr "Init session"
 
@@ -441,7 +441,9 @@ msgstr "Document"
 
 #: templates/edit.html:42
 msgid "to_change_password"
-msgstr "It will be used to change the password"
+msgstr ""
+"This data will be exclusively used in the password recovery process and will "
+"not be displayed by the rest of the users or in the telephone list."
 
 #: templates/edit.html:52
 msgid "Examples"
@@ -451,11 +453,15 @@ msgstr "Examples"
 msgid "or_alone"
 msgstr "or alone"
 
-#: templates/edit.html:64
+#: templates/edit.html:62
+msgid "footnote_info"
+msgstr "The alternative email and personal telephone number will be exclusively used in the password recovery process and will not be shown to the rest of the users or in the telephone list."
+
+#: templates/edit.html:67
 msgid "Cancel"
 msgstr "Cancel"
 
-#: templates/edit.html:66
+#: templates/edit.html:69
 msgid "Save"
 msgstr "Save"
 

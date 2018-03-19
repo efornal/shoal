@@ -56,8 +56,12 @@
         <div class="col-sm-4">
           <input class="form-control" type="text" name="home_telephone_number" 
                  value="{{ form.home_telephone_number.value|default:'' }}" />
+          
         </div>
       </div>
+
+      <p class="help-block">{{ _('footnote_info') }}</p>        
+
       <br>
       <div class="form-group pull-right">
         <div class="col-xs-12">
