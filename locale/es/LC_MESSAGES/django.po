@@ -458,7 +458,7 @@ msgstr "o sólo"
 
 #: templates/edit.html:62
 msgid "footnote_info"
-msgstr "El email alternativo y teléfono personal serán de uso exclusivo en el proceso de recuperación de contraseña y no se mostrará al resto de los usuarios o en el listado telefónico."
+msgstr "El <strong>Email alternativo</strong> y  <strong>Teléfono personal</strong> serán de uso exclusivo en el proceso de recuperación de contraseña y no se mostrará al resto de los usuarios o en el listado telefónico."
 
 #: templates/edit.html:67
 msgid "Cancel"
