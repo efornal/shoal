@@ -197,3 +197,19 @@ class AdminChangePasswordForm(UserCreationForm):
     #         self.add_error('username', _('user_not_valid_for_this_action'))
 
 
+
+class ChangeHostNameForm(forms.ModelForm):
+    username = forms.CharField(
+        required=True,
+        max_length=200,
+        label=_('Username'))
+    host_name = forms.CharField(
+        max_length=200,
+        required=True,
+        label=_('Host_name'))
+
+    class Meta:
+        model = LdapPerson
+        fields = ('username', 'host_name',)
+
+

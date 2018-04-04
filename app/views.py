@@ -13,9 +13,13 @@ from django.utils import translation
 import logging
 from django.contrib import messages
 from ldap_people.forms import FrontLdapPersonForm
+from ldap_people.forms import ChangeHostNameForm
 from app.decorators import ldap_user_required
 from django.conf import settings
 from django.http import HttpResponse
+from decorators import validate_basic_http_header
+from decorators import validate_basic_http_authentication
+from decorators import validate_https_request
 
 def set_language(request, lang='es'):
     if 'lang' in request.GET:
@@ -143,8 +147,22 @@ def search_by_office(request, office):
     return render(request, 'search.html', context)
 
 
-#@validate_basic_http_autorization
-#@validate_https_request
-def api_register_host(request,user):
-    logging.warning("Register for user: {}".format(user))
-    return HttpResponse("Register for user: {}".format(user), content_type="text/plain")
+@validate_basic_http_authentication
+@validate_https_request
+def api_register_host(request,user,host):
+    
+    logging.warning("registering host access {} for user {}".format(host,user))
+    params = {'username': user,'host_name': host}
+    form = ChangeHostNameForm(params)
+    try:
+        if form.is_valid():
+            form.instance.save()
+            logging.warning("Access to host {} per user {} registered.".format(host,user))
+            return HttpResponse('200 Successfully registered access', status=200)
+        else:
+            logging.error("Invalid hostname change form: {}".format(form.errors))
+    except Exception as e:
+        logging.error(e)
+
+    return HttpResponse('500 Internal Server Error', status=500)
+
