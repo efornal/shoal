@@ -15,7 +15,7 @@ from django.contrib import messages
 from ldap_people.forms import FrontLdapPersonForm
 from app.decorators import ldap_user_required
 from django.conf import settings
-
+from django.http import HttpResponse
 
 def set_language(request, lang='es'):
     if 'lang' in request.GET:
@@ -141,3 +141,10 @@ def search_by_office(request, office):
             messages.info(request, _('search_error'))
         
     return render(request, 'search.html', context)
+
+
+#@validate_basic_http_autorization
+#@validate_https_request
+def api_register_host(request,user):
+    logging.warning("Register for user: {}".format(user))
+    return HttpResponse("Register for user: {}".format(user), content_type="text/plain")
