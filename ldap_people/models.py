@@ -642,12 +642,12 @@ class LdapPerson(models.Model):
     
     @classmethod
     def ldap_to_obj(cls, ldap_result):
-        if ldap_result is None:
-            logging.warning ("Omitted object conversion, the list has None value.")
-            return ldap_result
-        
         cn_found = []
         ldap_domain_mail = ''
+        
+        if ldap_result is None:
+            logging.warning ("Omitted object conversion, the list has None value.")
+            return cn_found
 
         if hasattr(settings, 'LDAP_DOMAIN_MAIL') and settings.LDAP_DOMAIN_MAIL:
             ldap_domain_mail = settings.LDAP_DOMAIN_MAIL
