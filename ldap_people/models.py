@@ -530,17 +530,20 @@ class LdapPerson(models.Model):
     @classmethod
     def _filter_members_outside_the_group(cls, people, group):
         group_members = LdapGroup.members_of(group)
+        people_found = people[:]
+        
         for person in people:
             if not person.username in group_members:
-                people.remove(person)
-        return people
+                people_found.remove(person)
+
+        return people_found
 
     @classmethod    
     def filter_members_out_of_groups(cls, people, groups):
         # Delete members that do not match the group.
         # Given a list of person objects, it removes it if it is not a member
         for group in groups:
-            cls._filter_members_outside_the_group(people,group)
+            people = cls._filter_members_outside_the_group(people,group)
         return people
     
     @classmethod
