@@ -131,13 +131,17 @@ def search(request):
     return render(request, 'search.html', context)
 
 
+
+
 def search_by_office(request, office):
     user_groups = []
     context = {}
     show_extra_info = is_in_group_with_extra_info(request)
     context={'show_extra_info':show_extra_info}
     if office is not None:
+        filter_groups = getattr(settings, "LDAP_FILTER_MEMBERS_OUT_OF_GROUPS", [])
         people = LdapPerson.search_by_office(office)
+        people = LdapPerson.filter_members_out_of_groups(people,filter_groups)
         context.update({'people': people})
 
         if people is None:
