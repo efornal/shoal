@@ -1076,6 +1076,9 @@ class LdapOffice(models.Model):
         offices = {}
         try:
             people = LdapPerson.by_offices()
+            filter_groups = getattr(settings, "LDAP_FILTER_MEMBERS_OUT_OF_GROUPS", [])
+            people = LdapPerson.filter_members_out_of_groups(people,filter_groups)
+            
             for person in people:
                 if person.office is not None \
                    and person.telephone_number is not None:
