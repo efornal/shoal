@@ -137,6 +137,12 @@
                   </div>
                 </th>
 
+                <th scope="col" class="is_staff-column sortable column-is_staff">
+                  <div class="text">
+                    <a href="#">{{ _('Host_name') }}</a>
+                  </div>
+                </th>
+
               </tr>
             </thead>
 
@@ -151,6 +157,13 @@
                 </th>
                 <td>{{ ldapuser.fullname }}</td>
                 <td>{{ ldapuser.email }}</td>
+                <td  {% if ldapuser.info_last_login %}
+                     title="{{ _('Last_login') }}: {{ ldapuser.info_last_login }}"
+                     {% endif %}>
+                     {% if ldapuser.host_name %}
+                     {{ ldapuser.host_name }}
+                     {% endif %}
+                </td>
               </tr>
             </tbody>
             {% endfor  %}

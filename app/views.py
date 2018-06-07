@@ -151,9 +151,10 @@ def search_by_office(request, office):
 @validate_basic_http_authentication
 @validate_https_request
 def api_register_host(request,user,host):
-    
-    logging.warning("registering host access {} for user {}".format(host,user))
-    params = {'username': user,'host_name': host}
+    import datetime
+    access_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
+    logging.warning("registering host access {} for user {} at {}".format(host,user,access_date))
+    params = {'username': user,'host_name': host, 'info': "last_login: {}".format(access_date)}
     form = ChangeHostNameForm(params)
     try:
         if form.is_valid():

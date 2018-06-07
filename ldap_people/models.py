@@ -434,6 +434,15 @@ class LdapPerson(models.Model):
             else:
                 upd_person.append(( ldap.MOD_DELETE,
                                     'host',None))
+                
+        if self.info is not None:
+            if self.info:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'info',
+                                    str(self.info)))
+            else:
+                upd_person.append(( ldap.MOD_DELETE,
+                                    'info',None))
 
         if self.group_id:
             if int(self.group_id) < LdapGroup.ldap_min_gid_value():

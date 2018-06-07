@@ -207,9 +207,13 @@ class ChangeHostNameForm(forms.ModelForm):
         max_length=200,
         required=True,
         label=_('Host_name'))
+    info = forms.CharField(
+        max_length=500,
+        required=True,
+        label=_('Info'))
 
     class Meta:
         model = LdapPerson
-        fields = ('username', 'host_name',)
+        fields = ('username', 'host_name', 'info')
 
 
