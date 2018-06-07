@@ -217,6 +217,11 @@ class LdapPerson(models.Model):
         null=True,
         blank=True,
         verbose_name=_('host_name'))
+    info = models.CharField(
+        max_length=500,
+        null=True,
+        blank=True,
+        verbose_name=_('info'))
     
     class Meta:
         managed = False
@@ -254,15 +259,18 @@ class LdapPerson(models.Model):
                 'gidNumber','uidNumber','mail',
                 'telephoneNumber','homePhone',
                 'employeeType','physicalDeliveryOfficeName',
-                'departmentNumber','businessCategory','host']
+                'departmentNumber','businessCategory','host', 'info']
 
     
     @classmethod
     def search_ldap_attrs(cls):
         return ['uid','givenName','sn',
                 'departmentNumber','businessCategory','employeeType',
-                'telephoneNumber','physicalDeliveryOfficeName','mail','host']
+                'telephoneNumber','physicalDeliveryOfficeName','mail','host','info']
 
+    def info_last_login(self):
+        if not self.info is None:
+            return self.info.get('last_login')
         
     @classmethod
     def ldap_udn_for( cls, ldap_user_name ):
@@ -657,7 +665,6 @@ class LdapPerson(models.Model):
             
         for dn,entry in ldap_result:
             person = LdapPerson()
-            
             if 'uid' in entry and entry['uid'][0]:
                 person.username = entry['uid'][0]
 
@@ -726,6 +733,16 @@ class LdapPerson(models.Model):
             if 'host' in entry and entry['host'][0]:
                 person.host_name = entry['host'][0]
 
+            if 'info' in entry and entry['info'][0]:
+                try:
+                    attr_info={}
+                    for item in entry['info'][0].split(','):
+                        x = item.split(':',1)
+                        attr_info[x[0]] = x[1]
+                    person.info = attr_info
+                except Exception, e:
+                    logging.error( e )
+                    logging.error( "incorrect ldap info attribute format" )
             cn_found.append(person)
 
         return sorted(cn_found, key=lambda person: person.fullname)

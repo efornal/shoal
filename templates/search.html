@@ -56,7 +56,8 @@
           <td>{{ person.surname|default:'' }}, {{ person.name|default:'' }} </td>
           {% if show_extra_info %}
           <td>{{ person.username|default:'' }} </td>
-          <td>{{ person.host_name|default:'' }} </td>
+          <td title="{{ _('Last_login') }}: {{ person.info_last_login|default:'' }}">
+            {{ person.host_name|default:'' }} </td>
           {% endif %}
           <td>{{ person.telephone_number|default:'' }} </td>
           <td>{{ person.office|default:'' }} </td>

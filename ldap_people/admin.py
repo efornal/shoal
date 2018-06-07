@@ -45,13 +45,13 @@ class LdapPersonAdmin(admin.ModelAdmin):
     form = LdapPersonAdminForm
 
     search_fields = ['username',]
-    readonly_fields = ('full_document',)
+    readonly_fields = ('full_document','last_login')
     if enable_admin_password_change():
         readonly_fields += ('update_password',)
     fields = ('username','name','surname','email', 'full_document', \
               'alternative_email', 'office','other_office','telephone_number',
               'home_telephone_number', 'floor', 'area', 'position', \
-              'host_name','group_id', 'groups_id')
+              'host_name','group_id', 'groups_id', 'last_login')
     if enable_admin_password_change():
         fields += ('update_password',)
     actions = None
@@ -63,6 +63,10 @@ class LdapPersonAdmin(admin.ModelAdmin):
                                   obj.document_number )
     full_document.short_description = _('Full_document')
 
+    def last_login(self, obj):
+        return obj.info_last_login()
+    last_login.short_description = _('Last_login')
+    
     def update_password(self, obj):
         if enable_admin_password_change():
             return format_html(
@@ -177,7 +181,6 @@ class LdapPersonAdmin(admin.ModelAdmin):
     def change_view(self, request, object_id, form_url='', extra_context=None):
         person_id = '{}'.format(object_id)
         person = LdapPerson.get_by_uid(person_id)
-
         form = LdapPersonAdminForm(instance=person)
 
         context = {'form': form,
