@@ -1,53 +1,50 @@
-asn1crypto (0.24.0)
-certifi (2018.11.29)
-cffi (1.12.1)
-chardet (3.0.4)
-configparser (3.7.3)
-cryptography (2.5)
-Django (1.11.20)
-django-auth-ldap (1.7.0)
-django-bootstrap-themes (3.3.6)
-django-bootstrap-ui (0.5.1)
-django-cleanup (3.2.0)
-django-datetime-widget (0.9.3)
-django-durationfield (0.5.5)
-django-extensions (2.1.6)
-django-jquery (2.2.4)
-django-jquery-ui (1.11.4.1)
-django-suit (0.2.26)
-django-suit-locale (1.0.10)
-django-tag-parser (3.1)
-dnspython (1.16.0)
-dominate (2.3.5)
-entrypoints (0.3)
-enum34 (1.1.6)
-idna (2.8)
-ipaddress (1.0.22)
-keyring (18.0.0)
-keyrings.alt (3.1.1)
-Pillow (5.4.1)
-pip (9.0.1)
-psycopg2 (2.7.7)
-psycopg2-binary (2.7.7)
-py-zabbix (1.1.5)
-pyasn1 (0.4.5)
-pyasn1-modules (0.2.4)
-pycairo (1.18.0)
-pycparser (2.19)
-pycrypto (2.6.1)
-PyGObject (3.30.4)
-PySocks (1.6.8)
-python-apt (1.4.0b3)
-python-ldap (3.1.0)
-python-redmine (2.2.0)
-pytz (2018.9)
-pyxdg (0.26)
-PyYAML (3.13)
-reportlab (3.5.13)
-requests (2.21.0)
-SecretStorage (2.3.1)
-setuptools (33.1.1)
-six (1.12.0)
-typing (3.6.6)
-urllib3 (1.24.1)
-wheel (0.29.0)
+asn1crypto==0.24.0
+certifi==2018.11.29
+cffi==1.12.1
+chardet==3.0.4
+configparser==3.7.3
+cryptography==2.5
+Django==1.11.20
+django-auth-ldap==1.7.0
+django-bootstrap-themes==3.3.6
+django-bootstrap-ui==0.5.1
+django-cleanup==3.2.0
+django-datetime-widget==0.9.3
+django-durationfield==0.5.5
+django-extensions==2.1.6
+django-jquery==2.2.4
+django-jquery-ui==1.11.4.1
+django-suit==0.2.26
+django-suit-locale==1.0.10
+django-tag-parser==3.1
+dnspython==1.16.0
+dominate==2.3.5
+entrypoints==0.3
+enum34==1.1.6
+idna==2.8
+ipaddress==1.0.22
+keyring==18.0.0
+keyrings.alt==3.1.1
+Pillow==5.4.1
+psycopg2==2.7.7
+psycopg2-binary==2.7.7
+py-zabbix==1.1.5
+pyasn1==0.4.5
+pyasn1-modules==0.2.4
+pycairo==1.18.0
+pycparser==2.19
+pycrypto==2.6.1
+PyGObject==3.30.4
+PySocks==1.6.8
+python-apt==1.4.0b3
+python-ldap==3.1.0
+python-redmine==2.2.0
+pytz==2018.9
+pyxdg==0.26
+PyYAML==3.13
+reportlab==3.5.13
+requests==2.21.0
+SecretStorage==2.3.1
+six==1.12.0
+typing==3.6.6
+urllib3==1.24.1
