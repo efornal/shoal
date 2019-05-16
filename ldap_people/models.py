@@ -1106,13 +1106,15 @@ class LdapOffice(models.Model):
             people = LdapPerson.filter_members_out_of_groups(people,filter_groups)
             
             for person in people:
-                if person.office is not None \
-                   and person.telephone_number is not None:
+                if not (person.office is None) and not (person.telephone_number is None):
                     curr_phone = offices.get('{}'.format(person.office))
-                    if curr_phone and person.telephone_number not in curr_phone:
+                    
+                    if curr_phone and not (person.telephone_number in curr_phone):
                         curr_phone = '{}, {}'.format( curr_phone,person.telephone_number)
                     else:
-                        curr_phone = '{}'.format( person.telephone_number)
+                        if curr_phone is None:
+                            curr_phone = '{}'.format( person.telephone_number)
+                            
                     offices.update({'{}'.format(person.office):'{}'.format(curr_phone)})
 
             return OrderedDict(sorted(offices.items(), key=lambda t: t[0]))
