@@ -41,9 +41,9 @@
           {% endif %}
           <th>{{ _('Phone') }}</th>
           <th>{{ _('Office') }}</th>
+          <th>{{ _('Area') }}</th>
           {% if show_extra_info %}
           <th>{{ _('Floor') }}</th>
-          <th>{{ _('Area') }}</th>
           <th>{{ _('Position') }}</th>
           {% endif %}
           <th>{{ _('Email') }}</th>
@@ -61,9 +61,9 @@
           {% endif %}
           <td>{{ person.telephone_number|default:'' }} </td>
           <td>{{ person.office|default:'' }} </td>
+          <td>{{ person.area|default:'' }} </td>
           {% if show_extra_info %}
           <td>{{ person.floor|default:'' }} </td>
-          <td>{{ person.area|default:'' }} </td>
           <td>{{ person.position|default:'' }}</td>
           {% endif %}
           {% if person.email %}
