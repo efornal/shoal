@@ -104,7 +104,7 @@ class LdapPersonAdminForm(forms.ModelForm):
 
        
 def validate_telephone_number(val):
-    pattern = r'^\+?(\d{3,4})?(\s)?(\d{3,15})?(\s)?(int\s\d{1,3})?$'
+    pattern = r'^(^(int )?\d{1,3})(((,|/)\d{1,3}){0,10})$'
     return re.match(pattern, val)
 
 class FrontLdapPersonForm(forms.ModelForm):
