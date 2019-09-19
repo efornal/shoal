@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-07 08:42-0300\n"
+"POT-Creation-Date: 2019-09-19 13:38-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,9 @@ msgstr ""
 msgid "Full_document"
 msgstr "National identifier"
 
-#: ldap_people/admin.py:68 templates/search.html:59
+#: ldap_people/admin.py:68
+#: ldap_people/templates/admin/ldapperson/change_list.html:161
+#: templates/search.html:59
 msgid "Last_login"
 msgstr "Last login"
 
@@ -75,7 +77,7 @@ msgstr "Email"
 msgid "Alternative_email"
 msgstr "Alternative email"
 
-#: ldap_people/forms.py:46 ldap_people/forms.py:126 ldap_people/models.py:1041
+#: ldap_people/forms.py:46 ldap_people/forms.py:126 ldap_people/models.py:1050
 #: templates/edit.html:30 templates/index.html:15 templates/search.html:43
 msgid "Office"
 msgstr "Office"
@@ -104,15 +106,15 @@ msgstr "Type document number"
 msgid "Telephone_number"
 msgstr "Work telephone number"
 
-#: ldap_people/forms.py:75 templates/edit.html:55
+#: ldap_people/forms.py:75 templates/edit.html:57
 msgid "Home_telephone_number"
 msgstr "Home telephone number"
 
-#: ldap_people/forms.py:79 templates/search.html:45
+#: ldap_people/forms.py:79 templates/search.html:46
 msgid "Floor"
 msgstr "Floor"
 
-#: ldap_people/forms.py:83 templates/search.html:46
+#: ldap_people/forms.py:83 templates/search.html:44
 msgid "Area"
 msgstr "Area"
 
@@ -120,7 +122,9 @@ msgstr "Area"
 msgid "Position"
 msgstr "Position"
 
-#: ldap_people/forms.py:91 ldap_people/forms.py:209 templates/search.html:40
+#: ldap_people/forms.py:91 ldap_people/forms.py:209
+#: ldap_people/templates/admin/ldapperson/change_list.html:142
+#: templates/search.html:40
 msgid "Host_name"
 msgstr "Host name"
 
@@ -148,12 +152,16 @@ msgstr "The institutional email of the person is a required data"
 msgid "invalid_format"
 msgstr "The gutted value does not match the required format"
 
+#: ldap_people/forms.py:213
+msgid "Info"
+msgstr ""
+
 #: ldap_people/models.py:133 templates/base.html:85
 msgid "username"
 msgstr "username"
 
-#: ldap_people/models.py:142 ldap_people/models.py:1037
-#: ldap_people/models.py:1059
+#: ldap_people/models.py:142 ldap_people/models.py:1046
+#: ldap_people/models.py:1068
 msgid "name"
 msgstr "name"
 
@@ -222,68 +230,68 @@ msgstr "Ldap People"
 msgid "user_not_valid_for_this_action"
 msgstr "The user belongs to a group that does not allow the password change"
 
-#: ldap_people/models.py:440
+#: ldap_people/models.py:449
 msgid "setting_group_must_be_greater"
 msgstr "Error setting group %(group)s, must be greater than %(value)s"
 
-#: ldap_people/models.py:443
+#: ldap_people/models.py:452
 msgid "changing_group_must_be_greater"
 msgstr ""
 "Error to change group %(group)s, the previous group is greater than %(value)s"
 
-#: ldap_people/models.py:446
+#: ldap_people/models.py:455
 msgid "setting_group_do_not_allow_edit"
 msgstr ""
 "Error setting group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:449
+#: ldap_people/models.py:458
 msgid "changing_group_do_not_allow_edit"
 msgstr ""
 "Error to change the previous group %(group)s, the settings do not allow "
 "editing of the following groups: %(value)s"
 
-#: ldap_people/models.py:793
+#: ldap_people/models.py:802
 msgid "Group"
 msgstr "Group"
 
-#: ldap_people/models.py:794
+#: ldap_people/models.py:803
 msgid "Groups"
 msgstr "Groups"
 
-#: ldap_people/models.py:892
+#: ldap_people/models.py:901
 msgid "adding_group_must_be_greater"
 msgstr "Error adding group  %(group)s, must be greater than  %(value)s"
 
-#: ldap_people/models.py:899
+#: ldap_people/models.py:908
 msgid "adding_group_do_not_allow_editing"
 msgstr ""
 "Error adding group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:951
+#: ldap_people/models.py:960
 msgid "removing_group_must_be_greater"
 msgstr "Error removing group %(group)s, must be greater than %(value)s"
 
-#: ldap_people/models.py:958
+#: ldap_people/models.py:967
 msgid "removing_group_do_not_allow_editing"
 msgstr ""
 "Error removing group %(group)s, the settings do not allow editing of the "
 "following groups: %(value)s"
 
-#: ldap_people/models.py:1042
+#: ldap_people/models.py:1051
 msgid "Offices"
 msgstr "Offices"
 
-#: ldap_people/models.py:1064
+#: ldap_people/models.py:1073
 msgid "LdapOffice"
 msgstr "Office"
 
-#: ldap_people/models.py:1065
+#: ldap_people/models.py:1074
 msgid "LdapOffices"
 msgstr "Offices"
 
-#: ldap_people/models.py:1137
+#: ldap_people/models.py:1148
 msgid "select_one"
 msgstr "Select one"
 
@@ -323,7 +331,7 @@ msgstr "View on site"
 
 #: ldap_people/templates/admin/ldapperson/change_form.html:123
 #: ldap_people/templates/admin/ldapperson/change_list.html:68
-#: ldap_people/templates/admin/ldapperson/change_list.html:176
+#: ldap_people/templates/admin/ldapperson/change_list.html:189
 #: ldap_people/templates/admin/ldapperson/update_password.html:123
 #, python-format
 msgid "Add %(name)s"
@@ -346,15 +354,15 @@ msgstr "Please correct the error below."
 msgid "Full_name"
 msgstr "Full name"
 
-#: ldap_people/templates/admin/ldapperson/change_list.html:170
+#: ldap_people/templates/admin/ldapperson/change_list.html:183
 msgid "Nothing found"
 msgstr "Nothing found"
 
-#: ldap_people/templates/admin/ldapperson/change_list.html:172
+#: ldap_people/templates/admin/ldapperson/change_list.html:185
 msgid "Reset search and filters"
 msgstr "Reset search and filters"
 
-#: ldap_people/templates/admin/ldapperson/change_list.html:174
+#: ldap_people/templates/admin/ldapperson/change_list.html:187
 #, python-format
 msgid "%(name_plural)s are not created yet"
 msgstr "%(name_plural)s are not created yet"
@@ -403,11 +411,11 @@ msgstr "password has been changed"
 msgid "password_has_not_been_changed"
 msgstr "password has not been changed"
 
-#: shoal/settings.py:166 templates/base.html:71 templates/base.html:76
+#: shoal/settings.py:141 templates/base.html:71 templates/base.html:76
 msgid "Spanish"
 msgstr "Spanish"
 
-#: shoal/settings.py:167 templates/base.html:72 templates/base.html:78
+#: shoal/settings.py:142 templates/base.html:72 templates/base.html:78
 msgid "English"
 msgstr "English"
 
@@ -458,21 +466,25 @@ msgid "Examples"
 msgstr "Examples"
 
 #: templates/edit.html:53
-msgid "or_alone"
-msgstr "or alone"
+msgid "or"
+msgstr "or"
 
-#: templates/edit.html:63
+#: templates/edit.html:54
+msgid "for_several"
+msgstr "for several"
+
+#: templates/edit.html:65
 msgid "footnote_info"
 msgstr ""
 "The <strong>Alternative email</strong> and <strong>Personal telephone</"
 "strong> number will be exclusively used in the password recovery process and "
 "will not be shown to the rest of the users or in the telephone list."
 
-#: templates/edit.html:68
+#: templates/edit.html:70
 msgid "Cancel"
 msgstr "Cancel"
 
-#: templates/edit.html:70
+#: templates/edit.html:72
 msgid "Save"
 msgstr "Save"
 
@@ -522,6 +534,9 @@ msgstr "Person"
 #: templates/search.html:70
 msgid "view_email"
 msgstr "View email"
+
+#~ msgid "or_alone"
+#~ msgstr "or alone"
 
 #~ msgid "Password"
 #~ msgstr "Password"
