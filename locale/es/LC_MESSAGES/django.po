@@ -148,7 +148,7 @@ msgstr "El email institucional de la persona es un dato requerido"
 
 #: ldap_people/forms.py:172 ldap_people/forms.py:182
 msgid "invalid_format"
-msgstr "El valor ingrasado no se corresponde con el formato requerido"
+msgstr "El valor ingresado no se corresponde con el formato requerido"
 
 #: ldap_people/models.py:133 templates/base.html:85
 msgid "username"
