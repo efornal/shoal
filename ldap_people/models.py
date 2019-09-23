@@ -328,37 +328,11 @@ class LdapPerson(models.Model):
         except Exception as e:
             logging.error(e)
             return False
-
-
     
-    @classmethod
-    def change_password( cls, ldap_username, old_password, new_password ):
-        new_password = str(cls.make_secret(new_password))
-        # new password is a raw password
-        try:
-            logging.warning( "Updating ldap user password for {} ...\n".format(ldap_username))
-            
-            if cls.belongs_to_restricted_group(ldap_username):
-                raise Exception(_('user_not_valid_for_this_action'))
-                                
-            if not cls.is_password_valid(new_password):
-                raise Exception("Invalid password format")
-
-            update_person = [( ldap.MOD_REPLACE, 'userPassword', new_password )]
-            udn = cls.ldap_udn_for( ldap_username )
-            
-            LdapConn.new_user_auth(ldap_username, old_password).modify_s(udn, update_person)
-            
-        except ldap.LDAPError as e:
-            logging.error( "Error updating ldap user password for %s \n" % ldap_username)
-            logging.error( e )
-            raise Exception (e)
-
         
     @classmethod
     def change_password( cls, ldap_username, new_password ):
         new_password = str(cls.make_secret(new_password))
-
         # new password is a raw password
         try:
             logging.warning( "Updating ldap user password for {} ...\n".format(ldap_username))
@@ -375,6 +349,30 @@ class LdapPerson(models.Model):
         except ldap.LDAPError as e:
             logging.error( e )
             raise(e)
+        
+    @classmethod    
+    def change_password( cls, ldap_username, old_password, new_password ):
+        new_password = str(cls.make_secret(new_password))
+
+        # new password is a raw password
+        try:
+            logging.warning( "Updating ldap user password for {} ...\n".format(ldap_username))
+            
+            if not cls.belongs_to_restricted_group(ldap_username):
+                raise Exception(_('user_not_valid_for_this_action'))
+                                
+            if not cls.is_password_valid(new_password):
+                raise Exception("Invalid password format")
+
+            update_person = [( ldap.MOD_REPLACE, 'userPassword', new_password )]
+            udn = cls.ldap_udn_for( ldap_username )
+            
+            LdapConn.new_user_auth(ldap_username, old_password).modify_s(udn, update_person)
+            
+        except ldap.LDAPError as e:
+            logging.error( "Error updating ldap user password for %s \n" % ldap_username)
+            logging.error( e )
+            raise Exception (e)
     
     def save(self, *args, **kwargs):
         """Guarda determinados datos de la persona en LDAP """

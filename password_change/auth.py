@@ -62,7 +62,7 @@ def password_change_complete(request):
         return render(request, 'password_change.html')
 
 
-    if LdapPerson.belongs_to_restricted_group(user.username):
+    if not LdapPerson.belongs_to_restricted_group(user.username):
         logging.warning("The user belongs to a group that is not allowed to change the password")
         messages.warning(request, _('user_not_valid_for_this_action'))
         return render(request, 'password_change.html')
@@ -75,14 +75,14 @@ def password_change_complete(request):
         try:
             new_password = form.cleaned_data['password1']
 
+            logging.warning("changing password for ldap user ...")
+            LdapPerson.change_password(user.username, password, new_password)
+
             logging.warning("changing password for django user ...")
             user.set_password(new_password)
             user.save()
-
-            logging.warning("changing password for ldap user ...")
-            LdapPerson.change_password_per_user(user.username, password, new_password)
-        
             logout(request)
+            
             return render(request, 'password_change_complete.html')
         except Exception, e:
             logging.warning("ERROR, password not changed. {}".format(e))
