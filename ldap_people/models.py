@@ -379,6 +379,25 @@ class LdapPerson(models.Model):
         upd_person = []
         new_office = None
         curr_person = LdapPerson.get_by_uid(self.username)
+        
+        if self.name is not None:
+            if self.name:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'givenName',
+                                    str(self.name)))
+            else:
+                upd_person.append(( ldap.MOD_DELETE,
+                                    'givenName',None))
+                
+        if self.surname is not None:
+            if self.surname:
+                upd_person.append(( ldap.MOD_REPLACE,
+                                    'sn',
+                                    str(self.surname)))
+            else:
+                upd_person.append(( ldap.MOD_DELETE,
+                                    'sn',None))
+        
         if self.telephone_number is not None:
             if self.telephone_number:
                 upd_person.append(( ldap.MOD_REPLACE,
