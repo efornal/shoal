@@ -4,7 +4,7 @@ cffi==1.12.1
 chardet==3.0.4
 configparser==3.7.3
 cryptography==2.5
-Django==1.11.20
+Django==1.11.23
 django-auth-ldap==1.7.0
 django-bootstrap-themes==3.3.6
 django-bootstrap-ui==0.5.1
