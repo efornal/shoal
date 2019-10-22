@@ -25,7 +25,7 @@ idna==2.8
 ipaddress==1.0.22
 keyring==18.0.0
 keyrings.alt==3.1.1
-Pillow==5.4.1
+Pillow==6.2.0
 psycopg2==2.7.7
 psycopg2-binary==2.7.7
 py-zabbix==1.1.5
