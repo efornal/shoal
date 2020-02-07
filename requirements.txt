@@ -4,7 +4,7 @@ cffi==1.12.1
 chardet==3.0.4
 configparser==3.7.3
 cryptography==2.5
-Django==1.11.20
+Django==1.11.28
 django-auth-ldap==1.7.0
 django-bootstrap-themes==3.3.6
 django-bootstrap-ui==0.5.1
@@ -25,7 +25,7 @@ idna==2.8
 ipaddress==1.0.22
 keyring==18.0.0
 keyrings.alt==3.1.1
-Pillow==5.4.1
+Pillow==6.2.2
 psycopg2==2.7.7
 psycopg2-binary==2.7.7
 py-zabbix==1.1.5
@@ -39,12 +39,13 @@ PySocks==1.6.8
 python-apt==1.4.0b3
 python-ldap==3.1.0
 python-redmine==2.2.0
-pytz==2018.9
+pytz==2019.3
 pyxdg==0.26
-PyYAML==3.13
+PyYAML==5.3
 reportlab==3.5.13
 requests==2.21.0
 SecretStorage==2.3.1
 six==1.12.0
 typing==3.6.6
-urllib3==1.24.1
+urllib3==1.25.8
+wheel==0.29.0
