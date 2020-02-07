@@ -21,5 +21,5 @@ sudo apt-get install libgirepository1.0-dev
 
 ### Python lib Installation
 ```bash
-pip install -r requieremens.txt
+pip install -r requirements.txt
 ```
