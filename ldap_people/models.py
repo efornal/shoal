@@ -328,10 +328,9 @@ class LdapPerson(models.Model):
         except Exception as e:
             logging.error(e)
             return False
-    
         
     @classmethod
-    def change_password( cls, ldap_username, new_password ):
+    def update_password( cls, ldap_username, new_password ):
         new_password = str(cls.make_secret(new_password))
         # new password is a raw password
         try:
@@ -356,7 +355,7 @@ class LdapPerson(models.Model):
 
         # new password is a raw password
         try:
-            logging.warning( "Updating ldap user password for {} ...\n".format(ldap_username))
+            logging.warning( "Changing ldap user password for {} ...\n".format(ldap_username))
             
             if not cls.belongs_to_restricted_group(ldap_username):
                 raise Exception(_('user_not_valid_for_this_action'))

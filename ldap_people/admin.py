@@ -143,7 +143,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
                 new_password = form.cleaned_data['password1']
 
                 logging.warning("changing password for ldap user ...")
-                LdapPerson.change_password(id, new_password)
+                LdapPerson.update_password(id, new_password)
 
                 if not user is None:
                     logging.warning("changing password for django user ...")
