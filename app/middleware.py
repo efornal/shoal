@@ -11,4 +11,4 @@ class ForceLangMiddleware:
            and settings.LANGUAGE_CODE:
             translation.activate(settings.LANGUAGE_CODE)
             request.session[translation.LANGUAGE_SESSION_KEY] = settings.LANGUAGE_CODE
-            logging.warning("Activated default lang '{}'".format(settings.LANGUAGE_CODE))
+            logging.info("Activated default lang '{}'".format(settings.LANGUAGE_CODE))

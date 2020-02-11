@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 from . import views
 from django.contrib.auth import views as auth_views
 from password_change import urls as change_password_urls
+from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^', include(change_password_urls)),
@@ -22,5 +23,6 @@ urlpatterns = [
     url(r'^save/$',views.save, name='save'),
     url(r'^en/$', views.index, name='index'),
     url(r'^lang/(?P<lang>\w+)/$', views.set_language, name='set_language'),
+    url(r'^favicon\.ico$',RedirectView.as_view(url='/static/images/favicon.ico')),
     url(r'^$', views.index, name='index'),
 ]
