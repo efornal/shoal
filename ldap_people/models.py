@@ -591,6 +591,7 @@ class LdapPerson(models.Model):
         condition += "(numdoc=*{}*)".format( text )
         condition += "(physicalDeliveryOfficeName=*{}*)".format( text )
         condition += "(telephoneNumber=*{}*)".format( text )
+        condition += "(businessCategory=*{}*)".format( text )
         condition = "(|{})".format( condition )
         condition = cls.compose_ldap_filter(condition)
         attributes = [str(x) for x in cls.search_ldap_attrs()]
