@@ -584,14 +584,15 @@ class LdapPerson(models.Model):
     
     @classmethod
     def search(cls, text):
-        condition = "(uid=*{}*)".format( text )
-        condition += "(cn=*{}*)".format( text )
-        condition += "(sn=*{}*)".format( text )
-        condition += "(givenName=*{}*)".format( text )
-        condition += "(numdoc=*{}*)".format( text )
-        condition += "(physicalDeliveryOfficeName=*{}*)".format( text )
-        condition += "(telephoneNumber=*{}*)".format( text )
-        condition += "(businessCategory=*{}*)".format( text )
+        escape_text = ldap.filter.escape_filter_chars(text)
+        condition = "(uid=*{}*)".format( escape_text )
+        condition += "(cn=*{}*)".format( escape_text )
+        condition += "(sn=*{}*)".format( escape_text )
+        condition += "(givenName=*{}*)".format( escape_text )
+        condition += "(numdoc=*{}*)".format( escape_text )
+        condition += "(physicalDeliveryOfficeName=*{}*)".format( escape_text )
+        condition += "(telephoneNumber=*{}*)".format( escape_text )
+        condition += "(businessCategory=*{}*)".format( escape_text )
         condition = "(|{})".format( condition )
         condition = cls.compose_ldap_filter(condition)
         attributes = [str(x) for x in cls.search_ldap_attrs()]
@@ -607,7 +608,7 @@ class LdapPerson(models.Model):
     
     @classmethod
     def search_by_office(cls, office_name):
-        condition = "(physicalDeliveryOfficeName=*{}*)".format( office_name )
+        condition = "(physicalDeliveryOfficeName=*{}*)".format( ldap.filter.escape_filter_chars(office_name) )
         condition = "(|{})".format( condition )
         condition = cls.compose_ldap_filter(condition)
         attributes = [str(x) for x in cls.search_ldap_attrs()]
