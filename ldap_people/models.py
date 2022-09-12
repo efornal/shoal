@@ -241,7 +241,7 @@ class LdapPerson(models.Model):
     @classmethod
     def ldap_size_limit(self):
         if hasattr(settings, 'LDAP_SIZE_LIMIT'):
-            return settings.LDAP_SIZE_LIMIT
+            return int(settings.LDAP_SIZE_LIMIT)
         return 100
 
 
@@ -1125,7 +1125,6 @@ class LdapOffice(models.Model):
             people = LdapPerson.by_offices()
             filter_groups = getattr(settings, "LDAP_FILTER_MEMBERS_OUT_OF_GROUPS", [])
             people = LdapPerson.filter_members_out_of_groups(people,filter_groups)
-            
             for person in people:
                 if not (person.office is None) and not (person.telephone_number is None):
                     curr_phone = offices.get('{}'.format(person.office))
