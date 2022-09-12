@@ -18,7 +18,8 @@ from django.db import models
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+#from django.core.urlresolvers import reverse
+from django.urls import reverse
 from ldap_people.forms import LdapPersonAdminForm
 import logging
 import sys
@@ -152,7 +153,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
                 
                 messages.info(request, _('password_modified_successfully'))
                 return HttpResponseRedirect(reverse('admin:ldap_people_ldapperson_change', args=[id]))
-            except Exception, e:
+            except Exception as e:
                 logging.warning(e)
                 messages.info(request, e)
                 return render(request, 'admin/ldapperson/update_password.html', context)
@@ -215,7 +216,7 @@ class LdapPersonAdmin(admin.ModelAdmin):
 
             super(LdapPersonAdmin, self).save_model(request, obj, form, change)
             
-        except Exception, e:
+        except Exception as e:
             for msg in e:
                 messages.warning(request, msg)
         

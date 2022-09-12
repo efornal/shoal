@@ -84,7 +84,7 @@ def password_change_complete(request):
             logout(request)
             
             return render(request, 'password_change_complete.html')
-        except Exception, e:
+        except Exception as e:
             logging.warning("ERROR, password not changed. {}".format(e))
             return render(request, 'password_change_error.html')
     else:

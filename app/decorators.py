@@ -6,8 +6,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.http import HttpResponse
 from django.conf import settings
-from http_auth import basic_http_authentication
-
+from app.http_auth import basic_http_authentication
 
 def ldap_user_required(view):
 

@@ -11,9 +11,10 @@ from django.utils import translation
 from django.contrib import messages
 import logging
 from django.conf import settings
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+#from importlib import reload
+#import sys
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 import re
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User

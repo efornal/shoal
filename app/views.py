@@ -17,9 +17,9 @@ from ldap_people.forms import ChangeHostNameForm
 from app.decorators import ldap_user_required
 from django.conf import settings
 from django.http import HttpResponse
-from decorators import validate_basic_http_header
-from decorators import validate_basic_http_authentication
-from decorators import validate_https_request
+from app.decorators import validate_basic_http_header
+from app.decorators import validate_basic_http_authentication
+from app.decorators import validate_https_request
 
 def set_language(request, lang='es'):
     if 'lang' in request.GET:

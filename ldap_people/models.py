@@ -20,7 +20,7 @@ class LdapConn():
             connection = ldap.initialize( LdapConn.ldap_server() )
             connection.simple_bind_s()
             return connection
-        except ldap.LDAPError, e:
+        except ldap.LDAPError as e:
             logging.error("Could not connect to the Ldap server: '{}'" \
                           .format(LdapConn.ldap_server()))
             logging.error(e)
@@ -28,13 +28,14 @@ class LdapConn():
 
     @classmethod
     def new_auth(cls, username, password):
+        # , bytes_mode=False
         try:
-            connection = ldap.initialize( LdapConn.ldap_server() )
+            connection = ldap.initialize( LdapConn.ldap_server())
             connection.simple_bind_s( "cn={},{}".format( str(username), \
                                                          str(LdapConn.ldap_dn())),  \
                                       str(password) )
             return connection
-        except ldap.LDAPError, e:
+        except ldap.LDAPError as e:
             logging.error("Could not connect to the Ldap server: '{}'" \
                           .format(LdapConn.ldap_server()))
             logging.error(e)
@@ -50,7 +51,7 @@ class LdapConn():
                                                str(LdapConn.ldap_dn())),
                                       str(password) )
             return connection
-        except ldap.LDAPError, e:
+        except ldap.LDAPError as e:
             logging.error("Could not connect to the Ldap server: '{}'" \
                           .format(LdapConn.ldap_server()))
             logging.error(e)
@@ -95,6 +96,7 @@ class LdapConn():
     def ldap_search(cls, dn, condition, attributes=[], size_limit=None ):
         retrieve_attributes = [str(x) for x in attributes]
         ldap_result = []
+        logging.warning("dn: {},{},{}".format(dn,condition,retrieve_attributes))
         try:
             if size_limit is None:
                 ldap_result = LdapConn.new().search_ext_s(
@@ -109,15 +111,14 @@ class LdapConn():
                     condition,
                     retrieve_attributes,
                     sizelimit = size_limit)
-        except ldap.TIMEOUT, e:
+        except ldap.TIMEOUT as e:
             logging.error( "Timeout exception {} \n".format(e))
             return None
-        except ldap.SIZELIMIT_EXCEEDED, e:
+        except ldap.SIZELIMIT_EXCEEDED as e:
             logging.error( "Size limit exceeded exception {} \n".format(e))
             return None
-        except ldap.LDAPError, e:
+        except ldap.LDAPError as e:
             logging.error( e )
-
         return ldap_result
 
     
@@ -506,7 +507,7 @@ class LdapPerson(models.Model):
             try:
                 logging.warning("updating.. {}".format(upd))
                 LdapConn.new().modify_s(udn, [upd])                
-            except ldap.LDAPError, e:
+            except ldap.LDAPError as e:
                 logging.error( e )
 
         try:
@@ -520,9 +521,9 @@ class LdapPerson(models.Model):
                (curr_person.group_id != self.group_id): # update members!
                 logging.warning('Removing user as a member from the previous parent group..')
                 LdapGroup.remove_member_of_group( self.username, curr_person.group_id )
-        except ValidationError, e:
+        except ValidationError as e:
             raise ValidationError( e )
-        except ldap.LDAPError, e:
+        except ldap.LDAPError as e:
             logging.error( e )
 
 
@@ -541,7 +542,7 @@ class LdapPerson(models.Model):
         try:
             result = cls.ldap_search( condition, attributes, LdapPerson.ldap_size_limit() )
             ldap_result = cls.ldap_to_obj( result )
-        except Exception, e:
+        except Exception as e:
             logging.error( e )
 
         return ldap_result
@@ -557,7 +558,7 @@ class LdapPerson(models.Model):
         try:
             result = cls.ldap_search(condition,attributes)
             ldap_result = cls.ldap_to_obj(result)
-        except Exception, e:
+        except Exception as e:
             logging.error( e )
 
         return ldap_result
@@ -600,7 +601,7 @@ class LdapPerson(models.Model):
         try:
             result = cls.ldap_search( condition, attributes, cls.ldap_size_limit() )
             ldap_result = cls.ldap_to_obj( result )
-        except Exception, e:
+        except Exception as e:
             logging.error( e )
 
         return ldap_result
@@ -617,7 +618,7 @@ class LdapPerson(models.Model):
         try:
             result = cls.ldap_search( condition, attributes, LdapPerson.ldap_size_limit() )
             ldap_result = cls.ldap_to_obj( result )
-        except Exception, e:
+        except Exception as e:
             logging.error( e )
 
         return ldap_result
@@ -632,7 +633,7 @@ class LdapPerson(models.Model):
         try:
             result = cls.ldap_search( condition, attributes)
             ldap_result = cls.ldap_to_obj( result )
-        except Exception, e:
+        except Exception as e:
             logging.error( e )
 
         return ldap_result
@@ -651,7 +652,7 @@ class LdapPerson(models.Model):
                 ldap_condition,
                 retrieve_attributes)
             ldap_result = LdapPerson.ldap_to_obj(ldap_result)[0]
-        except ldap.LDAPError, e:
+        except ldap.LDAPError as e:
             logging.error( e )
 
         return ldap_result
@@ -675,7 +676,7 @@ class LdapPerson(models.Model):
                 ldap_condition,
                 retrieve_attributes)
             ldap_result = LdapPerson.ldap_to_obj(ldap_result)[0]
-        except ldap.LDAPError, e:
+        except ldap.LDAPError as e:
             logging.error( e )
 
         return ldap_result
@@ -712,12 +713,12 @@ class LdapPerson(models.Model):
                 elif 'givenName' in entry and entry['givenName'][0]:
                     person.fullname = entry['givenName'][0]
 
-            if 'mail' in entry and len(entry['mail']) > 0:
-                for mail in entry['mail']:
-                    if ldap_domain_mail and ldap_domain_mail in mail:
-                        person.email = mail
-                    else:
-                        person.alternative_email = mail
+            # if 'mail' in entry and len(entry['mail']) > 0:
+            #     for mail in entry['mail']:
+            #         if ldap_domain_mail and ldap_domain_mail in mail:
+            #             person.email = mail
+            #         else:
+            #             person.alternative_email = mail
                 
             if 'givenName' in entry and entry['givenName'][0]:
                 person.name = "%s" % entry['givenName'][0]
@@ -740,10 +741,11 @@ class LdapPerson(models.Model):
                 
             if 'sn' in entry and entry['sn'][0]:                
                 person.surname = entry['sn'][0]
-
+            logging.error("Email:{}".format(entry['mail']))
             if 'physicalDeliveryOfficeName' in entry \
-               and entry['physicalDeliveryOfficeName'][0]:                
+               and entry['physicalDeliveryOfficeName'][0]:
                 person.office = entry['physicalDeliveryOfficeName'][0]
+                #person.office = (entry['physicalDeliveryOfficeName'][0]).decode('UTF-8')  
                 
             if 'telephoneNumber' in entry and entry['telephoneNumber'][0]:                
                 person.telephone_number = entry['telephoneNumber'][0]
@@ -770,7 +772,7 @@ class LdapPerson(models.Model):
                         x = item.split(':',1)
                         attr_info[x[0]] = x[1]
                     person.info = attr_info
-                except Exception, e:
+                except Exception as e:
                     logging.error( e )
                     logging.error( "incorrect ldap info attribute format" )
             cn_found.append(person)
@@ -792,7 +794,7 @@ class LdapPerson(models.Model):
                    and entry[attribute_name][0] \
                    and not (entry[attribute_name][0] in available_values):
                     available_values.append(entry[attribute_name][0])
-        except Exception, e:
+        except Exception as e:
             logging.error( e )
 
         return available_values
@@ -877,7 +879,7 @@ class LdapGroup(models.Model):
         try:
             result = cls.ldap_search( condition, attributes)
             ldap_result = cls.ldap_to_obj( result )
-        except Exception, e:
+        except Exception as e:
             logging.error( e )
         
         return ldap_result
@@ -892,7 +894,7 @@ class LdapGroup(models.Model):
             result = cls.ldap_search( condition, attributes)
             for dn,entry in result:
                 members = entry['memberUid']
-        except ldap.LDAPError, e:
+        except ldap.LDAPError as e:
             logging.error( e )
         
         return members
@@ -909,7 +911,7 @@ class LdapGroup(models.Model):
         try:
             result = cls.ldap_search( condition, attributes)
             ldap_result = cls.ldap_to_obj( result )
-        except Exception, e:
+        except Exception as e:
             logging.error( e )
 
         return ldap_result
@@ -944,7 +946,7 @@ class LdapGroup(models.Model):
             LdapConn.new().modify_s(gdn, update_group)
             logging.warning("Added new member {} in ldap group: {} \n" \
                             .format(ldap_username,group_name))
-        except ldap.LDAPError, e:
+        except ldap.LDAPError as e:
             logging.error( "Error adding member {} in ldap group: {} \n" \
                            .format(ldap_username,group_name))
             logging.error( e )
@@ -956,7 +958,7 @@ class LdapGroup(models.Model):
         for group_id in group_ids:
             try:
                 LdapGroup.add_member_to(ldap_username,group_id)
-            except Exception, e:
+            except Exception as e:
                 errors.append(e)
         if errors:
             raise ValidationError(errors)  
@@ -968,7 +970,7 @@ class LdapGroup(models.Model):
         for group_id in group_ids:
             try:
                 LdapGroup.remove_member_of_group(ldap_username,group_id)
-            except Exception, e:
+            except Exception as e:
                 errors.append(e)
         if errors:
             raise ValidationError(errors)  
@@ -1008,7 +1010,7 @@ class LdapGroup(models.Model):
             LdapConn.new().modify_s(gdn,delete_member)
             logging.warning("Removed member {} of group {} \n" \
                          .format(ldap_username,group_name))
-        except ldap.LDAPError, e:
+        except ldap.LDAPError as e:
             logging.error( "Error deleting member {} of group: {} \n" \
                            .format(ldap_username,group_name))
             logging.error( e )
@@ -1022,7 +1024,7 @@ class LdapGroup(models.Model):
         try:
             LdapGroup.add_member_in_groups( ldap_username, add_groups )
             LdapGroup.remove_member_of_groups (ldap_username, remove_groups )
-        except Exception, e:
+        except Exception as e:
             raise ValidationError(e)  
 
 
@@ -1112,7 +1114,7 @@ class LdapOffice(models.Model):
         try:
             result = LdapPerson.ldap_search( condition, attributes)
             ldap_result = cls.ldap_to_obj( result )
-        except Exception, e:
+        except Exception as e:
             logging.error( e )
 
         return ldap_result
@@ -1124,6 +1126,7 @@ class LdapOffice(models.Model):
         try:
             people = LdapPerson.by_offices()
             filter_groups = getattr(settings, "LDAP_FILTER_MEMBERS_OUT_OF_GROUPS", [])
+            logging.error("people: {}".format(people))
             people = LdapPerson.filter_members_out_of_groups(people,filter_groups)
             
             for person in people:
@@ -1139,7 +1142,7 @@ class LdapOffice(models.Model):
                     offices.update({'{}'.format(person.office):'{}'.format(curr_phone)})
 
             return OrderedDict(sorted(offices.items(), key=lambda t: t[0]))
-        except Exception, e:
+        except Exception as e:
             logging.error(e)
 
         return offices
