@@ -17,7 +17,7 @@ services:
     image: shoal:latest
     command: python manage.py runserver 0.0.0.0:8000
     env_file:
-      - .env
+      - .env.dev
     volumes:
       - .:/srv/shoal
     ports:
