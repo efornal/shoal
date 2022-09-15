@@ -1,4 +1,4 @@
-x1# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
 from django.db import models
@@ -275,7 +275,7 @@ class LdapPerson(models.Model):
         
     @classmethod
     def ldap_udn_for( cls, ldap_user_name ):
-            dn = "uid=%s,%s" % ( ldap_user_name, LdapConn.ldap_dn_users() )
+        dn = "uid=%s,%s" % ( ldap_user_name, LdapConn.ldap_dn_users() )
         return dn
 
     @classmethod
@@ -659,7 +659,7 @@ class LdapPerson(models.Model):
     @classmethod
     def get_auth_by_uid(cls, uid):
         """
-        Retorna PersonaLdap con datos de authenticación
+        Retorna PersonaLdap con datos de authenticacion
         Usado luego para autenticar las peticiones a Ldap por usuario
         """
         ldap_condition = "(uid={})".format( str(uid) )
