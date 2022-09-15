@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+x1# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
 from django.db import models
@@ -19,6 +19,7 @@ class LdapConn():
         try:
             connection = ldap.initialize( LdapConn.ldap_server() )
             connection.simple_bind_s()
+            logging.info("Connected to the Ldap server: '{}'".format(LdapConn.ldap_server()))
             return connection
         except ldap.LDAPError, e:
             logging.error("Could not connect to the Ldap server: '{}'" \
@@ -33,10 +34,11 @@ class LdapConn():
             connection.simple_bind_s( "cn={},{}".format( str(username), \
                                                          str(LdapConn.ldap_dn())),  \
                                       str(password) )
+            logging.info("Connected to the Ldap with 'cn=user' and dn: '{}'".format(LdapConn.ldap_dn()))
             return connection
         except ldap.LDAPError, e:
-            logging.error("Could not connect to the Ldap server: '{}'" \
-                          .format(LdapConn.ldap_server()))
+            logging.error("Could not connect to the Ldap server: '{}', with dn: '{}'" \
+                          .format(LdapConn.ldap_server(),LdapConn.ldap_dn()))
             logging.error(e)
             raise
 
@@ -44,11 +46,10 @@ class LdapConn():
     def new_user_auth(cls, username, password):
         try:
             connection = ldap.initialize( LdapConn.ldap_server() )
-            connection.simple_bind_s( "uid={},ou={},{}" \
-                                      .format( str(username),
-                                               str(LdapConn.ldap_people()),
-                                               str(LdapConn.ldap_dn())),
+            connection.simple_bind_s( "uid={},{}" \
+                                      .format( str(username), str(LdapConn.ldap_dn_users())),
                                       str(password) )
+            logging.info("Connected to the Ldap with 'uid=user' and dn: '{}'".format(LdapConn.ldap_dn_users()))
             return connection
         except ldap.LDAPError, e:
             logging.error("Could not connect to the Ldap server: '{}'" \
@@ -62,14 +63,20 @@ class LdapConn():
 
     @classmethod
     def ldap_dn(self):
-        if hasattr(settings, 'LDAP_DN'):
+        if hasattr(settings, 'LDAP_DN') and len(settings.LDAP_DN) > 0:
             return settings.LDAP_DN
         return None
 
     @classmethod
-    def ldap_people(self):
-        if hasattr(settings, 'LDAP_PEOPLE'):
-            return settings.LDAP_PEOPLE
+    def ldap_dn_users(self):
+        if hasattr(settings, 'LDAP_DN_USERS') and len(settings.LDAP_DN_USERS) > 0:
+            return settings.LDAP_DN_USERS
+        return None
+    
+    @classmethod
+    def ldap_dn_group(self):
+        if hasattr(settings, 'LDAP_DN_GROUP') and len(settings.LDAP_DN_GROUP) > 0:
+            return settings.LDAP_DN_GROUP
         return None
 
     @classmethod
@@ -95,6 +102,7 @@ class LdapConn():
     def ldap_search(cls, dn, condition, attributes=[], size_limit=None ):
         retrieve_attributes = [str(x) for x in attributes]
         ldap_result = []
+        logging.warning("SEARCH, DN = {}, condition: {}".format(dn,condition))
         try:
             if size_limit is None:
                 ldap_result = LdapConn.new().search_ext_s(
@@ -244,13 +252,6 @@ class LdapPerson(models.Model):
             return int(settings.LDAP_SIZE_LIMIT)
         return 100
 
-
-    @classmethod
-    def ldap_ou(self):
-        if hasattr(settings, 'LDAP_PEOPLE'):
-            return settings.LDAP_PEOPLE
-        return None
-
     
     @classmethod
     def ldap_attrs(cls):
@@ -274,9 +275,8 @@ class LdapPerson(models.Model):
         
     @classmethod
     def ldap_udn_for( cls, ldap_user_name ):
-        return "uid=%s,ou=%s,%s" % ( ldap_user_name,
-                                     LdapPerson.ldap_ou(),
-                                     LdapConn.ldap_dn())
+            dn = "uid=%s,%s" % ( ldap_user_name, LdapConn.ldap_dn_users() )
+        return dn
 
     @classmethod
     def compose_ldap_filter ( cls, extra_conditions="",operator='&' ):
@@ -528,8 +528,7 @@ class LdapPerson(models.Model):
 
     @classmethod
     def ldap_search(cls, condition, attributes=[], size_limit=None ):
-        dn = "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn())
-        return LdapConn.ldap_search( dn, condition, attributes, size_limit )
+        return LdapConn.ldap_search( LdapConn.ldap_dn_users(), condition, attributes, size_limit )
 
     
     @classmethod
@@ -646,7 +645,7 @@ class LdapPerson(models.Model):
         ldap_result = None
         try:
             ldap_result = LdapConn.new().search_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
+                LdapConn.ldap_dn_users(),
                 ldap.SCOPE_SUBTREE,
                 ldap_condition,
                 retrieve_attributes)
@@ -670,7 +669,7 @@ class LdapPerson(models.Model):
         ldap_result = None
         try:
             ldap_result = LdapConn.new().search_s(
-                "ou={},{}".format(LdapPerson.ldap_ou(),LdapConn.ldap_dn()),
+                LdapConn.ldap_dn_users(),
                 ldap.SCOPE_SUBTREE,
                 ldap_condition,
                 retrieve_attributes)
@@ -829,11 +828,11 @@ class LdapGroup(models.Model):
         return self.name
 
 
-    @classmethod
-    def ldap_ou(self):
-        if hasattr(settings, 'LDAP_GROUP'):
-            return settings.LDAP_GROUP
-        return None
+    # @classmethod
+    # def ldap_ou(self):
+    #     if hasattr(settings, 'LDAP_GROUP_APP') and len(settings.LDAP_GROUP_APP) > 0:
+    #         return settings.LDAP_GROUP_APP
+    #     return None
 
     @classmethod
     def ldap_min_gid_value(self):
@@ -863,8 +862,7 @@ class LdapGroup(models.Model):
 
     @classmethod
     def ldap_search(cls, condition, attributes=[], size_limit=None ):
-        dn = "ou={},{}".format(LdapGroup.ldap_ou(), LdapConn.ldap_dn())
-        return LdapConn.ldap_search( dn, condition, attributes, size_limit )
+        return LdapConn.ldap_search( LdapConn.ldap_dn_group(), condition, attributes, size_limit )
 
     
     @classmethod
@@ -938,9 +936,8 @@ class LdapGroup(models.Model):
         
         try:
             group_name = LdapGroup.cn_group_by_gid(group_id)
-            gdn = "cn={},ou={},{}".format ( group_name,
-                                            LdapGroup.ldap_ou(),
-                                            LdapConn.ldap_dn() )
+            gdn = "cn={},{}".format ( group_name,
+                                      LdapConn.ldap_dn_group() )
             LdapConn.new().modify_s(gdn, update_group)
             logging.warning("Added new member {} in ldap group: {} \n" \
                             .format(ldap_username,group_name))
@@ -1002,9 +999,8 @@ class LdapGroup(models.Model):
             
         delete_member = [(ldap.MOD_DELETE , 'memberUid', ldap_username )]
         try:
-            gdn = "cn={},ou={},{}".format( group_name,
-                                           LdapGroup.ldap_ou(),
-                                           LdapConn.ldap_dn() )
+            gdn = "cn={},{}".format( group_name,
+                                     LdapConn.ldap_dn_group() )
             LdapConn.new().modify_s(gdn,delete_member)
             logging.warning("Removed member {} of group {} \n" \
                          .format(ldap_username,group_name))
@@ -1031,11 +1027,10 @@ class LdapGroup(models.Model):
     def cn_group_by_gid(cls, gid):
         ldap_condition = "(gidNumber={})".format(str(gid))
         cn_found = None
-        r = LdapConn.new().search_s("ou={},{}".format(LdapGroup.ldap_ou(),
-                                                      LdapConn.ldap_dn()),
-                                    ldap.SCOPE_SUBTREE,
-                                    ldap_condition,
-                                    [str("cn")])
+        r = LdapConn.new().search_s( LdapConn.ldap_dn_group(),
+                                     ldap.SCOPE_SUBTREE,
+                                     ldap_condition,
+                                     [str("cn")])
         for dn,entry in r:
             if 'cn' in entry and entry['cn'][0]:
                 cn_found = entry['cn'][0]
