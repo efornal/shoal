@@ -108,7 +108,7 @@ class LdapConn():
     def ldap_search(cls, dn, condition, attributes=[], size_limit=None ):
         retrieve_attributes = [str(x) for x in attributes]
         ldap_result = []
-        logging.warning("SEARCH, DN = {}, condition: {}".format(dn,condition))
+        logging.info("Ldap search with dn: {}, condition: {}".format(dn,condition))
         try:
             if size_limit is None:
                 ldap_result = LdapConn.new().search_ext_s(
@@ -620,7 +620,6 @@ class LdapPerson(models.Model):
         ldap_result = []
 
         try:
-            #result = cls.ldap_search( condition, attributes, LdapPerson.ldap_size_limit() )
             result = LdapConn.new().search_s(
                 LdapConn.ldap_dn_users_search(),
                 ldap.SCOPE_SUBTREE,
@@ -640,7 +639,6 @@ class LdapPerson(models.Model):
         attributes = [str(x) for x in  LdapPerson.search_ldap_attrs()]
         ldap_result = []
         try:
-#            result = cls.ldap_search( condition, attributes)
             result = LdapConn.new().search_s(
                 LdapConn.ldap_dn_users_search(),
                 ldap.SCOPE_SUBTREE,
@@ -839,17 +837,9 @@ class LdapGroup(models.Model):
         verbose_name = _('Group')
         verbose_name_plural = _('Groups')
         managed = False
-
         
     def __unicode__(self):
         return self.name
-
-
-    # @classmethod
-    # def ldap_ou(self):
-    #     if hasattr(settings, 'LDAP_GROUP_APP') and len(settings.LDAP_GROUP_APP) > 0:
-    #         return settings.LDAP_GROUP_APP
-    #     return None
 
     @classmethod
     def ldap_min_gid_value(self):
