@@ -32,13 +32,13 @@ class LdapConn():
         try:
             connection = ldap.initialize( LdapConn.ldap_server() )
             connection.simple_bind_s( "cn={},{}".format( str(username), \
-                                                         str(LdapConn.ldap_dn())),  \
+                                                         str(LdapConn.ldap_bind_dn())),  \
                                       str(password) )
-            logging.info("Connected to the Ldap with 'cn=user' and dn: '{}'".format(LdapConn.ldap_dn()))
+            logging.info("Connected to the Ldap with 'cn=user' and dn: '{}'".format(LdapConn.ldap_bind_dn()))
             return connection
         except ldap.LDAPError, e:
             logging.error("Could not connect to the Ldap server: '{}', with dn: '{}'" \
-                          .format(LdapConn.ldap_server(),LdapConn.ldap_dn()))
+                          .format(LdapConn.ldap_server(),LdapConn.ldap_bind_dn()))
             logging.error(e)
             raise
 
@@ -62,21 +62,27 @@ class LdapConn():
         return LdapConn.new_auth( LdapConn.ldap_username(), LdapConn.ldap_password() )
 
     @classmethod
-    def ldap_dn(self):
-        if hasattr(settings, 'LDAP_DN') and len(settings.LDAP_DN) > 0:
-            return settings.LDAP_DN
+    def ldap_bind_dn(self):
+        if hasattr(settings, 'LDAP_BIND_DN'):
+            return settings.LDAP_BIND_DN
         return None
 
     @classmethod
     def ldap_dn_users(self):
-        if hasattr(settings, 'LDAP_DN_USERS') and len(settings.LDAP_DN_USERS) > 0:
+        if hasattr(settings, 'LDAP_DN_AUTH_USERS'):
+            return settings.LDAP_DN_AUTH_USERS
+        return None
+
+    @classmethod
+    def ldap_dn_users_search(self):
+        if hasattr(settings, 'LDAP_DN_USERS'):
             return settings.LDAP_DN_USERS
         return None
     
     @classmethod
     def ldap_dn_group(self):
-        if hasattr(settings, 'LDAP_DN_GROUP') and len(settings.LDAP_DN_GROUP) > 0:
-            return settings.LDAP_DN_GROUP
+        if hasattr(settings, 'LDAP_DN_AUTH_GROUP'):
+            return settings.LDAP_DN_AUTH_GROUP
         return None
 
     @classmethod
@@ -87,14 +93,14 @@ class LdapConn():
 
     @classmethod
     def ldap_password(self):
-        if hasattr(settings, 'LDAP_PASSWORD'):
-            return settings.LDAP_PASSWORD
+        if hasattr(settings, 'LDAP_BIND_PASSWORD'):
+            return settings.LDAP_BIND_PASSWORD
         return None
 
     @classmethod
     def ldap_username(self):
-        if hasattr(settings, 'LDAP_USERNAME'):
-            return settings.LDAP_USERNAME
+        if hasattr(settings, 'LDAP_BIND_USERNAME'):
+            return settings.LDAP_BIND_USERNAME
         return None
 
     
@@ -614,7 +620,12 @@ class LdapPerson(models.Model):
         ldap_result = []
 
         try:
-            result = cls.ldap_search( condition, attributes, LdapPerson.ldap_size_limit() )
+            #result = cls.ldap_search( condition, attributes, LdapPerson.ldap_size_limit() )
+            result = LdapConn.new().search_s(
+                LdapConn.ldap_dn_users_search(),
+                ldap.SCOPE_SUBTREE,
+                condition,
+                attributes)
             ldap_result = cls.ldap_to_obj( result )
         except Exception, e:
             logging.error( e )
@@ -629,7 +640,12 @@ class LdapPerson(models.Model):
         attributes = [str(x) for x in  LdapPerson.search_ldap_attrs()]
         ldap_result = []
         try:
-            result = cls.ldap_search( condition, attributes)
+#            result = cls.ldap_search( condition, attributes)
+            result = LdapConn.new().search_s(
+                LdapConn.ldap_dn_users_search(),
+                ldap.SCOPE_SUBTREE,
+                condition,
+                attributes)
             ldap_result = cls.ldap_to_obj( result )
         except Exception, e:
             logging.error( e )
@@ -644,12 +660,13 @@ class LdapPerson(models.Model):
         retrieve_attributes = [str(x) for x in LdapPerson.ldap_attrs()]
         ldap_result = None
         try:
-            ldap_result = LdapConn.new().search_s(
+            ldap_search = LdapConn.new().search_s(
                 LdapConn.ldap_dn_users(),
                 ldap.SCOPE_SUBTREE,
                 ldap_condition,
                 retrieve_attributes)
-            ldap_result = LdapPerson.ldap_to_obj(ldap_result)[0]
+            if len(ldap_search) > 0:
+                ldap_result = LdapPerson.ldap_to_obj(ldap_search)[0]
         except ldap.LDAPError, e:
             logging.error( e )
 
