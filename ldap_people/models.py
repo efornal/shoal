@@ -603,7 +603,10 @@ class LdapPerson(models.Model):
         attributes = [str(x) for x in cls.search_ldap_attrs()]
         ldap_result = []
         try:
-            result = cls.ldap_search( condition, attributes, cls.ldap_size_limit() )
+            result = LdapConn.ldap_search( LdapConn.ldap_dn_users_search(),
+                                           condition,
+                                           attributes,
+                                           LdapPerson.ldap_size_limit() )
             ldap_result = cls.ldap_to_obj( result )
         except Exception, e:
             logging.error( e )
