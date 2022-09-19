@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
     volumes:
-      - pgdata_shoal:/var/lib/postgresql/data
+      - shoal_pgdata:/var/lib/postgresql/data
       - ./db:/docker-entrypoint-initdb.d
   
   shoal:
@@ -26,5 +26,5 @@ services:
       - db
 
 volumes:
-  pgdata_shoal:
+  shoal_pgdata:
     external: true

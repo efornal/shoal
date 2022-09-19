@@ -38,7 +38,7 @@ docker build -t shoal:latest .
 * Volume creation
 
 ```bash
-docker volume create pgdata
+docker volume create shoal_pgdata
 ```
 Note that for this local development environment, the app directory is mounted inside the image. While for the database, the volume is previously created and used as an external volume.
 
