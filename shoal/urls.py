@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^internos/admin/', include(admin.site.urls)),
     url(r'^internos/', include('app.urls')),
 ]
 # urlpatterns += i18n_patterns(
