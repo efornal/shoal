@@ -37,8 +37,6 @@ RUN apt-get clean && apt-get autoremove
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
-RUN mkdir -p /custom_statics
-
 
 
 CMD ["gunicorn", "shoal.wsgi:application", "--bind",  ":8000"]
