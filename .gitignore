@@ -89,3 +89,4 @@ ENV/
 .ropeproject
 shoal/settings.py~
 .env.dev
+db/
