@@ -110,19 +110,19 @@ WSGI_APPLICATION = 'shoal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME_DEF'),
-        'USER': os.environ.get('DB_USER_DEF'),
-        'PASSWORD':  os.environ.get('DB_PASS_DEF'),
-        'PORT': os.environ.get('DB_PORT_DEF'),
-        'HOST': os.environ.get('DB_HOST_DEF'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD':  os.environ.get('DB_USER_PASSWORD'),
+        'PORT': os.environ.get('DB_PORT'),
+        'HOST': os.environ.get('DB_HOST'),
     },
     'db_owner': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB_NAME_OWN'),
-        'USER': os.environ.get('DB_USER_OWN'),
-        'PASSWORD': os.environ.get('DB_PASS_OWN'),
-        'PORT': os.environ.get('DB_PORT_OWN'),
-        'HOST': os.environ.get('DB_HOST_DEF'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_OWNER'),
+        'PASSWORD': os.environ.get('DB_OWNER_PASSWORD'),
+        'PORT': os.environ.get('DB_PORT'),
+        'HOST': os.environ.get('DB_HOST'),
     },
 }
 
