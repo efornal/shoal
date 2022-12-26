@@ -29,6 +29,10 @@ def set_language(request, lang='es'):
     logging.info("Language changed by the user to '{}'".format(lang))
     return redirect('index')
 
+def health(request):
+    from django.http import HttpResponse
+    return HttpResponse(status=200)
+
 
 def index(request):
     context={}
