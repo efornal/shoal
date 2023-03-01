@@ -217,7 +217,7 @@ LDAP_PEOPLE_FIELDS = ast.literal_eval(os.environ.get('LDAP_PEOPLE_FIELDS')) # id
 
 #
 # Maximum limit of results to be taken as error
-LDAP_SIZE_LIMIT = os.environ.get('LDAP_SIZE_LIMIT')
+LDAP_SIZE_LIMIT = int(os.environ.get('LDAP_SIZE_LIMIT'))
 #
 # If specified, add the ObjectClass to the search condition of ldap
 LDAP_FILTER_OBJECT_CLASS = ast.literal_eval(os.environ.get('LDAP_FILTER_OBJECT_CLASS'))
@@ -241,7 +241,7 @@ LDAP_DOMAIN_MAIL = os.environ.get('LDAP_DOMAIN_MAIL')
 
 # Performs filtering to obtain LDAP groups
 # min group_id (group_id>= 500) for ldap search filter
-LDAP_GROUP_MIN_VALUE = os.environ.get('LDAP_GROUP_MIN_VALUE')
+LDAP_GROUP_MIN_VALUE = int(os.environ.get('LDAP_GROUP_MIN_VALUE'))
 #
 # group_id to exclude in ldap search filter
 LDAP_GROUP_SKIP_VALUES = ast.literal_eval(os.environ.get('LDAP_GROUP_SKIP_VALUES'))
@@ -251,7 +251,7 @@ LDAP_GROUP_SKIP_VALUES = ast.literal_eval(os.environ.get('LDAP_GROUP_SKIP_VALUES
 GROUPS_EXTRA_INFORMATION_SEARCH = ast.literal_eval(os.environ.get('GROUPS_EXTRA_INFORMATION_SEARCH'))
 #
 # Password length used by default in password change functionality
-DEFAULT_PASSWORD_LENGHT = os.environ.get('DEFAULT_PASSWORD_LENGHT')
+DEFAULT_PASSWORD_LENGHT = int(os.environ.get('DEFAULT_PASSWORD_LENGHT'))
 # =================================/
 
 # =================================\
