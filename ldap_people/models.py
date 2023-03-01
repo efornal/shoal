@@ -847,7 +847,7 @@ class LdapGroup(models.Model):
     @classmethod
     def ldap_min_gid_value(self):
         if hasattr(settings, 'LDAP_GROUP_MIN_VALUE'):
-            return settings.LDAP_GROUP_MIN_VALUE
+            return int(settings.LDAP_GROUP_MIN_VALUE)
         return None
     
     @classmethod
