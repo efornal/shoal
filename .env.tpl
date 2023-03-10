@@ -1,11 +1,11 @@
 ## django configuration
 
-DEBUG=on
-
-BASE_URL=https://base_url
-
 APPLICATION_NAME=Internos
 APPLICATION_DESC=Internos
+
+DEBUG=True
+
+BASE_URL=https://base_url
 
 SECRET_KEY=p7p0c223vc98k_qx31op8c18s9&x*1kvott8**zbjc+ec3t%!
 
@@ -15,11 +15,15 @@ ADMINS=(("admin", "admin@site.com"),)
 
 MANAGERS=(("Manager Name", "manager@site.com"),)
 
+TIME_ZONE=America/Argentina/Buenos_Aires
+
 LANGUAGE_CODE=es
 
 DEFAULT_CHARSET=utf-8
 
-TIME_ZONE=America/Argentina/Buenos_Aires
+STATIC_ROOT=/srv/shoal/shared/static
+
+STATIC_URL=/static/
 
 CONTEXT_ROOT=/
 
@@ -28,10 +32,6 @@ CONTEXT_PATH=/srv/shoal
 LOGIN_URL=/login
 
 LOGIN_REDIRECT_URL=/
-
-STATIC_ROOT=/srv/shoal/shared/static
-
-STATIC_URL=/static/
 
 SESSION_COOKIE_NAME=shoalsessionid
 
@@ -101,18 +101,11 @@ DEFAULT_PASSWORD_LENGHT=20
 
 # =================================/
 
-
 ## database configuration
-# for default user
-DB_NAME_DEF=shoal_db
-DB_USER_DEF=shoal_user
-DB_PASS_DEF=user_password
-DB_HOST_DEF=db
-DB_PORT_DEF=5432
-
-# for user with privileged access 
-DB_NAME_OWN=shoal_db
-DB_USER_OWN=shoal_owner
-DB_PASS_OWN=owner_password
-DB_HOST_OWN=db
-DB_PORT_OWN=5432
+DB_NAME=shoal_db
+DB_USER=shoal_user
+DB_USER_PASSWORD=user_password
+DB_OWNER=shoal_owner
+DB_OWNER_PASSWORD=owner_password
+DB_HOST=db
+DB_PORT=5432
