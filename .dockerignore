@@ -1,0 +1,6 @@
+docker-compose.yml
+.env.tpl
+.env.dev
+.gitignore
+.git
+db

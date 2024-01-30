@@ -13,13 +13,14 @@ services:
   
   shoal:
     restart: always
-#    build: .
-    image: shoal:latest
+    build:
+      context: .
+      dockerfile: container-build/Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
     env_file:
       - .env.dev
     volumes:
-      - .:/srv/shoal
+      - shoal_app:/srv/shoal
     ports:
       - "8000:8000"
     depends_on:
@@ -27,4 +28,6 @@ services:
 
 volumes:
   shoal_pgdata:
+    external: true
+  shoal_app:
     external: true
