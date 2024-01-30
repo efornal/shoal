@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-19 13:38-0300\n"
+"POT-Creation-Date: 2024-01-30 15:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,11 +23,11 @@ msgid "person_was_not_found"
 msgstr ""
 "La persona registrada no se pudo validar. El servicio no está disponible."
 
-#: app/views.py:76
+#: app/views.py:80
 msgid "changes_saved"
 msgstr "Los cambios se guardaron correctamente"
 
-#: app/views.py:126 app/views.py:146 ldap_people/admin.py:256
+#: app/views.py:130 app/views.py:150 ldap_people/admin.py:256
 msgid "search_error"
 msgstr ""
 "La búsqueda no pudo realizarse. Verifique la conexión, o que el texto a "
@@ -55,31 +55,31 @@ msgstr "La contraseña se modificó con exito"
 msgid "Database error"
 msgstr "Error de base de datos"
 
-#: ldap_people/forms.py:26 ldap_people/forms.py:114 ldap_people/forms.py:205
+#: ldap_people/forms.py:26 ldap_people/forms.py:118 ldap_people/forms.py:209
 #: ldap_people/templates/admin/ldapperson/change_list.html:124
 #: templates/search.html:39
 msgid "Username"
 msgstr "Usuario"
 
-#: ldap_people/forms.py:30 ldap_people/forms.py:118 templates/edit.html:13
+#: ldap_people/forms.py:30 ldap_people/forms.py:122 templates/edit.html:13
 msgid "Name"
 msgstr "Nombre"
 
-#: ldap_people/forms.py:34 ldap_people/forms.py:122
+#: ldap_people/forms.py:34 ldap_people/forms.py:126
 msgid "Surname"
 msgstr "Apellido"
 
-#: ldap_people/forms.py:38 ldap_people/forms.py:130
+#: ldap_people/forms.py:38 ldap_people/forms.py:134
 #: ldap_people/templates/admin/ldapperson/change_list.html:136
 #: templates/edit.html:37 templates/search.html:49
 msgid "Email"
 msgstr "Email"
 
-#: ldap_people/forms.py:42 ldap_people/forms.py:134 templates/edit.html:41
+#: ldap_people/forms.py:42 ldap_people/forms.py:138 templates/edit.html:41
 msgid "Alternative_email"
 msgstr "Email alternativo"
 
-#: ldap_people/forms.py:46 ldap_people/forms.py:126 ldap_people/models.py:1050
+#: ldap_people/forms.py:46 ldap_people/forms.py:130 ldap_people/models.py:1076
 #: templates/edit.html:30 templates/index.html:15 templates/search.html:43
 msgid "Office"
 msgstr "Oficina"
@@ -96,7 +96,7 @@ msgstr "Grupo principal"
 msgid "Secondary_groups"
 msgstr "Grupos secundarios"
 
-#: ldap_people/forms.py:63 ldap_people/forms.py:138
+#: ldap_people/forms.py:63 ldap_people/forms.py:142
 msgid "Document_number"
 msgstr "Nro documento"
 
@@ -124,176 +124,176 @@ msgstr "Área"
 msgid "Position"
 msgstr "Cargo"
 
-#: ldap_people/forms.py:91 ldap_people/forms.py:209
+#: ldap_people/forms.py:91 ldap_people/forms.py:213
 #: ldap_people/templates/admin/ldapperson/change_list.html:142
 #: templates/search.html:40
 msgid "Host_name"
 msgstr "Máquina"
 
-#: ldap_people/forms.py:142 ldap_people/models.py:184
+#: ldap_people/forms.py:146 ldap_people/models.py:198
 msgid "type_document_number"
 msgstr "Tipo documento"
 
-#: ldap_people/forms.py:146 ldap_people/models.py:194
+#: ldap_people/forms.py:150 ldap_people/models.py:208
 msgid "telephone_number"
 msgstr "Teléfono laboral"
 
-#: ldap_people/forms.py:150 ldap_people/models.py:199
+#: ldap_people/forms.py:154 ldap_people/models.py:213
 msgid "home_telephone_number"
 msgstr "Teléfono personal"
 
-#: ldap_people/forms.py:162
+#: ldap_people/forms.py:166
 msgid "person_without_email"
 msgstr "El email de la persona es un dato requerido"
 
-#: ldap_people/forms.py:165
+#: ldap_people/forms.py:169
 msgid "person_without_institutional_email"
 msgstr "El email institucional de la persona es un dato requerido"
 
-#: ldap_people/forms.py:172 ldap_people/forms.py:182
+#: ldap_people/forms.py:176 ldap_people/forms.py:186
 msgid "invalid_format"
 msgstr "El valor ingresado no se corresponde con el formato requerido"
 
-#: ldap_people/forms.py:213
+#: ldap_people/forms.py:217
 msgid "Info"
 msgstr ""
 
-#: ldap_people/models.py:133 templates/base.html:85
+#: ldap_people/models.py:147 templates/base.html:85
 msgid "username"
 msgstr "usuario"
 
-#: ldap_people/models.py:142 ldap_people/models.py:1046
-#: ldap_people/models.py:1068
+#: ldap_people/models.py:156 ldap_people/models.py:1072
+#: ldap_people/models.py:1094
 msgid "name"
 msgstr "nombre"
 
-#: ldap_people/models.py:147
+#: ldap_people/models.py:161
 msgid "surname"
 msgstr "apellido"
 
-#: ldap_people/models.py:152
+#: ldap_people/models.py:166
 msgid "fullname"
 msgstr "nombre completo"
 
-#: ldap_people/models.py:156
+#: ldap_people/models.py:170
 msgid "email"
 msgstr "email"
 
-#: ldap_people/models.py:160
+#: ldap_people/models.py:174
 msgid "alternative_email"
 msgstr "email alternativo"
 
-#: ldap_people/models.py:165
+#: ldap_people/models.py:179
 msgid "office"
 msgstr "oficina"
 
-#: ldap_people/models.py:170
+#: ldap_people/models.py:184
 msgid "other_office"
 msgstr "otra oficina"
 
-#: ldap_people/models.py:179
+#: ldap_people/models.py:193
 msgid "document_number"
 msgstr "nro documento"
 
-#: ldap_people/models.py:189
+#: ldap_people/models.py:203
 msgid "country_document_number"
 msgstr "nro documento país"
 
-#: ldap_people/models.py:204
+#: ldap_people/models.py:218
 msgid "floor"
 msgstr "piso"
 
-#: ldap_people/models.py:209
+#: ldap_people/models.py:223
 msgid "area"
 msgstr "area"
 
-#: ldap_people/models.py:214
+#: ldap_people/models.py:228
 msgid "position"
 msgstr "cargo"
 
-#: ldap_people/models.py:219
+#: ldap_people/models.py:233
 msgid "host_name"
 msgstr "máquina"
 
-#: ldap_people/models.py:224
+#: ldap_people/models.py:238
 msgid "info"
 msgstr ""
 
-#: ldap_people/models.py:228
+#: ldap_people/models.py:242
 msgid "LdapPerson"
 msgstr "Persona Ldap"
 
-#: ldap_people/models.py:229
+#: ldap_people/models.py:243
 msgid "LdapPeople"
 msgstr "Personas Ldap"
 
-#: ldap_people/models.py:342 ldap_people/models.py:367
+#: ldap_people/models.py:347 ldap_people/models.py:370
 #: password_change/auth.py:67
 msgid "user_not_valid_for_this_action"
 msgstr "El usuario pertenece a un grupo que no permite el cambio de contraseña"
 
-#: ldap_people/models.py:449
+#: ldap_people/models.py:474
 msgid "setting_group_must_be_greater"
 msgstr "Error definiendo el grupo %(group)s, debe ser mayor a %(value)s"
 
-#: ldap_people/models.py:452
+#: ldap_people/models.py:477
 msgid "changing_group_must_be_greater"
 msgstr ""
 "Error al cambiar el grupo %(group)s, el valor previo es mayor que %(value)s"
 
-#: ldap_people/models.py:455
+#: ldap_people/models.py:480
 msgid "setting_group_do_not_allow_edit"
 msgstr ""
 "Error definiendo el grupo %(group)s, la configuración no permite editar los "
 "grupos: %(value)s"
 
-#: ldap_people/models.py:458
+#: ldap_people/models.py:483
 msgid "changing_group_do_not_allow_edit"
 msgstr ""
 "Error al cambiar el grupo previo %(group)s, la configuración no permite "
 "editar los grupos: %(value)s"
 
-#: ldap_people/models.py:802
+#: ldap_people/models.py:840
 msgid "Group"
 msgstr "Grupo"
 
-#: ldap_people/models.py:803
+#: ldap_people/models.py:841
 msgid "Groups"
 msgstr "Grupos"
 
-#: ldap_people/models.py:901
+#: ldap_people/models.py:930
 msgid "adding_group_must_be_greater"
 msgstr "Error agregando el groupo  %(group)s, debe ser mayor a  %(value)s"
 
-#: ldap_people/models.py:908
+#: ldap_people/models.py:937
 msgid "adding_group_do_not_allow_editing"
 msgstr ""
 "Error agregando el grupo %(group)s, la configuración no permite editar los "
 "grupos: %(value)s"
 
-#: ldap_people/models.py:960
+#: ldap_people/models.py:988
 msgid "removing_group_must_be_greater"
 msgstr "Error eliminando el group %(group)s, debe ser mayor a %(value)s"
 
-#: ldap_people/models.py:967
+#: ldap_people/models.py:995
 msgid "removing_group_do_not_allow_editing"
 msgstr ""
 "Error eliminando group %(group)s, la configuración no permite editar los "
 "grupos: %(value)s"
 
-#: ldap_people/models.py:1051
+#: ldap_people/models.py:1077
 msgid "Offices"
 msgstr "Oficinas"
 
-#: ldap_people/models.py:1073
+#: ldap_people/models.py:1099
 msgid "LdapOffice"
 msgstr "Oficina"
 
-#: ldap_people/models.py:1074
+#: ldap_people/models.py:1100
 msgid "LdapOffices"
 msgstr "Oficinas"
 
-#: ldap_people/models.py:1148
+#: ldap_people/models.py:1173
 msgid "select_one"
 msgstr "Seleccionar uno"
 
@@ -413,11 +413,11 @@ msgstr "Contraseña modificada"
 msgid "password_has_not_been_changed"
 msgstr "Contraseña no modificada"
 
-#: shoal/settings.py:141 templates/base.html:71 templates/base.html:76
+#: shoal/settings.py:152 templates/base.html:71 templates/base.html:76
 msgid "Spanish"
 msgstr "Español"
 
-#: shoal/settings.py:142 templates/base.html:72 templates/base.html:78
+#: shoal/settings.py:153 templates/base.html:72 templates/base.html:78
 msgid "English"
 msgstr "Inglés"
 
@@ -425,9 +425,19 @@ msgstr "Inglés"
 msgid "Go_home"
 msgstr "Ir a inicio"
 
+#: templates/base.html:56
+msgid "search_input"
+msgstr "Texto a buscar"
+
 #: templates/base.html:57 templates/base.html:59
 msgid "search"
 msgstr "buscar"
+
+#: templates/base.html:59
+msgid "search_button"
+msgstr ""
+"Buscar el texto indicado. "
+"El patrón que produzca un exceso de resultados será omitido"
 
 #: templates/base.html:69
 msgid "language"
@@ -464,11 +474,11 @@ msgstr ""
 "y no será visualizado por el resto de los usuarios  o en el listado "
 "telefónico."
 
-#: templates/edit.html:52
+#: templates/edit.html:52 templates/edit.html:61
 msgid "Examples"
 msgstr "Ejemplos"
 
-#: templates/edit.html:53
+#: templates/edit.html:53 templates/edit.html:62
 msgid "or"
 msgstr "o"
 
@@ -476,18 +486,18 @@ msgstr "o"
 msgid "for_several"
 msgstr "para varios"
 
-#: templates/edit.html:65
+#: templates/edit.html:69
 msgid "footnote_info"
 msgstr ""
 "El <strong>Email alternativo</strong> y  <strong>Teléfono personal</strong> "
 "serán de uso exclusivo en el proceso de recuperación de contraseña y no se "
 "mostrará al resto de los usuarios o en el listado telefónico."
 
-#: templates/edit.html:70
+#: templates/edit.html:74
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: templates/edit.html:72
+#: templates/edit.html:76
 msgid "Save"
 msgstr "Guardar cambios"
 
