@@ -8,9 +8,11 @@ from . import views
 from django.contrib.auth import views as auth_views
 from password_change import urls as change_password_urls
 from django.views.generic import RedirectView
+from password_reset import urls as pass_urls
 
 urlpatterns = [
     url(r'^', include(change_password_urls)),
+    url(r'^', include(pass_urls)),
     url('^api/user/(?P<user>\w+)/host/(?P<host>(\w+)?.\w+)/register', \
         views.api_register_host, name='api_register_host'),
     url('health/', views.health, name='health'),

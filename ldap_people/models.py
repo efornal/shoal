@@ -653,6 +653,30 @@ class LdapPerson(models.Model):
 
         return ldap_result
 
+    @classmethod
+    def get_by_email(cls, email):
+        ldap_condition = "(mail=*{}*)".format( str(email) )
+        ldap_condition = LdapPerson.compose_ldap_filter(ldap_condition)
+        retrieve_attributes = [str(x) for x in LdapPerson.ldap_attrs()]
+        #logging.error(ldap_condition)
+        ldap_result = None
+        try:
+            ldap_search = LdapConn.new().search_s(
+                LdapConn.ldap_dn_users(),
+                ldap.SCOPE_SUBTREE,
+                ldap_condition,
+                retrieve_attributes)
+
+            if len(ldap_search) > 1:
+                # only one person should have the mail
+                raise forms.ValidationError(_('email_with_multiple_people'))
+            elif len(ldap_search) == 1:
+                ldap_result = LdapPerson.ldap_to_obj(ldap_search)[0]
+
+        except ldap.LDAPError, e:
+            logging.error( e )
+
+        return ldap_result
     
     @classmethod
     def get_by_uid(cls, uid):
@@ -672,7 +696,6 @@ class LdapPerson(models.Model):
             logging.error( e )
 
         return ldap_result
-
 
     @classmethod
     def get_auth_by_uid(cls, uid):

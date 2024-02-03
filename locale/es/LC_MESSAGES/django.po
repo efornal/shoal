@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-30 15:51+0000\n"
+"POT-Creation-Date: 2024-02-01 14:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: app/decorators.py:18
+#: app/decorators.py:18 decorators.py:14
 msgid "person_was_not_found"
 msgstr ""
 "La persona registrada no se pudo validar. El servicio no está disponible."
@@ -413,11 +413,105 @@ msgstr "Contraseña modificada"
 msgid "password_has_not_been_changed"
 msgstr "Contraseña no modificada"
 
-#: shoal/settings.py:152 templates/base.html:71 templates/base.html:76
+#: password_reset/forms.py:24
+msgid "email_must_be_unique"
+msgstr "Ya existe un usuario con este email"
+
+#: password_reset/forms.py:34
+msgid "duplicate_username"
+msgstr ""
+"Ya existe un usuario con este nombre. Intente con un nombre diferente. Si ya "
+"ha completado la solicitud y no ha recibido el mail de confirmación, le "
+"pedimos se comunique directamente con Mesa de ayuda."
+
+#: password_reset/forms.py:60
+msgid "invalid_alternative_email"
+msgstr "El email ingresado no corresponde a una cuenta de usuario válida"
+
+#: password_reset/forms.py:64
+msgid "without_alternative_email"
+msgstr "La persona no tiene un email alternativo definido, no es posible restaurar la contraseña"
+
+#: password_reset/templates/email_reset_password.html:11
+#: password_reset/templates/email_reset_password_done.html:9
+msgid "email_footer"
+msgstr ""
+"Ante cualquier duda, puede comunicarse con Mesa de ayuda. Saludos "
+"cordiales,\n"
+"El equipo de administración de sistemas"
+
+#: password_reset/templates/password_reset.html:33
+#: password_reset/templates/password_reset_confirm.html:34
+msgid "reset_password"
+msgstr "Restablecer contraseña"
+
+#: password_reset/templates/password_reset.html:44
+msgid "reset_password_message"
+msgstr ""
+"Ingrese su dirección de correo electrónico alternativo y le enviaremos un enlace para "
+"restablecer su contraseña. "
+"Recuerde que sólo podrá restablecer la contraseña si ha definido un email alternativo "
+"en la configuración de su cuenta."
+
+#: password_reset/templates/password_reset.html:51
+msgid "send_reset_password_email"
+msgstr "Enviar correo para restablecer contraseña"
+
+#: password_reset/templates/password_reset_complete.html:6
+msgid "password_has_been_reset"
+msgstr "Contraseña restablecida!"
+
+#: password_reset/templates/password_reset_confirm.html:38
+#: templates/registration/login.html:41
+msgid "password"
+msgstr "contraseña"
+
+#: password_reset/templates/password_reset_confirm.html:45
+msgid "confirm_password"
+msgstr "confirmar contraseña"
+
+#: password_reset/templates/password_reset_confirm.html:51
+msgid "confirm_reset_password_message"
+msgstr ""
+"Ingrese su nueva contraseña y confirmación de la misma para restablecerla."
+
+#: password_reset/templates/password_reset_confirm.html:58
+msgid "_confirm_reset_password"
+msgstr "Confirmar restablecer contraseña"
+
+#: password_reset/templates/password_reset_done_not_sent.html:6
+#: password_reset/templates/password_reset_done_sent.html:6
+msgid "email_to_reset_password"
+msgstr "Email para restablecer contraseña"
+
+#: password_reset/templates/password_reset_error.html:6
+msgid "password_has_not_been_reset"
+msgstr "La contraseña no pudo ser restablecida."
+
+#: password_reset/validators.py:17 password_reset/validators.py:35
+#: password_reset/validators.py:59
+msgid "email_domain_not_exist"
+msgstr ""
+"No se ha podido verificar la existencia del dominio del email; Por favor, "
+"verifique el email ingresado. "
+
+#: password_reset/validators.py:22
+msgid "email_domain_to_exclude"
+msgstr ""
+"Su cuenta de correo no pertenece a un dominio válido. Debe usar una cuenta "
+"diferente a la del correo institucional"
+
+#: password_reset/validators.py:40
+msgid "email_domain_restriction"
+msgstr ""
+"Su cuenta de correo no pertenece a un dominio institucional válido. Debe "
+"usar una cuenta de correo institucional. "
+
+#: shoal/settings.py:153 templates/base.html:71 templates/base.html:76
 msgid "Spanish"
 msgstr "Español"
 
-#: shoal/settings.py:153 templates/base.html:72 templates/base.html:78
+#: shoal/settings.py:154 templates/base.html:72 templates/base.html:78
 msgid "English"
 msgstr "Inglés"
 
@@ -436,8 +530,8 @@ msgstr "buscar"
 #: templates/base.html:59
 msgid "search_button"
 msgstr ""
-"Buscar el texto indicado. "
-"El patrón que produzca un exceso de resultados será omitido"
+"Buscar el texto indicado. El patrón que produzca un exceso de resultados "
+"será omitido"
 
 #: templates/base.html:69
 msgid "language"
@@ -529,17 +623,17 @@ msgstr "Gracias por el tiempo que has dedicado al sitio web hoy."
 msgid "home_login"
 msgstr "inicio"
 
-#: templates/registration/login.html:35
+#: templates/registration/login.html:36
 msgid "user"
 msgstr "usuario"
 
-#: templates/registration/login.html:40
-msgid "password"
-msgstr "contraseña"
-
-#: templates/registration/login.html:45
+#: templates/registration/login.html:48
 msgid "log_in"
 msgstr "iniciar sesión"
+
+#: templates/registration/login.html:55
+msgid "forgot_password"
+msgstr "¿Olvidó su contraseña?"
 
 #: templates/search.html:37
 msgid "Person"

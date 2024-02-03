@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-30 15:51+0000\n"
+"POT-Creation-Date: 2024-02-01 14:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/decorators.py:18
+#: app/decorators.py:18 decorators.py:14
 msgid "person_was_not_found"
 msgstr "The registered person could not be validated. Service not available"
 
@@ -411,11 +411,102 @@ msgstr "password has been changed"
 msgid "password_has_not_been_changed"
 msgstr "password has not been changed"
 
-#: shoal/settings.py:152 templates/base.html:71 templates/base.html:76
+#: password_reset/forms.py:24
+msgid "email_must_be_unique"
+msgstr ""
+
+#: password_reset/forms.py:34
+msgid "duplicate_username"
+msgstr ""
+"A user with this name already exists. Try a different name. If you have "
+"already completed the application and you have not received the confirmation "
+"email, we ask you to contact the Help Desk directly."
+
+#: password_reset/forms.py:60
+msgid "invalid_alternative_email"
+msgstr "The email entered does not correspond to a valid user account"
+
+#: password_reset/forms.py:64
+msgid "without_alternative_email"
+msgstr "The person does not have a defined alternative email, it is not possible to restore the password"
+
+#: password_reset/templates/email_reset_password.html:11
+#: password_reset/templates/email_reset_password_done.html:9
+msgid "email_footer"
+msgstr ""
+"If you have any questions, you can contact the Help DeskBest regards, \n"
+"The system administration team"
+
+#: password_reset/templates/password_reset.html:33
+#: password_reset/templates/password_reset_confirm.html:34
+msgid "reset_password"
+msgstr "Reset password"
+
+#: password_reset/templates/password_reset.html:44
+msgid "reset_password_message"
+msgstr ""
+"Enter your alternative email address and we will send you a link to reset your password. "
+"Remember that you will only be able to reset your password "
+"if you have defined an alternate email in your account settings."
+
+#: password_reset/templates/password_reset.html:51
+msgid "send_reset_password_email"
+msgstr "Send password reset email"
+
+#: password_reset/templates/password_reset_complete.html:6
+msgid "password_has_been_reset"
+msgstr "Password has been reset"
+
+#: password_reset/templates/password_reset_confirm.html:38
+#: templates/registration/login.html:41
+msgid "password"
+msgstr "password"
+
+#: password_reset/templates/password_reset_confirm.html:45
+msgid "confirm_password"
+msgstr "confirm password"
+
+#: password_reset/templates/password_reset_confirm.html:51
+msgid "confirm_reset_password_message"
+msgstr "Enter your new password and confirm it to reset it"
+
+#: password_reset/templates/password_reset_confirm.html:58
+msgid "_confirm_reset_password"
+msgstr "Confirm reset password"
+
+#: password_reset/templates/password_reset_done_not_sent.html:6
+#: password_reset/templates/password_reset_done_sent.html:6
+msgid "email_to_reset_password"
+msgstr "Email to reset password"
+
+#: password_reset/templates/password_reset_error.html:6
+msgid "password_has_not_been_reset"
+msgstr "the password could not be reset"
+
+#: password_reset/validators.py:17 password_reset/validators.py:35
+#: password_reset/validators.py:59
+msgid "email_domain_not_exist"
+msgstr ""
+"The existence of the email domain could not be verified. Please, verify the "
+"email entered. "
+
+#: password_reset/validators.py:22
+msgid "email_domain_to_exclude"
+msgstr ""
+"Your email account does not belong to a valid domain. You must use a "
+"different account than the institutional email"
+
+#: password_reset/validators.py:40
+msgid "email_domain_restriction"
+msgstr ""
+"Your email account does not belong to a valid institutional domain. You must "
+"use an institutional email account. "
+
+#: shoal/settings.py:153 templates/base.html:71 templates/base.html:76
 msgid "Spanish"
 msgstr "Spanish"
 
-#: shoal/settings.py:153 templates/base.html:72 templates/base.html:78
+#: shoal/settings.py:154 templates/base.html:72 templates/base.html:78
 msgid "English"
 msgstr "English"
 
@@ -434,8 +525,8 @@ msgstr "search"
 #: templates/base.html:59
 msgid "search_button"
 msgstr ""
-"Search for the indicated text. "
-"The pattern that produces an excess of results will be skipped"
+"Search for the indicated text. The pattern that produces an excess of "
+"results will be skipped"
 
 #: templates/base.html:69
 msgid "language"
@@ -525,17 +616,17 @@ msgstr "Thank you for the time you spent on the website today."
 msgid "home_login"
 msgstr "home login"
 
-#: templates/registration/login.html:35
+#: templates/registration/login.html:36
 msgid "user"
 msgstr "user"
 
-#: templates/registration/login.html:40
-msgid "password"
-msgstr "password"
-
-#: templates/registration/login.html:45
+#: templates/registration/login.html:48
 msgid "log_in"
 msgstr "log in"
+
+#: templates/registration/login.html:55
+msgid "forgot_password"
+msgstr "forgot_password?"
 
 #: templates/search.html:37
 msgid "Person"
@@ -553,3 +644,6 @@ msgstr "View email"
 
 #~ msgid "Password_confirm"
 #~ msgstr "Password confirm"
+
+#~ msgid "telephone_number_example"
+#~ msgstr "Ejemplo: (4571110[/4571111] int 172[/173])"

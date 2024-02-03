@@ -87,7 +87,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates'),
                  os.path.join(BASE_DIR, 'ldap_people/templates'),
-                 os.path.join(BASE_DIR, 'password_change/templates')],
+                 os.path.join(BASE_DIR, 'password_change/templates'),
+                 os.path.join(BASE_DIR, 'password_reset/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'debug': True,
@@ -252,6 +253,28 @@ GROUPS_EXTRA_INFORMATION_SEARCH = ast.literal_eval(os.environ.get('GROUPS_EXTRA_
 #
 # Password length used by default in password change functionality
 DEFAULT_PASSWORD_LENGHT = int(os.environ.get('DEFAULT_PASSWORD_LENGHT'))
+# =================================/
+
+# =================================\
+# django email configuration
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+#EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL')
+#EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+
+# email application configuration 
+EMAIL_REPLY_TO = ast.literal_eval(os.environ.get('EMAIL_REPLY_TO'))
+#
+# reset password email configuration
+EMAIL_RESET_PASSWORD_FROM = os.environ.get('EMAIL_RESET_PASSWORD_FROM')
+EMAIL_RESET_PASSWORD_SUBJECT = os.environ.get('EMAIL_RESET_PASSWORD_SUBJECT')
+#
+# password changed email configuration
+EMAIL_PASSWORD_CHANGED_SUBJECT = os.environ.get('EMAIL_PASSWORD_CHANGED_SUBJECT')
+EMAIL_PASSWORD_CHANGED_FROM = os.environ.get('EMAIL_PASSWORD_CHANGED_FROM')
+#
+# Performs a DNS query to verify the resolution of the domain
+VALIDATE_EXISTENCE_EMAIL_DOMAIN = os.environ.get('VALIDATE_EXISTENCE_EMAIL_DOMAIN')
 # =================================/
 
 # =================================\
