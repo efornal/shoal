@@ -6,16 +6,14 @@ ENV PYTHONUNBUFFERED 1
 
 EXPOSE 8000
 
-RUN apt-get -y update && \
-    apt-get install -y libcairo2-dev libcairo2 python-cairo python-cairo-dev \
+RUN apt-get -y update && apt-get install -y \
+    libcairo2-dev libcairo2 python-cairo python-cairo-dev \
     pkg-config gettext libpq-dev libyaml-dev \
     libldap2-dev libsasl2-dev libjpeg-dev zlib1g-dev libgtk2.0-dev \
     libgirepository1.0-dev \
-    procps python-apt python3-cairo python3-cairo-dev
-
-RUN pip install --upgrade pip
-
-RUN apt-get clean && apt-get autoremove
+    procps python-apt python3-cairo python3-cairo-dev \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    pip install --upgrade pip
 
 WORKDIR /srv/shoal
 
