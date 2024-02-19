@@ -109,3 +109,23 @@ DB_OWNER=shoal_owner
 DB_OWNER_PASSWORD=owner_password
 DB_HOST=db
 DB_PORT=5432
+
+# =================================/
+EMAIL_HOST=hostname
+EMAIL_PORT=25
+EMAIL_USE_SSL=False
+EMAIL_USE_TLS=False
+
+# email application configuration 
+EMAIL_REPLY_TO=["user@domain"]
+#
+# reset password email configuration
+EMAIL_RESET_PASSWORD_FROM=user@domain
+EMAIL_RESET_PASSWORD_SUBJECT=Cambio de contrasenia
+#
+# password changed email configuration
+EMAIL_PASSWORD_CHANGED_SUBJECT=Contraseniaa cambiada
+EMAIL_PASSWORD_CHANGED_FROM=user@domain
+#
+# Performs a DNS query to verify the resolution of the domain
+VALIDATE_EXISTENCE_EMAIL_DOMAIN=domain
