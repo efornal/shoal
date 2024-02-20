@@ -12,8 +12,8 @@ RUN apt-get -y update && apt-get install -y \
     libldap2-dev libsasl2-dev libjpeg-dev zlib1g-dev libgtk2.0-dev \
     libgirepository1.0-dev \
     procps python-apt python3-cairo python3-cairo-dev \
-    apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    pip install --upgrade pip
+    && apt-get clean && rm -rf /var/lib/apt/lists/* \
+    && pip install --upgrade pip
 
 WORKDIR /srv/shoal
 
