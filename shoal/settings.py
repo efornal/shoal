@@ -185,7 +185,7 @@ SUIT_CONFIG = {
 
 SESSION_COOKIE_NAME = os.environ.get('SESSION_COOKIE_NAME')
 SESSION_COOKIE_PATH = "/"
-
+SESSION_COOKIE_AGE = int(os.getenv('SESSION_COOKIE_AGE',1209600))
 
 # =================================\
 # ldap configuration
