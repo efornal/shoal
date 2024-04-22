@@ -90,3 +90,5 @@ ENV/
 shoal/settings.py~
 .env.dev
 db/
+
+shared/

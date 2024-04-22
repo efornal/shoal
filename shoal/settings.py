@@ -186,6 +186,8 @@ SUIT_CONFIG = {
 SESSION_COOKIE_NAME = os.environ.get('SESSION_COOKIE_NAME')
 SESSION_COOKIE_PATH = "/"
 SESSION_COOKIE_AGE = int(os.getenv('SESSION_COOKIE_AGE',1209600))
+SESSION_COOKIE_DOMAIN = os.environ.get('SESSION_COOKIE_DOMAIN')
+SESSION_SAVE_EVERY_REQUEST = bool(os.getenv('SESSION_SAVE_EVERY_REQUEST',True))
 
 # =================================\
 # ldap configuration

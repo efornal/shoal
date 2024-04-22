@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 from django.utils.translation import ugettext as _
 from ldap_people.models import LdapPerson
 from ldap_people.models import LdapOffice
@@ -29,8 +30,8 @@ def set_language(request, lang='es'):
     logging.info("Language changed by the user to '{}'".format(lang))
     return redirect('index')
 
+@never_cache
 def health(request):
-    from django.http import HttpResponse
     return HttpResponse(status=200)
 
 
