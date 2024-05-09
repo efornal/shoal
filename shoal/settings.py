@@ -67,7 +67,8 @@ INSTALLED_APPS = [
     'ldap_people',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
+    'app.middleware.HealthCheckMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

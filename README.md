@@ -26,3 +26,5 @@ To initialize the database (creation of connection users, etc) or import the dat
 $ ls db/
 init_db_or_dump.sql
 ```
+* Health ckeck
+For the health check, the middelware proposed at https://www.ianlewis.org/en/kubernetes-health-checks-django is used
