@@ -30,11 +30,6 @@ def set_language(request, lang='es'):
     logging.info("Language changed by the user to '{}'".format(lang))
     return redirect('index')
 
-@never_cache
-def health(request):
-    return HttpResponse(status=200)
-
-
 def index(request):
     context={}
     offices = LdapOffice.telephones()
