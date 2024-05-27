@@ -7,6 +7,9 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: postgres
+      LANG: es_AR.UTF-8
+      TZ: 'America/Argentina/Cordoba'
+      POSTGRES_DB: cardumen_db
     volumes:
       - shoal_pgdata:/var/lib/postgresql/data
       - ./db:/docker-entrypoint-initdb.d
