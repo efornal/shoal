@@ -1,7 +1,7 @@
 
 FROM python:2.7.18-slim-buster as base
 
-ARG LOCAL_TIME=America/Argentina/Buenos_Aires
+ARG LOCAL_TIME=America/Argentina/Cordoba
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED 1
