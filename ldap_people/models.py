@@ -613,6 +613,30 @@ class LdapPerson(models.Model):
 
         return ldap_result
 
+    @classmethod
+    def search_index(cls, text):
+        escape_text = ldap.filter.escape_filter_chars(text)
+        condition = "(uid=*{}*)".format( escape_text )
+        condition += "(cn=*{}*)".format( escape_text )
+        condition += "(sn=*{}*)".format( escape_text )
+        condition += "(givenName=*{}*)".format( escape_text )
+        condition += "(physicalDeliveryOfficeName=*{}*)".format( escape_text )
+        condition += "(telephoneNumber=*{}*)".format( escape_text )
+        condition += "(businessCategory=*{}*)".format( escape_text )
+        condition = "(|{})".format( condition )
+        condition = cls.compose_ldap_filter(condition)
+        attributes = [str(x) for x in cls.search_ldap_attrs()]
+        ldap_result = []
+        try:
+            result = LdapConn.ldap_search( LdapConn.ldap_dn_users_search(),
+                                           condition,
+                                           attributes,
+                                           LdapPerson.ldap_size_limit() )
+            ldap_result = cls.ldap_to_obj( result )
+        except Exception, e:
+            logging.error( e )
+
+        return ldap_result
     
     @classmethod
     def search_by_office(cls, office_name):

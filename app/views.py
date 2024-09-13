@@ -117,7 +117,7 @@ def search(request):
 
     if not text is None:
         filter_groups = getattr(settings, "LDAP_FILTER_MEMBERS_OUT_OF_GROUPS", [])
-        people = LdapPerson.search(text)
+        people = LdapPerson.search_index(text)
         people = LdapPerson.filter_members_out_of_groups(people,filter_groups)
         context.update({'people': people})
 
