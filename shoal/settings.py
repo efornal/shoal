@@ -19,6 +19,7 @@ import os
 import ldap
 from django.utils.translation import ugettext_lazy as _
 from django.conf.locale.es import formats as es_formats
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,6 +42,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
+
+# Nivel mínimo para registrar eventos (cubre DEBUG, INFO, WARNING, ERROR)
+LOGGING_DEBUG = os.getenv("LOGGING_DEBUG", "DEBUG") == "DEBUG"
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
 
@@ -322,3 +326,32 @@ AUTHENTICATION_BACKENDS = (
 # logger = logging.getLogger('django_auth_ldap')
 # logger.addHandler(logging.StreamHandler())
 # logger.setLevel(logging.DEBUG)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console_stdout': {
+            'level': LOGGING_DEBUG,  # Puedes ajustar el nivel de log según tus necesidades
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,  # Enviar mensajes de log a stdout
+        },
+        'console_stderr': {
+            'level': LOGGING_DEBUG,
+            'class': 'logging.StreamHandler',
+            'stream': sys.stderr,  # Enviar errores a stderr
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console_stdout', 'console_stderr'],
+            'level': LOGGING_DEBUG,  # Nivel mínimo para registrar eventos (cubre DEBUG, INFO, WARNING, ERROR)
+            'propagate': True,
+        },
+        'django.contrib.sessions': {
+            'handlers': ['console_stdout', 'console_stderr'],
+            'level': LOGGING_DEBUG,
+            'propagate': False,
+        },
+    },
+}
