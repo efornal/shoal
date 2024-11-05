@@ -5,6 +5,8 @@ APPLICATION_DESC=Internos
 
 DEBUG=True
 
+LOGGING_DEBUG=DEBUG
+
 BASE_URL=https://base_url
 
 SECRET_KEY=p7p0c223vc98k_qx31op8c18s9&x*1kvott8**zbjc+ec3t%!
