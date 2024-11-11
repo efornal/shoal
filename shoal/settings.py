@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 
 """
@@ -70,6 +71,12 @@ INSTALLED_APPS = [
     'app',
     'ldap_people',
 ]
+
+# Configurar backend de sesion en archivos
+SESSION_ENGINE = "django.contrib.sessions.backends.file"
+
+# Definir ubicacion de archivos de sesion
+SESSION_FILE_PATH = "/srv/django_sessions"
 
 MIDDLEWARE = [
     'app.middleware.HealthCheckMiddleware',

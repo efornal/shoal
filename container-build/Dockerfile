@@ -41,6 +41,8 @@ RUN chmod +x /entrypoint.sh
 
 COPY . ./
 
+RUN mkdir -vp /srv/django_sessions
+
 ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["gunicorn", "shoal.wsgi:application", "--bind",  ":8000"]
