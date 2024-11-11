@@ -72,12 +72,6 @@ INSTALLED_APPS = [
     'ldap_people',
 ]
 
-# Configurar backend de sesion en archivos
-SESSION_ENGINE = "django.contrib.sessions.backends.file"
-
-# Definir ubicacion de archivos de sesion
-SESSION_FILE_PATH = "/srv/django_sessions"
-
 MIDDLEWARE = [
     'app.middleware.HealthCheckMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -194,6 +188,14 @@ STATICFILES_DIRS = (
 SUIT_CONFIG = {
     'ADMIN_NAME': APPLICATION_NAME
 }
+
+# Configurar backend de sesion en archivos o base de datos
+SESSION_ENGINE = 'django.contrib.sessions.backends.file'
+#SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# Definir ubicacion de archivos de sesion si se opto por
+# django.contrib.sessions.backends.file
+SESSION_FILE_PATH = "/srv/django_sessions"
 
 SESSION_COOKIE_NAME = os.environ.get('SESSION_COOKIE_NAME')
 SESSION_COOKIE_PATH = "/"
