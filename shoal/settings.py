@@ -44,9 +44,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-# Nivel mínimo para registrar eventos (cubre DEBUG, INFO, WARNING, ERROR)
-LOGGING_DEBUG = os.getenv("LOGGING_DEBUG", "DEBUG") == "DEBUG"
-
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
 
 ADMINS=os.environ.get('ADMINS')
@@ -340,26 +337,20 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'console_stdout': {
-            'level': LOGGING_DEBUG,  # Puedes ajustar el nivel de log según tus necesidades
+        'console': {
+            'level': os.getenv('LOGGING_LEVEL', 'INFO'),
             'class': 'logging.StreamHandler',
-            'stream': sys.stdout,  # Enviar mensajes de log a stdout
-        },
-        'console_stderr': {
-            'level': LOGGING_DEBUG,
-            'class': 'logging.StreamHandler',
-            'stream': sys.stderr,  # Enviar errores a stderr
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['console_stdout', 'console_stderr'],
-            'level': LOGGING_DEBUG,  # Nivel mínimo para registrar eventos (cubre DEBUG, INFO, WARNING, ERROR)
+            'handlers': ['console'],
+            'level': os.getenv('LOGGING_LEVEL', 'INFO'),
             'propagate': True,
         },
-        'django.contrib.sessions': {
-            'handlers': ['console_stdout', 'console_stderr'],
-            'level': LOGGING_DEBUG,
+        '': {
+            'handlers': ['console'],
+            'level': os.getenv('LOGGING_LEVEL', 'INFO'),
             'propagate': False,
         },
     },

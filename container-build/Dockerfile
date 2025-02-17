@@ -45,5 +45,5 @@ RUN mkdir -vp /srv/django_sessions
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["gunicorn", "shoal.wsgi:application", "--bind",  ":8000"]
+CMD ["gunicorn", "shoal.wsgi:application", "--config", "gunicorn.conf.py"]
 
