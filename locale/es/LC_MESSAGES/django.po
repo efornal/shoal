@@ -515,7 +515,7 @@ msgstr ""
 
 #: templates/index.html:16 templates/search.html:42
 msgid "Phone"
-msgstr "Interno"
+msgstr "Teléfono"
 
 #: templates/logout.html:6
 msgid "logout_message_title"

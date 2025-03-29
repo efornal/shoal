@@ -21,7 +21,7 @@ import ldap
 from django.utils.translation import ugettext_lazy as _
 from django.conf.locale.es import formats as es_formats
 import sys
-
+import json
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #env = environ.Env(
@@ -49,6 +49,18 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
 ADMINS=os.environ.get('ADMINS')
 
 MANAGERS= os.environ.get('MANAGERS')
+
+# An array of arrays containing minimum and maximum values (range)
+# that allow you to define a different phone number for a group
+# of internal numbers determined by that range.
+# The format of each array is [min, max, number].
+# If the internal number is within that range, the specified number
+# will be prefixed to that internal number in the search list.
+#PHONE_MAPPING=[["1","999","123456"],["10","19","123457"]]
+PHONE_MAPPING= json.loads(os.environ.get('PHONE_MAPPING','{}'))
+
+# maximum length of an internal telephone number
+MAX_PHONE_LENGTH = int(os.environ.get('MAX_PHONE_LENGTH','5'))
 
 # Application definition
 

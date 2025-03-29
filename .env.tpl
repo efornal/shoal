@@ -37,6 +37,17 @@ LOGIN_REDIRECT_URL=/
 
 SESSION_COOKIE_NAME=shoalsessionid
 
+PHONE_MAPPING=[]
+# An array of arrays containing minimum and maximum values (range)
+# that allow you to define a different phone number for a group
+# of internal numbers determined by that range.
+# The format of each array is [min, max, number].
+# If the internal number is within that range, the specified number
+# will be prefixed to that internal number in the search list.
+#PHONE_MAPPING=[["1","999","123456"],["10","19","123457"]]
+
+# maximum length of an internal telephone number
+MAX_PHONE_LENGTH=5
 
 # =================================\
 

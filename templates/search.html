@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load staticfiles %}
+{% load application %}
+
 
 {% block content %}
 <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
@@ -39,7 +41,7 @@
           <th>{{ _('Username') }}</th>
           <th>{{ _('Host_name') }}</th>
           {% endif %}
-          <th>{{ _('Phone') }}</th>
+	  <th>{{ _('Phone') }}</th>
           <th>{{ _('Office') }}</th>
           <th>{{ _('Area') }}</th>
           {% if show_extra_info %}
@@ -58,8 +60,21 @@
           <td>{{ person.username|default:'' }} </td>
           <td title="{{ _('Last_login') }}: {{ person.info_last_login|default:'' }}">
             {{ person.host_name|default:'' }} </td>
-          {% endif %}
-          <td>{{ person.telephone_number|default:'' }} </td>
+	  {% endif %}
+	  <td>
+	      {% if "True"|phone_exchange_by_rank_enable %}
+	        {% for t in person.telephone_number|phone_exchange_by_rank %}
+	          {% if t.1 %}
+	            {{ t.1 }} / {{ t.0 }}
+	          {% else %}
+	            {{ t.0 }}
+	          {% endif %}
+	          {% if person.telephone_number|phone_exchange_by_rank|length != forloop.counter %}, &nbsp{% endif %}
+	        {% endfor %}
+	      {% else %}
+	        {{ person.telephone_number }}
+	      {% endif %}
+	  </td>
           <td>{{ person.office|default:'' }} </td>
           <td>{{ person.area|default:'' }} </td>
           {% if show_extra_info %}

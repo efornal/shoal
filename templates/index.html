@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load application %}
 
 {% block content %}
 
@@ -19,8 +20,15 @@
   {% for office_name, phones in offices.items %}
    <a href="{% url 'search_by_office' office=office_name %}"
       class="list-group-item" style="overflow-y: auto;">
-    <span >{{ office_name|default:'' }}</span>
-    <span style="float: right;">{{ phones }}</span>
+     <span >{{ office_name|default:'' }}</span>
+     <span style="float: right;">
+     {% if "True"|phone_exchange_by_rank_enable %}
+       {% for t in phones|phone_exchange_by_rank_unique %}
+         {{ t }}
+       {% endfor %} &nbsp
+     {% endif %}
+       ({{ phones }})
+     </span>
   </a>
   {% endfor %}
   {% endif %}

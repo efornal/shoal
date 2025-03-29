@@ -251,7 +251,6 @@ class LdapPerson(models.Model):
         super(LdapPerson, self).__init__(*args, **kwargs)
 
 
-
     @classmethod
     def ldap_size_limit(self):
         if hasattr(settings, 'LDAP_SIZE_LIMIT'):
