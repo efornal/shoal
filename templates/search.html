@@ -65,7 +65,7 @@
 	      {% if "True"|phone_exchange_by_rank_enable %}
 	        {% for t in person.telephone_number|phone_exchange_by_rank %}
 	          {% if t.1 %}
-	            {{ t.1 }} / {{ t.0 }}
+	            {{ t.1 }} ({{ t.0 }})
 	          {% else %}
 	            {{ t.0 }}
 	          {% endif %}
