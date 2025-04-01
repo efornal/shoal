@@ -34,7 +34,7 @@ pyasn1-modules==0.2.8
 pycparser==2.19
 pycrypto==2.6.1
 PySocks==1.6.8
-python-ldap==3.2.0
+python-ldap==3.4.0
 pytz==2019.1
 pyxdg==0.25
 PyYAML==3.13
