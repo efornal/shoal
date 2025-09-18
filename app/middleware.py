@@ -6,6 +6,8 @@ import logging
 import os
 from django.http import HttpResponse, HttpResponseServerError
 
+logger = logging.getLogger(__name__)
+
 class ForceLangMiddleware(object):
     def __init__(self, get_response):
         self.get_response = get_response
