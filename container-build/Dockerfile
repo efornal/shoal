@@ -13,6 +13,13 @@ WORKDIR /srv/shoal
 RUN rm /etc/localtime \
     && ln -s /usr/share/zoneinfo/$LOCAL_TIME /etc/localtime
 
+RUN echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until
+
+RUN echo "deb http://archive.debian.org/debian buster main contrib non-free\n" \
+         "deb http://archive.debian.org/debian buster-updates main contrib non-free\n" \
+         "deb http://archive.debian.org/debian-security buster/updates main contrib non-free" \
+         > /etc/apt/sources.list
+
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
     python-apt libcairo2 python-cairo  \
     pkg-config gettext procps \
